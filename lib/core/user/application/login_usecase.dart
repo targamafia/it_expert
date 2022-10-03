@@ -1,6 +1,6 @@
 import 'package:it_expert/core/utils/result.dart';
 
-import '../../domain/repository/user_repository_interface.dart';
+import '../domain/user_repository_interface.dart';
 
 class LoginUseCase {
   final UserRepositoryInterface loginRepository;

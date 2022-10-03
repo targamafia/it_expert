@@ -1,8 +1,8 @@
 import 'package:it_expert/core/user/domain/dto/login_dto.dart';
-import 'package:it_expert/core/user/domain/repository/user_repository_interface.dart';
+import 'package:it_expert/core/user/domain/user_repository_interface.dart';
 import 'package:it_expert/core/utils/result.dart';
 
-import '../datasource/user_remote_datasource_interface.dart';
+import 'user_remote_datasource_interface.dart';
 
 class UserRepositoryImpl implements UserRepositoryInterface {
   final UserRemoteDataSourceInterface userRemoteDataSource;

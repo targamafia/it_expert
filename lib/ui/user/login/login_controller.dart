@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
-import 'package:it_expert/core/user/application/usecase/login_usecase.dart';
+import 'package:it_expert/core/user/application/login_usecase.dart';
 import 'package:it_expert/core/user/domain/dto/login_failed_dto.dart';
 
-import '../../../core/user/dependency_injection/dependency_injection.dart';
+import '../../../core/user/dependency_injection.dart';
 
 class LoginController extends GetxController {
   var email = "".obs;

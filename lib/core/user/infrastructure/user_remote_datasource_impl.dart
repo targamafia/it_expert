@@ -6,9 +6,9 @@ import 'package:it_expert/core/utils/result.dart';
 
 import 'package:http/http.dart' as http;
 
-import '../../../constants.dart';
-import '../../application/datasource/user_remote_datasource_interface.dart';
-import '../../domain/dto/login_failed_dto.dart';
+import '../../constants.dart';
+import '../application/user_remote_datasource_interface.dart';
+import '../domain/dto/login_failed_dto.dart';
 
 class UserRemoteDataSourceImpl implements UserRemoteDataSourceInterface {
   @override

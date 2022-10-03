@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:it_expert/ui/onboarding/onboarding_page.dart';
+import 'package:it_expert/ui/home/home_page.dart';
 import 'package:it_expert/ui/style.dart';
 import 'package:it_expert/ui/user/login/login_controller.dart';
 
@@ -129,7 +129,7 @@ class _LoginPage extends State<LoginPage> {
                             await controller.login();
                             if (controller.loginSuccess) {
                               Get.offAll(
-                                () => OnBoardingPage(),
+                                () => HomePage(),
                                 transition: Transition.circularReveal,
                                 duration: const Duration(milliseconds: 500),
                               );

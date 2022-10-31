@@ -16,6 +16,7 @@ class AssessmentDetailPage extends StatefulWidget {
 class _AssessmentDetailPageState extends State<AssessmentDetailPage> {
   @override
   Widget build(BuildContext context) {
+    print("AssessmentDto: ${widget.assessmentDto}");
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -97,8 +98,8 @@ class _AssessmentDetailPageState extends State<AssessmentDetailPage> {
                         ])),
                     child: ElevatedButton(
                       onPressed: () async {
-                        Get.offAll(() => const AssessmentApplicationPage(
-                            assessmentId: "633354f47334cae6e2ad775c"));
+                        Get.offAll(() => AssessmentApplicationPage(
+                            assessmentId: widget.assessmentDto.id));
                       },
                       style: ElevatedButton.styleFrom(
                           primary: Colors.transparent,

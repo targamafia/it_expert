@@ -36,7 +36,7 @@ class _AssessmentResultPageState extends State<AssessmentResultPage> {
                     lineWidth: 20.0,
                     percent: widget.grade,
                     center: Text(
-                      "${widget.grade * 100}%",
+                      "${(widget.grade * 100).round()}%",
                       style: Theme.of(context).textTheme.displaySmall,
                     ),
                     progressColor: Colors.green,

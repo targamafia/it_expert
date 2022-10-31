@@ -28,7 +28,7 @@ class _AssessmentApplicationPageState extends State<AssessmentApplicationPage> {
 
   @override
   Widget build(BuildContext context) {
-    controller.fetchQuestions("633354f47334cae6e2ad775c");
+    controller.fetchQuestions(widget.assessmentId);
     return Scaffold(
       backgroundColor: AppColor.aliceBlue,
       body: SafeArea(

@@ -50,7 +50,7 @@ class MainPage extends StatelessWidget {
                         assessmentDto: AssessmentDto(
                           questions: [],
                           categories: [],
-                          id: '',
+                          id: "",
                           description: '',
                           isPremium: true,
                           isPrivate: true,
@@ -99,7 +99,7 @@ class MainPage extends StatelessWidget {
                             title: it.title,
                             description: it.description,
                             categories: it.categories,
-                            id: '',
+                            id: it.id,
                             isPremium: true,
                             isPrivate: true,
                             rating: 5,

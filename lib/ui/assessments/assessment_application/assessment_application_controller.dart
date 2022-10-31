@@ -5,6 +5,7 @@ import 'package:it_expert/core/assessment/domain/dto/question_dto.dart';
 
 import '../../../core/assessment/di.dart';
 import '../../../core/utils/status.dart';
+import 'dart:developer' as developer;
 
 class AssessmentApplicationController extends GetxController {
   final _getAssessmentUseCase = constructGetAssessmentUseCase();
@@ -21,6 +22,7 @@ class AssessmentApplicationController extends GetxController {
 
   void fetchQuestions(String assessmentId) async {
     this.assessmentId = assessmentId;
+    print('AssessmentApplicationController.fetchQuestions($assessmentId)');
     status(Status.LOADING);
     var result = await _getAssessmentUseCase.call(assessmentId);
     if (result.isSuccess) {

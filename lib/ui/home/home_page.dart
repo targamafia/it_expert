@@ -1,38 +1,56 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:it_expert/ui/home/home_controller.dart';
 
-class HomePage extends StatelessWidget {
+import 'main_page.dart';
+
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() => _HomePage();
+}
+
+class _HomePage extends State<HomePage> {
+  int currentPageIndex = 0;
+
   @override
   Widget build(BuildContext context) {
+    HomeController controller = Get.put(HomeController());
+
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: Text(
-          "IT Expert",
-          style: Theme.of(context)
-              .textTheme
-              .titleLarge
-              ?.copyWith(color: Theme.of(context).primaryColor),
-        ),
-        actions: [
-          Padding(
-              padding: const EdgeInsets.only(right: 20),
-              child: InkWell(
-                onTap: () {},
-                child: Image.network(
-                  'https://buffer.com/library/content/images/2020/05/Kevan-Lee.png',
-                  width: 40,
-                  height: 40,
-                ),
-              ))
-        ],
-        elevation: 0,
-        backgroundColor: Theme.of(context).canvasColor,
-      ),
       resizeToAvoidBottomInset: false,
-      body: const SafeArea(
+      body: SafeArea(
         child: SingleChildScrollView(
-          child: Center(child: Text("HomePage")),
-        ),
+            child: [
+          const MainPage(),
+          const Text("2"),
+          const Text("3"),
+        ][currentPageIndex]),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        elevation: 0,
+        currentIndex: currentPageIndex,
+        onTap: (int index) {
+          setState(() {
+            currentPageIndex = index;
+          });
+        },
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_outlined),
+            label: 'Inicio',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Buscar',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.history_sharp),
+            label: 'Historial',
+          )
+        ],
+        backgroundColor: Theme.of(context).canvasColor,
       ),
     );
   }

@@ -30,6 +30,7 @@ class _LoginPage extends State<LoginPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              Spacer(),
               const Image(
                 image: AssetImage("assets/images/logo.png"),
                 height: 42,
@@ -152,6 +153,7 @@ class _LoginPage extends State<LoginPage> {
                 child: TextButton(
                     onPressed: () {}, child: const Text("O crea una cuenta")),
               ),
+              Spacer(),
             ],
           ),
         ),

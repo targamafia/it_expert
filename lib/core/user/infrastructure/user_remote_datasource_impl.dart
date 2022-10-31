@@ -1,13 +1,13 @@
 import 'dart:convert';
 
 import 'package:get/get_connect/http/src/status/http_status.dart';
-import 'package:it_expert/core/user/domain/dto/login_dto.dart';
+import 'package:it_expert/core/user/domain/dto/user_dto.dart';
 import 'package:it_expert/core/utils/result.dart';
 
 import 'package:http/http.dart' as http;
 
 import '../../constants.dart';
-import '../application/user_remote_datasource_interface.dart';
+import '../application/datasource/user_remote_datasource_interface.dart';
 import '../domain/dto/login_failed_dto.dart';
 
 class UserRemoteDataSourceImpl implements UserRemoteDataSourceInterface {
@@ -23,9 +23,9 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSourceInterface {
       case HttpStatus.ok:
         var user = json["entity"]["user"];
         return Result.success(
-          LoginDto(
+          UserDto(
             userId: user["_id"],
-            name: user["name"],
+            firstName: user["name"],
             lastName: user["lastName"],
             email: user["email"],
             companyCode: user["companyCode"],

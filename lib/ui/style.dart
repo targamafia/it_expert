@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import "dart:math";
 
 ThemeData lightTheme() {
   return ThemeData(
@@ -35,9 +36,14 @@ ThemeData lightTheme() {
             const TextStyle(fontSize: 36.0, fontWeight: FontWeight.bold),
         headlineLarge:
             const TextStyle(fontSize: 32.0, fontWeight: FontWeight.bold),
-        headlineMedium:
-            const TextStyle(fontSize: 28.0, fontWeight: FontWeight.bold),
-        headlineSmall: const TextStyle(fontSize: 24.0),
+        headlineMedium: const TextStyle(
+            fontSize: 28.0,
+            fontWeight: FontWeight.bold,
+            color: AppColor.black1),
+        headlineSmall: const TextStyle(
+            fontSize: 24.0,
+            fontWeight: FontWeight.bold,
+            color: AppColor.black1),
         titleLarge: const TextStyle(fontSize: 22.0),
         titleMedium: const TextStyle(fontSize: 16.0),
         titleSmall: const TextStyle(fontSize: 14.0),
@@ -55,6 +61,7 @@ ThemeData lightTheme() {
 
 class AppColor {
   static const white = Color(0xFFFDFDFD);
+  static const aliceBlue = Color(0xFFF3FAFF);
   static const blueRYB = Color(0xFF1D33FF);
   static const bluetiful = Color(0xFF1269FF);
   static const midnightBlue = Color(0xFF0e0e52);
@@ -74,4 +81,19 @@ class AppColor {
     800: Color(0xFF001c4d),
     900: Color(0xFF00091a),
   });
+
+  static const pink1 = Color(0xFFff006e);
+  static const indigoDye = Color(0xFF083D77);
+  static const lightSalmon = Color(0xFFfca17d);
+  static const correctGreen = Color(0xFF81dc9b);
+
+  static Color randomLabelColor() {
+    var list = [pink1, indigoDye, lightSalmon];
+// generates a new Random object
+    final random = Random();
+
+// generate a random index based on the list length
+// and use it to retrieve the element
+    return list[random.nextInt(list.length)];
+  }
 }

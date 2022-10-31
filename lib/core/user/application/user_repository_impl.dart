@@ -1,16 +1,25 @@
-import 'package:it_expert/core/user/domain/dto/login_dto.dart';
+import 'package:it_expert/core/user/application/datasource/user_local_datasource_interface.dart';
+
+import 'package:it_expert/core/user/domain/dto/user_dto.dart';
 import 'package:it_expert/core/user/domain/user_repository_interface.dart';
 import 'package:it_expert/core/utils/result.dart';
 
-import 'user_remote_datasource_interface.dart';
+import 'datasource/user_remote_datasource_interface.dart';
 
 class UserRepositoryImpl implements UserRepositoryInterface {
   final UserRemoteDataSourceInterface userRemoteDataSource;
+  final UserLocalDataSourceInterface userLocalDataSourceInterface;
 
-  UserRepositoryImpl(this.userRemoteDataSource);
+  UserRepositoryImpl(
+      this.userRemoteDataSource, this.userLocalDataSourceInterface);
 
   @override
-  Future<Result> login(String email, String password) {
+  Future<Result> login(String email, String password) async {
     return userRemoteDataSource.login(email, password);
+  }
+
+  @override
+  Future<Result> saveUserInfoInLocalStorage(UserDto userDto) async {
+    return userLocalDataSourceInterface.saveUserInfo(userDto);
   }
 }

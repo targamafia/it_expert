@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
-import 'package:it_expert/core/assessment/application/usecase/get_best_assessments_usecase.dart';
+import '../../core/assessment/application/usecase/get_best_assessments_usecase.dart';
 import '../../core/assessment/application/usecase/get_featured_assessment_usecase.dart';
 import '../../core/assessment/di.dart';
 
-class HomeController extends GetxController {
+class MainController extends GetxController {
   GetBestAssessmentsUseCase getBestAssessmentsUseCase =
       constructGetBestAssessmentsUseCase();
   GetFeaturedAssessmentsUseCase getFeaturedAssessmentsUseCase =

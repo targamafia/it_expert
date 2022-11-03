@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:it_expert/ui/home/home_controller.dart';
+import 'package:it_expert/ui/home/search/search_page.dart';
 
-import 'main_page.dart';
+import 'main/main_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -24,7 +25,7 @@ class _HomePage extends State<HomePage> {
         child: SingleChildScrollView(
             child: [
           const MainPage(),
-          const Text("2"),
+          const SearchPage(),
           const Text("3"),
         ][currentPageIndex]),
       ),

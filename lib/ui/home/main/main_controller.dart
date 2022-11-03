@@ -1,7 +1,8 @@
 import 'package:get/get.dart';
-import '../../core/assessment/application/usecase/get_best_assessments_usecase.dart';
-import '../../core/assessment/application/usecase/get_featured_assessment_usecase.dart';
-import '../../core/assessment/di.dart';
+
+import '../../../core/assessment/application/usecase/get_best_assessments_usecase.dart';
+import '../../../core/assessment/application/usecase/get_featured_assessment_usecase.dart';
+import '../../../core/assessment/di.dart';
 
 class MainController extends GetxController {
   GetBestAssessmentsUseCase getBestAssessmentsUseCase =

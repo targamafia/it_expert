@@ -4,6 +4,9 @@ class AssessmentRepositoryInterface {
   Future<Result> getFeaturedAssessments() async {
     throw UnimplementedError();
   }
+ Future<Result> getAllAssessments() async {
+    throw UnimplementedError();
+  }
 
   Future<Result> getAssessment(String id) async {
     throw UnimplementedError();

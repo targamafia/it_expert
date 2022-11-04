@@ -36,23 +36,17 @@ ThemeData lightTheme() {
             const TextStyle(fontSize: 36.0, fontWeight: FontWeight.bold),
         headlineLarge:
             const TextStyle(fontSize: 32.0, fontWeight: FontWeight.bold),
-        headlineMedium: const TextStyle(
-            fontSize: 28.0,
-            fontWeight: FontWeight.bold,
-            color: AppColor.black1),
-        headlineSmall: const TextStyle(
-            fontSize: 24.0,
-            fontWeight: FontWeight.bold,
-            color: AppColor.black1),
+        headlineMedium: const TextStyle(fontSize: 28.0, fontWeight: FontWeight.bold, color: AppColor.black1),
+        headlineSmall: const TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold, color: AppColor.black1),
         titleLarge: const TextStyle(fontSize: 22.0),
         titleMedium: const TextStyle(fontSize: 16.0),
         titleSmall: const TextStyle(fontSize: 14.0),
         labelLarge: const TextStyle(fontSize: 14.0),
         labelMedium: const TextStyle(fontSize: 12.0),
         labelSmall: const TextStyle(fontSize: 11.0),
-        bodyLarge: const TextStyle(fontSize: 16.0),
+        bodyLarge: const TextStyle(fontSize: 18.0),
         bodyMedium: const TextStyle(
-            fontSize: 18.0,
+            fontSize: 16.0,
             fontWeight: FontWeight.normal,
             color: AppColor.black1),
         bodySmall: const TextStyle(fontSize: 14.0)),
@@ -60,6 +54,7 @@ ThemeData lightTheme() {
 }
 
 class AppColor {
+  static const primary = Color(0xFF4059AD);
   static const white = Color(0xFFFDFDFD);
   static const aliceBlue = Color(0xFFF3FAFF);
   static const blueRYB = Color(0xFF1D33FF);

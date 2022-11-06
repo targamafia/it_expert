@@ -2,7 +2,7 @@ import 'package:http/http.dart' as http;
 import 'package:it_expert/core/constants.dart';
 import 'package:it_expert/core/user/application/usecase/get_auth_token_local_usecase.dart';
 
-import '../user/dependency_injection.dart';
+import '../user/di.dart';
 
 class TokenSingleton {
   static final TokenSingleton _singleton = TokenSingleton._internal();

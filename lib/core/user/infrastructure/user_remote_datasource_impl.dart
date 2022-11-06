@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:get/get_connect/http/src/status/http_status.dart';
+import 'package:it_expert/core/user/domain/dto/sign_up_failed_dto.dart';
 import 'package:it_expert/core/user/domain/dto/user_dto.dart';
 import 'package:it_expert/core/utils/result.dart';
 
@@ -41,5 +42,41 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSourceInterface {
         return Result.failure(LoginFailedException(
             errorMessage: json["error"], errorCode: "UNKNOWN"));
     }
+  }
+
+  @override
+  Future<Result> signUp(String name, String lastName, String email, String password)async {
+    var response =
+    await http.post(Uri.https(baseUrl, '/api/v1/users/signUp'), body: {
+      "name": name,
+      "lastName": lastName,
+      "email": email,
+      "password": password,
+      "companyCode": "MRP"
+    });
+    var json = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+    switch (response.statusCode) {
+      case HttpStatus.ok:
+        var user = json["entity"]["user"];
+        return Result.success(
+          UserDto(
+            userId: user["_id"],
+            firstName: user["name"],
+            lastName: user["lastName"],
+            email: user["email"],
+            companyCode: user["companyCode"],
+            token: json["entity"]["token"],
+          ),
+        );
+      case HttpStatus.unauthorized:
+        return Result.failure(
+          SignUpFailedException(
+              errorMessage: json["error"], errorCode: json["errorCode"]),
+        );
+      default:
+        return Result.failure(SignUpFailedException(
+            errorMessage: json["error"], errorCode: "UNKNOWN"));
+    }
+
   }
 }

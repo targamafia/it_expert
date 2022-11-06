@@ -32,117 +32,120 @@ class _SignUpPage extends State<SignUpPage> {
           },
         ),
       ),
-      body: Container(
-        padding: const EdgeInsets.all(32.0),
-        alignment: Alignment.topCenter,
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(
-                "Crea tu cuenta",
-                style: Theme.of(context).textTheme.headline1?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).primaryColor),
-              ),
-              const SizedBox(height: 20.0),
-              TextFormField(
-                onChanged: (text) {
-                  controller.name(text);
-                },
-                autocorrect: true,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Nombre(s)',
-                  prefixIcon: Icon(Icons.person),
+      body: SafeArea(
+          child: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.all(32.0),
+          alignment: Alignment.topCenter,
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  "Crea tu cuenta",
+                  style: Theme.of(context).textTheme.headline1?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).primaryColor),
                 ),
-              ),
-              const SizedBox(height: 20.0),
-              TextFormField(
-                onChanged: (text) {
-                  controller.lastName(text);
-                },
-                autocorrect: true,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Apellido(s)',
-                  prefixIcon: Icon(Icons.person),
-                ),
-              ),
-              const SizedBox(height: 20.0),
-              TextFormField(
-                onChanged: (text) {
-                  controller.email(text);
-                },
-                autocorrect: false,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Correo',
-                  prefixIcon: Icon(Icons.email),
-                ),
-              ),
-              const SizedBox(height: 20.0),
-              TextFormField(
-                onChanged: (text) {
-                  controller.password(text);
-                },
-                autocorrect: false,
-                obscureText: true,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Contraseña',
-                  prefixIcon: Icon(Icons.lock),
-                ),
-              ),
-              const SizedBox(height: 20.0),
-              TextFormField(
-                onChanged: (text) {
-                  controller.confirmedPassword(text);
-                },
-                autocorrect: false,
-                obscureText: true,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Confirma la contraseña',
-                  prefixIcon: Icon(Icons.lock),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 24),
-                child: Container(
-                  height: 50.0,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(40.0),
+                const SizedBox(height: 20.0),
+                TextFormField(
+                  onChanged: (text) {
+                    controller.name(text);
+                  },
+                  autocorrect: true,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Nombre(s)',
+                    prefixIcon: Icon(Icons.person),
                   ),
-                  child: ElevatedButton(
-                    onPressed: ([bool mounted = true]) async {
-                      if (_formKey.currentState!.validate()) {
-                        await controller.signUp();
-                        if (controller.signUpSuccess) {
-                          Get.offAll(
-                                () => HomePage(),
-                            transition: Transition.circularReveal,
-                            duration: const Duration(milliseconds: 500),
-                          );
-                        } else {
-                          // Removes warning for stateless components, check: https://stackoverflow.com/questions/68871880/do-not-use-buildcontexts-across-async-gaps
-                          if (!mounted) return;
-                          _showSignUpErrorDialog(
-                              context, controller.errorMessage);
+                ),
+                const SizedBox(height: 20.0),
+                TextFormField(
+                  onChanged: (text) {
+                    controller.lastName(text);
+                  },
+                  autocorrect: true,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Apellido(s)',
+                    prefixIcon: Icon(Icons.person),
+                  ),
+                ),
+                const SizedBox(height: 20.0),
+                TextFormField(
+                  onChanged: (text) {
+                    controller.email(text);
+                  },
+                  autocorrect: false,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Correo',
+                    prefixIcon: Icon(Icons.email),
+                  ),
+                ),
+                const SizedBox(height: 20.0),
+                TextFormField(
+                  onChanged: (text) {
+                    controller.password(text);
+                  },
+                  autocorrect: false,
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Contraseña',
+                    prefixIcon: Icon(Icons.lock),
+                  ),
+                ),
+                const SizedBox(height: 20.0),
+                TextFormField(
+                  onChanged: (text) {
+                    controller.confirmedPassword(text);
+                  },
+                  autocorrect: false,
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Confirma la contraseña',
+                    prefixIcon: Icon(Icons.lock),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 24),
+                  child: Container(
+                    height: 50.0,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(40.0),
+                    ),
+                    child: ElevatedButton(
+                      onPressed: ([bool mounted = true]) async {
+                        if (_formKey.currentState!.validate()) {
+                          await controller.signUp();
+                          if (controller.signUpSuccess) {
+                            Get.offAll(
+                              () => const HomePage(),
+                              transition: Transition.circularReveal,
+                              duration: const Duration(milliseconds: 500),
+                            );
+                          } else {
+                            // Removes warning for stateless components, check: https://stackoverflow.com/questions/68871880/do-not-use-buildcontexts-across-async-gaps
+                            if (!mounted) return;
+                            _showSignUpErrorDialog(
+                                context, controller.errorMessage);
+                          }
                         }
-                      }
-                    },
-                    child: const Text("Crear cuenta"),
+                      },
+                      child: const Text("Crear cuenta"),
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
-      ),
+      )),
     );
   }
 

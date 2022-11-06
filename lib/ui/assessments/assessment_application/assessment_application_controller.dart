@@ -22,7 +22,6 @@ class AssessmentApplicationController extends GetxController {
 
   void fetchQuestions(String assessmentId) async {
     this.assessmentId = assessmentId;
-    print('AssessmentApplicationController.fetchQuestions($assessmentId)');
     status(Status.LOADING);
     var result = await _getAssessmentUseCase.call(assessmentId);
     if (result.isSuccess) {

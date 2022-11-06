@@ -29,7 +29,6 @@ class UserLocalDataSourceImpl implements UserLocalDataSourceInterface {
     await prefs.setString('userInfo.email', userDto.email ?? "");
     await prefs.setString('userInfo.companyCode', userDto.companyCode ?? "");
     await prefs.setString('userInfo.token', userDto.token ?? "");
-    print(userDto.token);
     return Result.success(true);
   }
 }

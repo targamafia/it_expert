@@ -22,7 +22,8 @@ class SignUpController extends GetxController {
     signUpSuccess = false;
     errorMessage = "";
 
-    var result = await _signUpUseCase.call(name.value, lastName.value, email.value, password.value);
+    var result = await _signUpUseCase.call(
+        name.value, lastName.value, email.value, password.value);
     if (result.isSuccess) {
       signUpSuccess = true;
     }

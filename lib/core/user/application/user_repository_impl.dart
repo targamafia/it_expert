@@ -24,7 +24,8 @@ class UserRepositoryImpl implements UserRepositoryInterface {
   }
 
   @override
-  Future<Result> signUp(String name, String lastName, String email, String password) {
+  Future<Result> signUp(
+      String name, String lastName, String email, String password) {
     return userRemoteDataSource.signUp(name, lastName, email, password);
   }
 }

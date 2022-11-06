@@ -45,9 +45,10 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSourceInterface {
   }
 
   @override
-  Future<Result> signUp(String name, String lastName, String email, String password)async {
+  Future<Result> signUp(
+      String name, String lastName, String email, String password) async {
     var response =
-    await http.post(Uri.https(baseUrl, '/api/v1/users/signUp'), body: {
+        await http.post(Uri.https(baseUrl, '/api/v1/users/signUp'), body: {
       "name": name,
       "lastName": lastName,
       "email": email,
@@ -56,7 +57,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSourceInterface {
     });
     var json = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
     switch (response.statusCode) {
-      case HttpStatus.ok:
+      case HttpStatus.created:
         var user = json["entity"]["user"];
         return Result.success(
           UserDto(
@@ -77,6 +78,5 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSourceInterface {
         return Result.failure(SignUpFailedException(
             errorMessage: json["error"], errorCode: "UNKNOWN"));
     }
-
   }
 }

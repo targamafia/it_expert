@@ -30,4 +30,10 @@ class AssessmentRepositoryImpl implements AssessmentRepositoryInterface {
     return assessmentRemoteDataSourceInterface
         .fetchAssessmentGrade(assessmentId);
   }
+
+  @override
+  Future<Result> getAllAssessments() {
+    // TODO: implement getAllAssessments
+    throw UnimplementedError();
+  }
 }

@@ -16,7 +16,6 @@ class AssessmentDetailPage extends StatefulWidget {
 class _AssessmentDetailPageState extends State<AssessmentDetailPage> {
   @override
   Widget build(BuildContext context) {
-    print("AssessmentDto: ${widget.assessmentDto}");
     return Scaffold(
       appBar: AppBar(
         elevation: 0,

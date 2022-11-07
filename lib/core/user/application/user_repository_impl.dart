@@ -27,4 +27,9 @@ class UserRepositoryImpl implements UserRepositoryInterface {
   Future<Result> getUserInfo() {
     return userLocalDataSourceInterface.getUserInfo();
   }
+
+  Future<Result> signUp(
+      String name, String lastName, String email, String password) {
+    return userRemoteDataSource.signUp(name, lastName, email, password);
+  }
 }

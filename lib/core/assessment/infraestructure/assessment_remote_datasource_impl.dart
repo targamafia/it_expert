@@ -104,7 +104,6 @@ class AssessmentRemoteDataSourceImpl
         ),
       );
     } else {
-      print(response.body);
       return Result.failure(HttpException(response.body));
     }
   }

@@ -115,6 +115,33 @@ class AssessmentRemoteDataSourceImpl
       return Result.success(75);
     });
   }
+
+  @override
+  Future<Result> fetchAllAssessments() async {
+    var response = await API.get("/assessments");
+    var json = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+    switch (response.statusCode) {
+      case HttpStatus.ok:
+        var assessments =
+            json['entity']['list'].map<AssessmentDto>((it) {
+          return AssessmentDto(
+              id: it['id'],
+              title: it['title'],
+              categories: asListOfStrings(it['categories']),
+              thumbnailUrl:
+                  it['thumbnailUrl'] ?? 'http://placeimg.com/640/480/arch',
+              isPremium: it['isPremium'],
+              description: it['description'] ?? '',
+              rating: (it['rating'] as int) * 1.0,
+              isPrivate: it['isPrivate'],
+              questions: []);
+        }).toList();
+        return Result.success(assessments);
+    }
+    return Result.failure(
+      const HttpException("Cannot Perform operation (fetchAllAssessments)"),
+    );
+  }
 }
 
 List<String> asListOfStrings(List<dynamic> list) {

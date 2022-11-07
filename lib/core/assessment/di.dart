@@ -1,4 +1,5 @@
 import 'package:it_expert/core/assessment/application/assessment_repository_impl.dart';
+import 'package:it_expert/core/assessment/application/usecase/get_all_assessments_usecase.dart';
 import 'package:it_expert/core/assessment/application/usecase/get_assessment_questions_usecase.dart';
 import 'package:it_expert/core/assessment/application/usecase/get_best_assessments_usecase.dart';
 import 'package:it_expert/core/assessment/infraestructure/assessment_remote_datasource_impl.dart';
@@ -28,5 +29,10 @@ GradeAssessmentUseCase constructGradeAssessmentUseCase() {
 
 GetAssessmentGradeUseCase constructGetAssessmentGradeUseCase() {
   return GetAssessmentGradeUseCase(
+      AssessmentRepositoryImpl(AssessmentRemoteDataSourceImpl()));
+}
+
+GetAllAssessmentsUseCase constructGetAllAssessmentsUseCase() {
+  return GetAllAssessmentsUseCase(
       AssessmentRepositoryImpl(AssessmentRemoteDataSourceImpl()));
 }

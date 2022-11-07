@@ -20,20 +20,19 @@ class AssessmentRepositoryImpl implements AssessmentRepositoryInterface {
 
   @override
   Future<Result> gradeAssessment(
-      Map<String, String> questionsAnswer, String assessmentId) {
+      Map<String, String> questionsAnswer, String assessmentId) async {
     return assessmentRemoteDataSourceInterface.gradeAssessment(
         questionsAnswer, assessmentId);
   }
 
   @override
-  Future<Result> getAssessmentGrade(String assessmentId) {
+  Future<Result> getAssessmentGrade(String assessmentId) async {
     return assessmentRemoteDataSourceInterface
         .fetchAssessmentGrade(assessmentId);
   }
 
   @override
-  Future<Result> getAllAssessments() {
-    // TODO: implement getAllAssessments
-    throw UnimplementedError();
+  Future<Result> getAllAssessments() async {
+    return assessmentRemoteDataSourceInterface.fetchAllAssessments();
   }
 }

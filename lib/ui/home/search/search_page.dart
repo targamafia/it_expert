@@ -4,6 +4,9 @@ import 'package:it_expert/core/utils/status.dart';
 import 'package:it_expert/ui/home/search/search_page_controller.dart';
 import 'package:it_expert/ui/style.dart';
 
+import '../../../core/assessment/domain/dto/assessment_dto.dart';
+import '../../assessments/assessment_detail/assessment_detail_page.dart';
+
 class SearchPage extends StatelessWidget {
   const SearchPage({Key? key}) : super(key: key);
 
@@ -46,7 +49,26 @@ class SearchPage extends StatelessWidget {
                 crossAxisCount: 2,
                 childAspectRatio: (1 / .4),
                 children: controller.filteredAssessments
-                    .map((e) => CategoryCard(category: e.title))
+                    .map((e) => CategoryCard(
+                        category: e.title,
+                        onPressed: () {
+                          print("AssessmentId : ${e.id}");
+                          Get.to(
+                            () => AssessmentDetailPage(
+                              assessmentDto: AssessmentDto(
+                                questions: [],
+                                categories: [],
+                                id: e.id,
+                                description: e.description,
+                                isPremium: e.isPremium,
+                                isPrivate: e.isPrivate,
+                                rating: e.rating,
+                                title: e.title,
+                                thumbnailUrl: e.thumbnailUrl,
+                              ),
+                            ),
+                          );
+                        }))
                     .toList(),
               ),
           ],
@@ -57,8 +79,11 @@ class SearchPage extends StatelessWidget {
 }
 
 class CategoryCard extends StatefulWidget {
-  const CategoryCard({Key? key, required this.category}) : super(key: key);
+  const CategoryCard(
+      {Key? key, required this.category, required this.onPressed})
+      : super(key: key);
   final String category;
+  final void Function() onPressed;
 
   @override
   State<StatefulWidget> createState() => _CategoryCard();
@@ -68,7 +93,7 @@ class _CategoryCard extends State<CategoryCard> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: widget.onPressed,
       child: Container(
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(

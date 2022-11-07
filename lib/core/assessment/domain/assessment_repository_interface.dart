@@ -20,4 +20,8 @@ class AssessmentRepositoryInterface {
   Future<Result> getAssessmentGrade(String assessmentId) {
     throw UnimplementedError();
   }
+ Future<Result> getAllGradedAssessments(String userId) {
+    throw UnimplementedError();
+  } 
 }
+

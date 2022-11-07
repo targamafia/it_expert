@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:http/http.dart' as http;
+import 'package:it_expert/core/assessment/domain/dto/graded_assessment_dto.dart';
 import 'package:it_expert/core/assessment/domain/dto/post_grade_assessment_dto.dart';
 
 import 'package:it_expert/core/utils/result.dart';
@@ -10,6 +11,7 @@ import '../../api/api.dart';
 import '../application/assessment_remote_datasource_interface.dart';
 import '../domain/dto/assessment_dto.dart';
 import '../domain/dto/question_dto.dart';
+import '../domain/exceptions/no_questions_for_assessment_exception.dart';
 
 class AssessmentRemoteDataSourceImpl
     implements AssessmentRemoteDataSourceInterface {
@@ -48,16 +50,24 @@ class AssessmentRemoteDataSourceImpl
     switch (response.statusCode) {
       case HttpStatus.ok:
         var a = json["entity"];
+
+        if (asListOfQuestionDto(json["entity"]["questions"]).isEmpty) {
+          return Result.failure(
+            NoQuestionsForAssessmentException(
+                "El examen seleccionado no tiene preguntas!, intenta con otro"),
+          );
+        }
+        print(a["_id"]);
         AssessmentDto assessmentDto = AssessmentDto(
             id: a["_id"],
             title: a["title"],
-            description: a["description"],
-            thumbnailUrl: a["thumbnailUrl"],
-            isPrivate: a["private"],
-            isPremium: a["isPremium"],
-            categories: asListOfStrings(a["categories"]),
+            description: a["description"] ?? "",
+            thumbnailUrl: a["thumbnailUrl"] ?? "",
+            isPrivate: a["isPrivate"] ?? false,
+            isPremium: a["isPremium"] ?? false,
+            categories: asListOfStrings(a["categories"] ?? []),
             rating: (a["rating"] as int) * 1.0,
-            questions: asListOfQuestionDto(json["entity"]["questions"]));
+            questions: asListOfQuestionDto(json["entity"]["questions"] ?? []));
         return Result.success(assessmentDto);
     }
     return Result.failure(
@@ -121,8 +131,7 @@ class AssessmentRemoteDataSourceImpl
     var json = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
     switch (response.statusCode) {
       case HttpStatus.ok:
-        var assessments =
-            json['entity']['list'].map<AssessmentDto>((it) {
+        var assessments = json['entity']['list'].map<AssessmentDto>((it) {
           return AssessmentDto(
               id: it['id'],
               title: it['title'],
@@ -141,6 +150,21 @@ class AssessmentRemoteDataSourceImpl
       const HttpException("Cannot Perform operation (fetchAllAssessments)"),
     );
   }
+
+  @override
+  Future<Result> fetchAllGradedAssessments(String userId) async {
+    print("Fetching graded assessments");
+    var response = await API.get("/grade/user/$userId");
+    var json = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+
+    switch (response.statusCode) {
+      case HttpStatus.ok:
+        return Result.success(
+            asListOfGradedAssessmentDto(json["entity"]["list"]));
+    }
+    return Result.failure(
+        HttpException("Exception while fetching all graded assessmetns"));
+  }
 }
 
 List<String> asListOfStrings(List<dynamic> list) {
@@ -158,6 +182,21 @@ List<QuestionDto> asListOfQuestionDto(List<dynamic> list) {
         item["_id"], item["title"], asListOfAnswerDto(item["options"])));
   }
   return questions;
+}
+
+List<GradedAssessmentDto> asListOfGradedAssessmentDto(List<dynamic> list) {
+  List<GradedAssessmentDto> assessments = [];
+  for (var entity in list) {
+    assessments.add(GradedAssessmentDto(
+      id: entity["id"],
+      startDate: DateTime.parse(entity["startDate"]),
+      endDate: DateTime.parse(entity["endDate"]),
+      grade: entity["grade"] * 1.0,
+      correctAnswers: entity["correctAnswers"],
+      wrongAnswers: entity["wrongAnswers"],
+    ));
+  }
+  return assessments;
 }
 
 List<AnswerDto> asListOfAnswerDto(List<dynamic> list) {

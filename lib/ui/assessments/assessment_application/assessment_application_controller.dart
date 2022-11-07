@@ -31,6 +31,7 @@ class AssessmentApplicationController extends GetxController {
       status(Status.SUCCESS);
     } else if (result.isFailure) {
       errorMessage = result.exceptionOrNull().toString();
+      print(errorMessage);
       status(Status.ERROR);
     }
   }

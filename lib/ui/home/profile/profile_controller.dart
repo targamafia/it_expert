@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:it_expert/core/user/application/usecase/get_profile_data_usecase.dart';
-import 'package:it_expert/core/user/dependency_injection.dart';
+import 'package:it_expert/core/user/di.dart';
 
 
 class ProfilePageController extends GetxController {

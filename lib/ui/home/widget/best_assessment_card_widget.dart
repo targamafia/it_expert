@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:it_expert/core/assessment/domain/dto/assessment_dto.dart';
 import '../../style.dart';
+import 'dart:ui';
 
 class BestAssessmentCardWidget extends StatefulWidget {
   final Color backgroundColor;
@@ -35,6 +36,7 @@ class _BestAssessmentCardWidget extends State<BestAssessmentCardWidget> {
             ),
           ),
         ),
+
         InkWell(
           onTap: () => widget.onPressed(),
           child: SizedBox(

@@ -68,7 +68,7 @@ class ProfilePage extends StatelessWidget {
                                 'Exámenes contestados',
                                 textAlign: TextAlign.center,
                                 style:
-                                    Theme.of(context).textTheme.headlineMedium,
+                                    Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.normal),
                               )),
                               SelectionArea(
                                   child: Text(
@@ -105,7 +105,7 @@ class ProfilePage extends StatelessWidget {
                                 'Exámenes premium',
                                 textAlign: TextAlign.center,
                                 style:
-                                    Theme.of(context).textTheme.headlineMedium,
+                                    Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.normal),
                               )),
                               SelectionArea(
                                   child: Text(
@@ -148,7 +148,7 @@ class ProfilePage extends StatelessWidget {
                               Icon(
                                 Icons.contact_support_rounded,
                                 color: Colors.black,
-                                size: 24,
+                                size: 32,
                               ),
                               Expanded(
                                 child: Padding(
@@ -159,14 +159,15 @@ class ProfilePage extends StatelessWidget {
                                     'Soporte',
                                     style: Theme.of(context)
                                         .textTheme
-                                        .headlineMedium,
+                                        .headlineMedium
+                                        ?.copyWith(fontWeight: FontWeight.normal),
                                   )),
                                 ),
                               ),
                               Icon(
                                 Icons.keyboard_arrow_right,
                                 color: Colors.black,
-                                size: 24,
+                                size: 32,
                               ),
                             ],
                           ),
@@ -181,7 +182,7 @@ class ProfilePage extends StatelessWidget {
                               Icon(
                                 Icons.exit_to_app,
                                 color: Colors.black,
-                                size: 24,
+                                size: 32,
                               ),
                               Expanded(
                                 child: Padding(
@@ -192,14 +193,15 @@ class ProfilePage extends StatelessWidget {
                                     'Cerrar Sesión',
                                     style: Theme.of(context)
                                         .textTheme
-                                        .headlineMedium,
+                                        .headlineMedium
+                                        ?.copyWith(fontWeight: FontWeight.normal),
                                   )),
                                 ),
                               ),
                               Icon(
                                 Icons.keyboard_arrow_right,
                                 color: Colors.black,
-                                size: 24,
+                                size: 32,
                               ),
                             ],
                           ),

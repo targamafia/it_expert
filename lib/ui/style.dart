@@ -41,7 +41,7 @@ ThemeData lightTheme() {
             fontWeight: FontWeight.bold,
             color: AppColor.black1),
         headlineSmall: const TextStyle(
-            fontSize: 24.0,
+            fontSize: 22.0,
             fontWeight: FontWeight.bold,
             color: AppColor.black1),
         titleLarge: const TextStyle(fontSize: 22.0),
@@ -82,13 +82,13 @@ class AppColor {
     900: Color(0xFF00091a),
   });
 
-  static const pink1 = Color(0xFFff006e);
+  static const lightBlue = Color(0xff2050ae);
   static const indigoDye = Color(0xFF083D77);
-  static const lightSalmon = Color(0xFFfca17d);
+  static const royalBlue = Color(0xff0a2aa6);
   static const correctGreen = Color(0xFF81dc9b);
 
   static Color randomLabelColor() {
-    var list = [pink1, indigoDye, lightSalmon];
+    var list = [lightBlue, indigoDye, royalBlue];
 // generates a new Random object
     final random = Random();
 

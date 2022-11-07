@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:it_expert/core/utils/status.dart';
 import 'package:it_expert/ui/home/profile/profile_controller.dart';
-import 'package:it_expert/ui/home/search/search_page_controller.dart';
-import 'package:it_expert/ui/style.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -11,10 +8,10 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ProfilePageController controller = Get.put(ProfilePageController());
+    controller.loadProfileData();
     var padding = MediaQuery.of(context).padding;
     double height = MediaQuery.of(context).size.height;
     double newheight = height - padding.top - padding.bottom;
-    double firsth = newheight / 50.0;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Column(
@@ -29,7 +26,7 @@ class ProfilePage extends StatelessWidget {
                   alignment: AlignmentDirectional(0, 0),
                   child: SelectionArea(
                       child: Text(
-                    'USER NAME',
+                    controller.name + " " + controller.lastName,
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.headlineMedium,
                   )),

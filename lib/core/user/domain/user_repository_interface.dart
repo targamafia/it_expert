@@ -10,4 +10,8 @@ class UserRepositoryInterface {
   Future<Result> saveUserInfoInLocalStorage(UserDto userDto) async {
     throw UnimplementedError();
   }
+
+  Future<Result> getUserInfo() async{
+    throw UnimplementedError();
+  }
 }

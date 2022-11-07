@@ -22,4 +22,9 @@ class UserRepositoryImpl implements UserRepositoryInterface {
   Future<Result> saveUserInfoInLocalStorage(UserDto userDto) async {
     return userLocalDataSourceInterface.saveUserInfo(userDto);
   }
+
+  @override
+  Future<Result> getUserInfo() {
+    return userLocalDataSourceInterface.getUserInfo();
+  }
 }

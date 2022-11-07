@@ -1,10 +1,24 @@
 import 'package:get/get.dart';
-import 'package:it_expert/core/assessment/application/usecase/get_all_assessments_usecase.dart';
-import 'package:it_expert/core/assessment/domain/dto/assessment_dto.dart';
+import 'package:it_expert/core/user/application/usecase/get_profile_data_usecase.dart';
+import 'package:it_expert/core/user/dependency_injection.dart';
 
-import '../../../core/assessment/di.dart';
-import '../../../core/utils/status.dart';
 
 class ProfilePageController extends GetxController {
+  GetProfileDataUseCase getProfileDataUseCase = constructProfileDataUseCase();
+
+  String name = "";
+  String lastName = "";
+  var errorMessage = "".obs;
+
+  loadProfileData() async {
+    var result  = await getProfileDataUseCase.call();
+    if (result.isSuccess){
+      name = result.getOrNull().firstName.toString();
+     lastName = result.getOrNull().lastName.toString();
+    } else{
+      var error = result.exceptionOrNull() as Exception;
+      errorMessage(error.toString());
+    }
+  }
 
 }

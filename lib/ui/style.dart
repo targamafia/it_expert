@@ -39,7 +39,7 @@ ThemeData lightTheme() {
         headlineMedium: const TextStyle(fontSize: 28.0, fontWeight: FontWeight.bold, color: AppColor.black1),
         headlineSmall: const TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold, color: AppColor.black1),
         titleLarge: const TextStyle(fontSize: 22.0),
-        titleMedium: const TextStyle(fontSize: 16.0),
+        titleMedium: const TextStyle(fontSize: 18.0),
         titleSmall: const TextStyle(fontSize: 14.0),
         labelLarge: const TextStyle(fontSize: 14.0),
         labelMedium: const TextStyle(fontSize: 12.0),

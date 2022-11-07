@@ -32,7 +32,7 @@ class _OnBoardingDataState extends State<OnBoardingData> {
                   widget.title,
                   softWrap: true,
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold)
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)
               ),
             ),
           ),

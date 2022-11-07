@@ -14,7 +14,6 @@ class SearchPageController extends GetxController {
   var filteredAssessments = <AssessmentDto>[].obs;
 
   void filter() {
-    print(filtered);
     filteredAssessments(_assessments
         .where((element) =>
             element.title.toLowerCase().contains(filtered.toLowerCase()))
@@ -24,7 +23,6 @@ class SearchPageController extends GetxController {
   void fetchAssessments() async {
     status(Status.LOADING);
     var result = await _fetchAllAssessments.call();
-    print(result.getOrNull());
     if (result.isSuccess) {
       _assessments = result.getOrNull();
       filteredAssessments = RxList.from(_assessments);

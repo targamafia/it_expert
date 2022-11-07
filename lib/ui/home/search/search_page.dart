@@ -23,7 +23,6 @@ class SearchPage extends StatelessWidget {
                 onChanged: (text) {
                   controller.filtered(text);
                   controller.filter();
-                  print(controller.filteredAssessments.value);
                 },
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(),

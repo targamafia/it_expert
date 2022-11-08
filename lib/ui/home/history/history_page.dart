@@ -22,7 +22,7 @@ class HistoryPage extends StatelessWidget {
                             style: Theme.of(context).textTheme.headlineMedium
                           )),
                       ListView(
-                        padding: EdgeInsets.zero,
+                        padding: EdgeInsets.only(top:8.0),
                         shrinkWrap: true,
                         scrollDirection: Axis.vertical,
                         children: [
@@ -88,7 +88,7 @@ class HistoryPage extends StatelessWidget {
                                           SelectionArea(
                                               child: Text(
                                                 '83/100',
-                                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColor.correctGreen),
+                                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColor.successGreen),
                                               )),
                                         ],
                                       ),
@@ -96,6 +96,88 @@ class HistoryPage extends StatelessWidget {
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
                                             Icon(
+                                            Icons.refresh,
+                                            color: Colors.black,
+                                            size: 32,
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Card(
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            color: Color(0xFFF5F5F5),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      8, 8, 8, 8),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          SelectionArea(
+                                              child: Text(
+                                                'Examen',
+                                                style: Theme.of(context).textTheme.bodyLarge,
+                                              )),
+                                        ],
+                                      ),
+                                      Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          SelectionArea(
+                                              child: Text(
+                                                  '7/11/22',
+                                                  style: Theme.of(context).textTheme.labelLarge
+                                              )),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      8, 0, 8, 8),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          SelectionArea(
+                                              child: Text(
+                                                'Calificación: ',
+                                                style: Theme.of(context).textTheme.bodyMedium,
+                                              )),
+                                        ],
+                                      ),
+                                      Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          SelectionArea(
+                                              child: Text(
+                                                '83/100',
+                                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColor.successGreen),
+                                              )),
+                                        ],
+                                      ),
+                                      Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Icon(
                                             Icons.refresh,
                                             color: Colors.black,
                                             size: 32,

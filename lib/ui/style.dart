@@ -86,6 +86,8 @@ class AppColor {
   static const indigoDye = Color(0xFF083D77);
   static const royalBlue = Color(0xff0a2aa6);
   static const correctGreen = Color(0xFF81dc9b);
+  static const successGreen = Color(0xFF378857);
+
 
   static Color randomLabelColor() {
     var list = [lightBlue, indigoDye, royalBlue];

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:it_expert/ui/home/home_controller.dart';
 import 'package:it_expert/ui/home/profile/profile_page.dart';
 import 'package:it_expert/ui/home/search/search_page.dart';
+import 'package:it_expert/ui/home/history/history_page.dart';
 
 import 'main/main_page.dart';
 
@@ -27,7 +28,7 @@ class _HomePage extends State<HomePage> {
             child: [
           const MainPage(),
           const SearchPage(),
-          const Text("4"),
+          const HistoryPage(),
               const ProfilePage(),
         ][currentPageIndex]),
       ),

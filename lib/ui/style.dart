@@ -50,7 +50,7 @@ ThemeData lightTheme() {
         labelLarge: const TextStyle(fontSize: 14.0),
         labelMedium: const TextStyle(fontSize: 12.0),
         labelSmall: const TextStyle(fontSize: 11.0),
-        bodyLarge: const TextStyle(fontSize: 16.0),
+        bodyLarge: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600, color: Colors.black),
         bodyMedium: const TextStyle(
             fontSize: 18.0,
             fontWeight: FontWeight.normal,

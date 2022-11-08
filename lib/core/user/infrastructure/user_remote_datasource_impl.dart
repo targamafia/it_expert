@@ -79,4 +79,5 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSourceInterface {
             errorMessage: json["error"], errorCode: "UNKNOWN"));
     }
   }
+
 }

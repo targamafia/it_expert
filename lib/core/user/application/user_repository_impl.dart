@@ -32,4 +32,10 @@ class UserRepositoryImpl implements UserRepositoryInterface {
       String name, String lastName, String email, String password) {
     return userRemoteDataSource.signUp(name, lastName, email, password);
   }
+
+  @override
+  Future<Result> logout() {
+    return userLocalDataSourceInterface.logout();
+  }
+
 }

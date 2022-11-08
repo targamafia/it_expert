@@ -3,13 +3,14 @@ import 'package:get/get.dart';
 import 'package:it_expert/ui/home/profile/profile_controller.dart';
 import 'package:it_expert/ui/home/profile/user_failed_exams/user_failed_exams_page.dart';
 import 'package:it_expert/ui/home/profile/user_premium_exams/user_premium_exams_page.dart';
+import 'package:it_expert/ui/user/login/login_page.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context)  {
     final ProfilePageController controller = Get.put(ProfilePageController());
     controller.loadProfileData();
     var padding = MediaQuery.of(context).padding;
@@ -29,7 +30,7 @@ class ProfilePage extends StatelessWidget {
                   alignment: AlignmentDirectional(0, 0),
                   child: SelectionArea(
                       child: Text(
-                    controller.name + " " + controller.lastName,
+                    controller.getUserName(),
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.headlineMedium,
                   )),
@@ -268,7 +269,7 @@ class ProfilePage extends StatelessWidget {
                                         5, 0, 0, 0),
                                     child: SelectionArea(
                                         child: Text(
-                                      'Soporte',
+                                      'Contacto',
                                       style: Theme.of(context)
                                           .textTheme
                                           .headlineMedium
@@ -286,41 +287,52 @@ class ProfilePage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Padding(
-                          padding:
-                              EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Icon(
-                                Icons.exit_to_app,
-                                color: Colors.black,
-                                size: 32,
-                              ),
-                              Expanded(
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      5, 0, 0, 0),
-                                  child: SelectionArea(
-                                      child: Text(
-                                    'Cerrar Sesión',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headlineMedium
-                                        ?.copyWith(
-                                            fontWeight: FontWeight.normal),
-                                  )),
+                        GestureDetector(
+                          onTap: ([bool mounted = true]) async {
+                            var response = await controller.logOut();
+                            if (response) {
+                              Get.to(() => LoginPage());
+
+                            } else {
+                                print(response);
+                              };
+                          },
+                          child: Padding(
+                            padding:
+                            EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Icon(
+                                  Icons.exit_to_app,
+                                  color: Colors.black,
+                                  size: 32,
                                 ),
-                              ),
-                              Icon(
-                                Icons.keyboard_arrow_right,
-                                color: Colors.black,
-                                size: 32,
-                              ),
-                            ],
+                                Expanded(
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        5, 0, 0, 0),
+                                    child: SelectionArea(
+                                        child: Text(
+                                          'Cerrar Sesión',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headlineMedium
+                                              ?.copyWith(
+                                              fontWeight: FontWeight.normal),
+                                        )),
+                                  ),
+                                ),
+                                Icon(
+                                  Icons.keyboard_arrow_right,
+                                  color: Colors.black,
+                                  size: 32,
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
+                        )
                       ],
                     ),
                   ),

@@ -9,4 +9,8 @@ class UserLocalDataSourceInterface {
   Future<Result> getUserInfo() async {
     throw UnimplementedError();
   }
+
+  Future<Result> logout() async {
+    throw UnimplementedError();
+  }
 }

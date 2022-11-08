@@ -1,6 +1,7 @@
 import 'package:it_expert/core/user/application/usecase/get_auth_token_local_usecase.dart';
 import 'package:it_expert/core/user/application/usecase/get_profile_data_usecase.dart';
 import 'package:it_expert/core/user/application/usecase/login_usecase.dart';
+import 'package:it_expert/core/user/application/usecase/logout_usecase.dart';
 import 'package:it_expert/core/user/application/usecase/sign_up_usecase.dart';
 import 'package:it_expert/core/user/application/user_repository_impl.dart';
 import 'package:it_expert/core/user/infrastructure/user_local_datasource_impl.dart';
@@ -22,4 +23,10 @@ GetProfileDataUseCase constructProfileDataUseCase() {
 SignUpUseCase constructSignUpUseCase(){
   return SignUpUseCase(UserRepositoryImpl(
       UserRemoteDataSourceImpl(), UserLocalDataSourceImpl()));
+}
+
+LogOutUseCase constructLogOutUseCase(){
+  return LogOutUseCase(UserRepositoryImpl(
+    UserRemoteDataSourceImpl(), UserLocalDataSourceImpl()
+  ));
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:it_expert/ui/home/profile/profile_controller.dart';
+import 'package:it_expert/ui/home/profile/user_failed_exams/user_failed_exams_page.dart';
+import 'package:it_expert/ui/home/profile/user_premium_exams/user_premium_exams_page.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -21,7 +23,7 @@ class ProfilePage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
           Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, newheight/8, 0, 0),
+              padding: EdgeInsetsDirectional.fromSTEB(0, newheight / 8, 0, 0),
               child: SelectionArea(
                 child: Align(
                   alignment: AlignmentDirectional(0, 0),
@@ -34,7 +36,7 @@ class ProfilePage extends StatelessWidget {
                 ),
               )), // User name
           Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, newheight/20, 0, 0),
+              padding: EdgeInsetsDirectional.fromSTEB(0, newheight / 20, 0, 0),
               child: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                 child: Row(
@@ -42,7 +44,8 @@ class ProfilePage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Expanded(
-                      child: Card(
+                        child: GestureDetector(
+                            child: Card(
                         margin: EdgeInsets.symmetric(
                           horizontal: 10,
                         ),
@@ -65,55 +68,62 @@ class ProfilePage extends StatelessWidget {
                                   child: Text(
                                 'Exámenes contestados',
                                 textAlign: TextAlign.center,
-                                style:
-                                    Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.normal),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headlineSmall
+                                    ?.copyWith(fontWeight: FontWeight.normal),
                               )),
                               SelectionArea(
                                   child: Text(
-                                '2',
+                                '5',
                                 style: TextStyle(fontSize: 30),
                               )),
                             ],
                           ),
                         ),
                       ),
-                    ),
+                    )),
                     Expanded(
-                      child: Card(
-                        margin: EdgeInsets.symmetric(
-                          horizontal: 10,
-                        ),
-                        clipBehavior: Clip.antiAliasWithSaveLayer,
-                        elevation: 8,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(21),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Icon(
-                                Icons.star_rate_rounded,
-                                color: Colors.black,
-                                size: 24,
-                              ),
-                              SelectionArea(
-                                  child: Text(
-                                'Exámenes premium',
-                                textAlign: TextAlign.center,
-                                style:
-                                    Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.normal),
-                              )),
-                              SelectionArea(
-                                  child: Text(
-                                '0',
-                                style: TextStyle(fontSize: 30),
-                              )),
-                            ],
+                      child: GestureDetector(
+                        onTap: () {Get.to(() => UserPremiumExams());},
+                        child: Card(
+                          margin: EdgeInsets.symmetric(
+                            horizontal: 10,
+                          ),
+                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                          elevation: 8,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(21),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Icon(
+                                  Icons.star_rate_rounded,
+                                  color: Colors.black,
+                                  size: 24,
+                                ),
+                                SelectionArea(
+                                    child: Text(
+                                      'Exámenes premium',
+                                      textAlign: TextAlign.center,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headlineSmall
+                                          ?.copyWith(fontWeight: FontWeight.normal),
+                                    )),
+                                SelectionArea(
+                                    child: Text(
+                                      '2',
+                                      style: TextStyle(fontSize: 30),
+                                    )),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
+                      )
                     ),
                   ],
                 ),
@@ -127,46 +137,9 @@ class ProfilePage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Expanded(
-                      child: Card(
-                        margin: EdgeInsets.symmetric(
-                          horizontal: 10,
-                        ),
-                        clipBehavior: Clip.antiAliasWithSaveLayer,
-                        elevation: 8,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(21),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Icon(
-                                Icons.edit_note,
-                                color: Colors.black,
-                                size: 24,
-                              ),
-                              SelectionArea(
-                                  child: Text(
-                                    'Exámenes por volver a intentar',
-                                    textAlign: TextAlign.center,
-                                    style:
-                                    Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.normal),
-                                  )),
-                              SelectionArea(
-                                  child: Text(
-                                    '1',
-                                    style: TextStyle(fontSize: 30),
-                                  )),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    Expanded(
                       child: GestureDetector(
-                        onTap: () => launchUrlString('https://mrpcapacitacion.mx/product-category/cursos/'),
-                        child:Card(
+                        onTap: () {Get.to(() => UserFailedExams());},
+                        child:  Card(
                           margin: EdgeInsets.symmetric(
                             horizontal: 10,
                           ),
@@ -177,9 +150,53 @@ class ProfilePage extends StatelessWidget {
                           ),
                           child: Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Icon(
+                                  Icons.edit_note,
+                                  color: Colors.black,
+                                  size: 24,
+                                ),
+                                SelectionArea(
+                                    child: Text(
+                                      'Exámenes por volver a intentar',
+                                      textAlign: TextAlign.center,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headlineSmall
+                                          ?.copyWith(fontWeight: FontWeight.normal),
+                                    )),
+                                SelectionArea(
+                                    child: Text(
+                                      '2',
+                                      style: TextStyle(fontSize: 30),
+                                    )),
+                              ],
+                            ),
+                          ),
+                        ),
+                      )
+                    ),
+                    Expanded(
+                        child: GestureDetector(
+                      onTap: () => launchUrlString(
+                          'https://mrpcapacitacion.mx/product-category/cursos/'),
+                      child: Card(
+                        margin: EdgeInsets.symmetric(
+                          horizontal: 10,
+                        ),
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        elevation: 8,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(21),
+                        ),
+                        child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
                             child: GestureDetector(
-                              onTap: () => launchUrlString('https://mrpcapacitacion.mx/product-category/cursos/'),
-                              child:Column(
+                              onTap: () => launchUrlString(
+                                  'https://mrpcapacitacion.mx/product-category/cursos/'),
+                              child: Column(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Icon(
@@ -189,30 +206,34 @@ class ProfilePage extends StatelessWidget {
                                   ),
                                   SelectionArea(
                                       child: Text(
-                                        'Explorar cursos MRP',
-                                        textAlign: TextAlign.center,
-                                        style:
-                                        Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.normal),
-                                      )),
+                                    'Explorar cursos MRP',
+                                    textAlign: TextAlign.center,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineSmall
+                                        ?.copyWith(
+                                            fontWeight: FontWeight.normal),
+                                  )),
                                   SelectionArea(
                                       child: Text(
-                                        'en la página web',
-                                        textAlign: TextAlign.center,
-                                        style:
-                                        Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.normal),
-                                      )),
+                                    'en la página web',
+                                    textAlign: TextAlign.center,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineSmall
+                                        ?.copyWith(
+                                            fontWeight: FontWeight.normal),
+                                  )),
                                 ],
                               ),
-                            )
-                          ),
-                        ),
-                      )
-                    ),
+                            )),
+                      ),
+                    )),
                   ],
                 ),
               )), // Second stats
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0, newheight/10, 0, 0),
+            padding: EdgeInsetsDirectional.fromSTEB(0, newheight / 10, 0, 0),
             child: Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
               child: Align(
@@ -227,10 +248,11 @@ class ProfilePage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         GestureDetector(
-                          onTap: () => launchUrlString('https://mrpcapacitacion.mx/contact/'),
+                          onTap: () => launchUrlString(
+                              'https://mrpcapacitacion.mx/contact/'),
                           child: Padding(
                             padding:
-                            EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
+                                EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -246,12 +268,13 @@ class ProfilePage extends StatelessWidget {
                                         5, 0, 0, 0),
                                     child: SelectionArea(
                                         child: Text(
-                                          'Soporte',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headlineMedium
-                                              ?.copyWith(fontWeight: FontWeight.normal),
-                                        )),
+                                      'Soporte',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headlineMedium
+                                          ?.copyWith(
+                                              fontWeight: FontWeight.normal),
+                                    )),
                                   ),
                                 ),
                                 Icon(
@@ -285,7 +308,8 @@ class ProfilePage extends StatelessWidget {
                                     style: Theme.of(context)
                                         .textTheme
                                         .headlineMedium
-                                        ?.copyWith(fontWeight: FontWeight.normal),
+                                        ?.copyWith(
+                                            fontWeight: FontWeight.normal),
                                   )),
                                 ),
                               ),
@@ -304,7 +328,6 @@ class ProfilePage extends StatelessWidget {
               ),
             ),
           ), // Support and log out
-
         ],
       ),
     );

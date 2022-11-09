@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:it_expert/ui/assessments/assessment_application/widget/answer_card_widget.dart';
+import 'package:it_expert/ui/home/home_page.dart';
 import 'package:it_expert/ui/style.dart';
 import '../../../core/utils/status.dart';
 import '../assessment_result/assessment_result_page.dart';
@@ -37,14 +38,56 @@ class _AssessmentApplicationPageState extends State<AssessmentApplicationPage> {
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Obx(
-              () => Stack(
+              () => Column(
                 children: [
                   if (controller.status.value == Status.NOT_STARTED)
-                    Text("NotStarted..."),
+                    const Text("NotStarted..."),
                   if (controller.status.value == Status.LOADING)
                     const Center(
                       child: Text("Loading..."),
                     ),
+                  if (controller.status.value == Status.ERROR)
+                    Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const SizedBox(
+                            height: 100,
+                          ),
+                          Center(
+                            child: Image(
+                              image: AssetImage(
+                                  "assets/images/no_content_found.png"),
+                            ),
+                          ),
+                          Text(
+                            "Lo sentimos, este examen todavía no tiene preguntas, intenta con otro.",
+                            style: Theme.of(context).textTheme.titleMedium,
+                            textAlign: TextAlign.center,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 16),
+                            child: Container(
+                              height: 50.0,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(40.0),
+                                  gradient: LinearGradient(colors: [
+                                    Theme.of(context).primaryColor,
+                                    Theme.of(context).primaryColorDark
+                                  ])),
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  Get.offAll(() => const HomePage());
+                                },
+                                style: ElevatedButton.styleFrom(
+                                    primary: Colors.transparent,
+                                    shadowColor: Colors.transparent),
+                                child: const Text('Regresar'),
+                              ),
+                            ),
+                          )
+                        ]),
                   if (controller.status.value == Status.SUCCESS)
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,6 +125,12 @@ class _AssessmentApplicationPageState extends State<AssessmentApplicationPage> {
         child: Obx(
           () => Stack(
             children: [
+              if (controller.status.value == Status.ERROR)
+                Container(
+                  padding:
+                      const EdgeInsets.only(left: 30.0, right: 30.0, top: 20.0),
+                  height: 90.0,
+                ),
               if (controller.status.value == Status.LOADING)
                 Container(
                   padding:

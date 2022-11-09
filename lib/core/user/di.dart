@@ -1,4 +1,5 @@
 import 'package:it_expert/core/user/application/usecase/get_auth_token_local_usecase.dart';
+import 'package:it_expert/core/user/application/usecase/get_user_info_local_usecase.dart';
 import 'package:it_expert/core/user/application/usecase/get_profile_data_usecase.dart';
 import 'package:it_expert/core/user/application/usecase/login_usecase.dart';
 import 'package:it_expert/core/user/application/usecase/logout_usecase.dart';
@@ -16,12 +17,18 @@ GetAuthTokenLocalUseCase constructGetAuthTokenLocalUseCase() {
   return GetAuthTokenLocalUseCase(UserLocalDataSourceImpl());
 }
 
+SignUpUseCase constructSignUpUseCase() {
 GetProfileDataUseCase constructProfileDataUseCase() {
   return GetProfileDataUseCase(UserRepositoryImpl(UserRemoteDataSourceImpl(), UserLocalDataSourceImpl()));
 }
 
 SignUpUseCase constructSignUpUseCase(){
   return SignUpUseCase(UserRepositoryImpl(
+      UserRemoteDataSourceImpl(), UserLocalDataSourceImpl()));
+}
+
+GetUserInfoLocalUseCase constructGetUserInfoLocalUseCase() {
+  return GetUserInfoLocalUseCase(UserRepositoryImpl(
       UserRemoteDataSourceImpl(), UserLocalDataSourceImpl()));
 }
 

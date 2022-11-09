@@ -7,11 +7,16 @@ class UserRepositoryInterface {
     throw UnimplementedError();
   }
 
-  Future<Result> signUp(String name, String lastName, String email, String password) async {
+  Future<Result> signUp(
+      String name, String lastName, String email, String password) async {
     throw UnimplementedError();
   }
 
   Future<Result> saveUserInfoInLocalStorage(UserDto userDto) async {
+    throw UnimplementedError();
+  }
+
+  Future<Result> getUserInfoInLocalStorage() async {
     throw UnimplementedError();
   }
 

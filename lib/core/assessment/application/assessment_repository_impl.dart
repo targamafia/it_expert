@@ -35,4 +35,10 @@ class AssessmentRepositoryImpl implements AssessmentRepositoryInterface {
   Future<Result> getAllAssessments() async {
     return assessmentRemoteDataSourceInterface.fetchAllAssessments();
   }
+
+  @override
+  Future<Result> getAllGradedAssessments(String userId) {
+    return assessmentRemoteDataSourceInterface
+        .fetchAllGradedAssessments(userId);
+  }
 }

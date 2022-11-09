@@ -34,6 +34,11 @@ class UserRepositoryImpl implements UserRepositoryInterface {
   }
 
   @override
+  Future<Result> getUserInfoInLocalStorage() {
+    return userLocalDataSourceInterface.getUserInfo();
+  }
+
+  @override
   Future<Result> logout() {
     return userLocalDataSourceInterface.logout();
   }

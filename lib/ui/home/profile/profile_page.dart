@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:it_expert/ui/home/profile/profile_controller.dart';
-import 'package:it_expert/ui/home/profile/user_failed_exams/user_failed_exams_page.dart';
 import 'package:it_expert/ui/home/profile/user_premium_exams/user_premium_exams_page.dart';
 import 'package:it_expert/ui/user/login/login_page.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:it_expert/ui/style.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context)  {
+  Widget build(BuildContext context) {
     final ProfilePageController controller = Get.put(ProfilePageController());
     controller.loadProfileData();
-    var padding = MediaQuery.of(context).padding;
-    double height = MediaQuery.of(context).size.height;
-    double newheight = height - padding.top - padding.bottom;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Column(
@@ -23,325 +21,169 @@ class ProfilePage extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
-          Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, newheight / 8, 0, 0),
-              child: SelectionArea(
-                child: Align(
-                  alignment: AlignmentDirectional(0, 0),
-                  child: SelectionArea(
-                      child: Text(
-                    controller.getUserName(),
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  )),
-                ),
-              )), // User name
-          Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, newheight / 20, 0, 0),
-              child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Expanded(
-                        child: GestureDetector(
-                            child: Card(
-                        margin: EdgeInsets.symmetric(
-                          horizontal: 10,
-                        ),
-                        clipBehavior: Clip.antiAliasWithSaveLayer,
-                        elevation: 8,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(21),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Icon(
-                                Icons.school_rounded,
-                                color: Colors.black,
-                                size: 24,
-                              ),
-                              SelectionArea(
-                                  child: Text(
-                                'Exámenes contestados',
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headlineSmall
-                                    ?.copyWith(fontWeight: FontWeight.normal),
-                              )),
-                              SelectionArea(
-                                  child: Text(
-                                '5',
-                                style: TextStyle(fontSize: 30),
-                              )),
-                            ],
-                          ),
-                        ),
-                      ),
-                    )),
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () {Get.to(() => UserPremiumExams());},
-                        child: Card(
-                          margin: EdgeInsets.symmetric(
-                            horizontal: 10,
-                          ),
-                          clipBehavior: Clip.antiAliasWithSaveLayer,
-                          elevation: 8,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(21),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Icon(
-                                  Icons.star_rate_rounded,
-                                  color: Colors.black,
-                                  size: 24,
-                                ),
-                                SelectionArea(
-                                    child: Text(
-                                      'Exámenes premium',
-                                      textAlign: TextAlign.center,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineSmall
-                                          ?.copyWith(fontWeight: FontWeight.normal),
-                                    )),
-                                SelectionArea(
-                                    child: Text(
-                                      '2',
-                                      style: TextStyle(fontSize: 30),
-                                    )),
-                              ],
-                            ),
-                          ),
-                        ),
-                      )
-                    ),
-                  ],
-                ),
-              )), // First stats
-          Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-              child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () {Get.to(() => UserFailedExams());},
-                        child:  Card(
-                          margin: EdgeInsets.symmetric(
-                            horizontal: 10,
-                          ),
-                          clipBehavior: Clip.antiAliasWithSaveLayer,
-                          elevation: 8,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(21),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Icon(
-                                  Icons.edit_note,
-                                  color: Colors.black,
-                                  size: 24,
-                                ),
-                                SelectionArea(
-                                    child: Text(
-                                      'Exámenes por volver a intentar',
-                                      textAlign: TextAlign.center,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineSmall
-                                          ?.copyWith(fontWeight: FontWeight.normal),
-                                    )),
-                                SelectionArea(
-                                    child: Text(
-                                      '2',
-                                      style: TextStyle(fontSize: 30),
-                                    )),
-                              ],
-                            ),
-                          ),
-                        ),
-                      )
-                    ),
-                    Expanded(
-                        child: GestureDetector(
+          SizedBox(
+            height: 50,
+          ),
+          Container(
+            width: 180,
+            height: 180,
+            clipBehavior: Clip.antiAlias,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+            ),
+            child: Image.network(
+              'https://cdn-icons-png.flaticon.com/512/3940/3940410.png',
+            ),
+          ),
+          SizedBox(
+            height: 50,
+          ),
+          Text(
+            controller.getUserName(),
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.headlineMedium,
+          ), // User name
+          Container(
+            padding: EdgeInsets.only(top: 50),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                GestureDetector(
+                  child: _createStatsCard(context, "Exámenes realizados", Icons.school_rounded, "5")
+            ),
+                GestureDetector(
+                    onTap: () {
+                      Get.to(() => UserPremiumExams());
+                    },
+                    child: _createStatsCard(context, "Exámenes premium", Icons.star_rate_rounded, "4")),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),// First stats
+          Card(
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            color: Color(0xFFF5F5F5),
+            child: Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  GestureDetector(
                       onTap: () => launchUrlString(
                           'https://mrpcapacitacion.mx/product-category/cursos/'),
-                      child: Card(
-                        margin: EdgeInsets.symmetric(
-                          horizontal: 10,
-                        ),
-                        clipBehavior: Clip.antiAliasWithSaveLayer,
-                        elevation: 8,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(21),
-                        ),
-                        child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
-                            child: GestureDetector(
-                              onTap: () => launchUrlString(
-                                  'https://mrpcapacitacion.mx/product-category/cursos/'),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Icon(
-                                    Icons.travel_explore,
-                                    color: Colors.black,
-                                    size: 24,
-                                  ),
-                                  SelectionArea(
-                                      child: Text(
-                                    'Explorar cursos MRP',
-                                    textAlign: TextAlign.center,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headlineSmall
-                                        ?.copyWith(
-                                            fontWeight: FontWeight.normal),
-                                  )),
-                                  SelectionArea(
-                                      child: Text(
-                                    'en la página web',
-                                    textAlign: TextAlign.center,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headlineSmall
-                                        ?.copyWith(
-                                            fontWeight: FontWeight.normal),
-                                  )),
-                                ],
-                              ),
-                            )),
-                      ),
-                    )),
-                  ],
-                ),
-              )), // Second stats
-          Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0, newheight / 10, 0, 0),
-            child: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Card(
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  color: Color(0xFFF5F5F5),
-                  child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        GestureDetector(
-                          onTap: () => launchUrlString(
-                              'https://mrpcapacitacion.mx/contact/'),
-                          child: Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Icon(
-                                  Icons.contact_support_rounded,
-                                  color: Colors.black,
-                                  size: 32,
-                                ),
-                                Expanded(
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        5, 0, 0, 0),
-                                    child: SelectionArea(
-                                        child: Text(
-                                      'Contacto',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineMedium
-                                          ?.copyWith(
-                                              fontWeight: FontWeight.normal),
-                                    )),
-                                  ),
-                                ),
-                                Icon(
-                                  Icons.keyboard_arrow_right,
-                                  color: Colors.black,
-                                  size: 32,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: ([bool mounted = true]) async {
-                            var response = await controller.logOut();
-                            if (response) {
-                              Get.to(() => LoginPage());
+                      child: _createButtonCard(context, "Explorar cursos MRP", Icons.travel_explore)),
+                  GestureDetector(
+                      onTap: () => launchUrlString(
+                          'https://mrpcapacitacion.mx/contact/'),
+                      child: _createButtonCard(context, "Contacto", Icons.contact_support_rounded)),
+                  GestureDetector(
+                      onTap: ([bool mounted = true]) async {
+                        var response = await controller.logOut();
+                        if (response) {
+                          Get.to(() => LoginPage());
+                        } else {
+                          print(response);
+                        }
+                        ;
+                      },
+                      child: _createButtonCard(context, "Cerrar Sesión", Icons.exit_to_app)),
 
-                            } else {
-                                print(response);
-                              };
-                          },
-                          child: Padding(
-                            padding:
-                            EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Icon(
-                                  Icons.exit_to_app,
-                                  color: Colors.black,
-                                  size: 32,
-                                ),
-                                Expanded(
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        5, 0, 0, 0),
-                                    child: SelectionArea(
-                                        child: Text(
-                                          'Cerrar Sesión',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headlineMedium
-                                              ?.copyWith(
-                                              fontWeight: FontWeight.normal),
-                                        )),
-                                  ),
-                                ),
-                                Icon(
-                                  Icons.keyboard_arrow_right,
-                                  color: Colors.black,
-                                  size: 32,
-                                ),
-                              ],
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
+                ],
               ),
             ),
-          ), // Support and log out
+          )
         ],
       ),
     );
   }
+}
+
+
+Widget _createStatsCard(BuildContext context, String text, IconData icon, String stat){
+  return Card(
+    clipBehavior: Clip.antiAliasWithSaveLayer,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(21),
+    ),
+    child: Container(
+        padding: EdgeInsets.all(10),
+        color: AppColor.aliceBlue,
+        constraints: const BoxConstraints(
+          maxHeight: 150,
+          maxWidth: 180,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Icon(
+              icon,
+              color: Colors.black,
+              size: 24,
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Text(
+              text,
+              style: Theme.of(context)
+                  .textTheme
+                  .headlineSmall
+                  ?.copyWith(fontWeight: FontWeight.normal),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Text(
+              stat,
+              style: Theme.of(context)
+                  .textTheme
+                  .headlineMedium,
+            ),
+          ],
+        )),
+  );
+}
+
+Widget _createButtonCard(BuildContext context, String text, IconData icon){
+  return Card(
+    child:Container(
+        color: AppColor.white,
+        padding: EdgeInsets.all(10),
+        child:Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Icon(
+              icon,
+              color: Colors.black,
+              size: 24,
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Text(
+              text,
+              textAlign: TextAlign.start,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium
+                  ?.copyWith(
+                  fontWeight: FontWeight.normal),
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Icon(
+              Icons.keyboard_arrow_right,
+              color: Colors.black,
+              size: 32,
+            ),
+          ],
+        )
+    )
+  );
 }

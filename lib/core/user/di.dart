@@ -17,7 +17,6 @@ GetAuthTokenLocalUseCase constructGetAuthTokenLocalUseCase() {
   return GetAuthTokenLocalUseCase(UserLocalDataSourceImpl());
 }
 
-SignUpUseCase constructSignUpUseCase() {
 GetProfileDataUseCase constructProfileDataUseCase() {
   return GetProfileDataUseCase(UserRepositoryImpl(UserRemoteDataSourceImpl(), UserLocalDataSourceImpl()));
 }

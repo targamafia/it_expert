@@ -52,7 +52,6 @@ class SearchPage extends StatelessWidget {
                     .map((e) => CategoryCard(
                         category: e.title,
                         onPressed: () {
-                          print("AssessmentId : ${e.id}");
                           Get.to(
                             () => AssessmentDetailPage(
                               assessmentDto: AssessmentDto(

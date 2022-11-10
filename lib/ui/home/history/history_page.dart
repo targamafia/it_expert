@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
+import 'package:it_expert/ui/assessments/widget/assessment_card.dart';
 import 'package:it_expert/ui/home/history/history_controller.dart';
 import 'package:it_expert/ui/style.dart';
 
@@ -21,41 +22,20 @@ class HistoryPage extends StatelessWidget {
           children: [
             if (controller.status.value == Status.SUCCESS)
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     "Historial",
-                    style: Theme.of(context).textTheme.headlineLarge,
+                    textAlign: TextAlign.start,
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
+                  SizedBox(
+                    height: 12,
                   ),
                   Column(
                     children: controller.assessments
                         .map(
-                          (e) => Card(
-                              elevation: 3,
-                              child: Container(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 8),
-                                width: double.infinity,
-                                child: Padding(
-                                  padding: EdgeInsets.all(8),
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Text("Examen"),
-                                          Spacer(),
-                                          Text(asSimpleDateFormat(e.startDate))
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text("Calificación: "),
-                                          Text("${e.grade * 100}")
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              )),
+                          (e) => AssessmentCard(gradedAssessmentDto: e),
                         )
                         .toList(),
                   ),

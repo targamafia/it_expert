@@ -8,4 +8,8 @@ class UserRemoteDataSourceInterface {
   Future<Result> signUp(String name, String lastName, String email, String password) async {
     throw UnimplementedError();
   }
+
+  Future<Result> fetchUserStats(String id) async {
+    throw UnimplementedError();
+  }
 }

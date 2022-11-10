@@ -27,4 +27,8 @@ class UserRepositoryInterface {
   Future<Result> logout() async{
     throw UnimplementedError();
   }
+
+  Future<Result> fetchUserStats(String id) async{
+    throw UnimplementedError();
+  }
 }

@@ -43,4 +43,9 @@ class UserRepositoryImpl implements UserRepositoryInterface {
     return userLocalDataSourceInterface.logout();
   }
 
+  @override
+  Future<Result> fetchUserStats(String id) {
+    return userRemoteDataSource.fetchUserStats(id);
+  }
+
 }

@@ -1,3 +1,4 @@
+import 'package:it_expert/core/user/application/usecase/fetch_user_stats_usecase.dart';
 import 'package:it_expert/core/user/application/usecase/get_auth_token_local_usecase.dart';
 import 'package:it_expert/core/user/application/usecase/get_user_info_local_usecase.dart';
 import 'package:it_expert/core/user/application/usecase/get_profile_data_usecase.dart';
@@ -34,5 +35,11 @@ GetUserInfoLocalUseCase constructGetUserInfoLocalUseCase() {
 LogOutUseCase constructLogOutUseCase(){
   return LogOutUseCase(UserRepositoryImpl(
     UserRemoteDataSourceImpl(), UserLocalDataSourceImpl()
+  ));
+}
+
+FetchUserStatsUsecase constructUserStatsUseCase() {
+  return FetchUserStatsUsecase(UserRepositoryImpl(
+      UserRemoteDataSourceImpl(), UserLocalDataSourceImpl()
   ));
 }

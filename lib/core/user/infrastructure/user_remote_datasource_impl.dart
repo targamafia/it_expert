@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:get/get_connect/http/src/status/http_status.dart';
+import 'package:it_expert/core/user/domain/dto/Exceptions/no_stats_exceptions.dart';
 import 'package:it_expert/core/user/domain/dto/sign_up_failed_dto.dart';
 import 'package:it_expert/core/user/domain/dto/user_dto.dart';
+import 'package:it_expert/core/user/domain/dto/user_stats_dto.dart';
 import 'package:it_expert/core/utils/result.dart';
 
 import 'package:http/http.dart' as http;
@@ -10,6 +12,8 @@ import 'package:http/http.dart' as http;
 import '../../constants.dart';
 import '../application/datasource/user_remote_datasource_interface.dart';
 import '../domain/dto/login_failed_dto.dart';
+import '../../api/api.dart';
+
 
 class UserRemoteDataSourceImpl implements UserRemoteDataSourceInterface {
   @override
@@ -78,6 +82,21 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSourceInterface {
         return Result.failure(SignUpFailedException(
             errorMessage: json["error"], errorCode: "UNKNOWN"));
     }
+  }
+
+  @override
+  Future<Result> fetchUserStats(String id) async {
+    var response = await API.get("/users/092384792847/stats");
+    var json = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+    switch (response.statusCode) {
+      case HttpStatus.ok:
+        var a = json["entity"];
+        return Result.success(UserStatsDto(
+          premiumAssesments: a["premiumAssessments"] ?? 0,
+          takenAssesments: a["takenAssessments"] ?? 0
+        ));
+    }
+    return Result.failure(NoStatsException("Error al obtener las estadísticas de usuario"));
   }
 
 }

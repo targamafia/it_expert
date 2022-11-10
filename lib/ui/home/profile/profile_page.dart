@@ -12,7 +12,7 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ProfilePageController controller = Get.put(ProfilePageController());
-    controller.loadProfileData();
+    controller.fetchUserData();
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -50,13 +50,13 @@ class ProfilePage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 GestureDetector(
-                  child: _createStatsCard(context, "Exámenes realizados", Icons.school_rounded, "5")
+                  child: _createStatsCard(context, "Exámenes realizados", Icons.school_rounded, controller.takenAssessments)
             ),
                 GestureDetector(
                     onTap: () {
                       Get.to(() => UserPremiumExams());
                     },
-                    child: _createStatsCard(context, "Exámenes premium", Icons.star_rate_rounded, "4")),
+                    child: _createStatsCard(context, "Exámenes premium", Icons.star_rate_rounded, controller.premiumAssessments)),
               ],
             ),
           ),

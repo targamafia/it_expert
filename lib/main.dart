@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:it_expert/ui/onboarding/onboarding_page.dart';
 import 'package:it_expert/ui/user/login/login_page.dart';
 import 'package:it_expert/ui/style.dart';
 
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Flutter Demo',
       theme: lightTheme(),
-      home: const LoginPage(),
+      home: OnBoardingPage(),
     );
   }
 }

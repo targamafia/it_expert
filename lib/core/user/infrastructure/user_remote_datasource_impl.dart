@@ -92,8 +92,8 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSourceInterface {
       case HttpStatus.ok:
         var a = json["entity"];
         return Result.success(UserStatsDto(
-          premiumAssesments: a["premiumAssessments"] ?? 0,
-          takenAssesments: a["takenAssessments"] ?? 0
+          premiumAssessments: a["premiumAssessments"] ?? 0,
+          takenAssessments: a["takenAssessments"] ?? 0
         ));
     }
     return Result.failure(NoStatsException("Error al obtener las estadísticas de usuario"));

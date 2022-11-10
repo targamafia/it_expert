@@ -7,12 +7,7 @@ class LogOutUseCase {
 
   LogOutUseCase(this.logOutRepository);
 
-  Future<Result> call() async {
-    var result = await logOutRepository.logout();
-
-    if (result.isSuccess) {
-      await logOutRepository.logout();
-    }
-    return result;
+  Future<Result> call()  {
+    return logOutRepository.logout();
   }
 }

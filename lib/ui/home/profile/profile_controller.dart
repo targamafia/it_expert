@@ -10,10 +10,10 @@ class ProfilePageController extends GetxController {
   FetchUserStatsUsecase userStatsUsecase = constructUserStatsUseCase();
   GetUserInfoLocalUseCase userInfoLocalUseCase = constructGetUserInfoLocalUseCase();
 
-  String name = "";
-  String lastName = "";
-  String takenAssessments = "";
-  String premiumAssessments = "";
+  RxString name = "".obs;
+  RxString lastName = "".obs;
+  RxInt takenAssessments = 0.obs;
+  RxInt premiumAssessments = 0.obs;
   var errorMessage = "".obs;
 
   fetchUserData() async {
@@ -21,27 +21,25 @@ class ProfilePageController extends GetxController {
     var id = "";
     if (resultInfo.isSuccess){
       var data = resultInfo.getOrNull();
-      name = data.firstName;
-      lastName = data.lastName;
+      name(data.firstName);
+      lastName(data.lastName);
       id = data.userId;
     } else {
       var error = resultInfo.exceptionOrNull() as Exception;
-      return error.toString();
+      errorMessage(error.toString());
     }
 
     var resultStats = await userStatsUsecase.call(id);
     if (resultStats.isSuccess){
-      takenAssessments = resultStats.getOrNull().takenAssessments.toString();
-      premiumAssessments = resultStats.getOrNull().premiumAssessments.toString();
+      var stats = resultStats.getOrNull();
+      takenAssessments.value = stats.takenAssessments;
+      premiumAssessments.value = stats.premiumAssessments;
     } else{
       var error = resultStats.exceptionOrNull() as Exception;
-      return error.toString();
+     errorMessage(error.toString());
     }
   }
 
-  getUserName() {
-    return name + " " + lastName;
-  }
 
   logOut() async {
     var result = await logOutUseCase.call();

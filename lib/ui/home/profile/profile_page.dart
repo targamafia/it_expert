@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:it_expert/ui/home/profile/profile_controller.dart';
@@ -38,11 +39,13 @@ class ProfilePage extends StatelessWidget {
           SizedBox(
             height: 50,
           ),
-          Text(
-            controller.getUserName(),
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headlineMedium,
-          ), // User name
+          Obx(() {
+            return Text(
+              controller.name.value + " " + controller.lastName.value,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.headlineMedium,
+            );
+          }), // User name
           Container(
             padding: EdgeInsets.only(top: 50),
             child: Row(
@@ -50,13 +53,106 @@ class ProfilePage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 GestureDetector(
-                  child: _createStatsCard(context, "Exámenes realizados", Icons.school_rounded, controller.takenAssessments)
-            ),
+                    child: Card(
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(21),
+                      ),
+                      child: Container(
+                        padding: EdgeInsets.all(10),
+                        color: AppColor.aliceBlue,
+                        constraints: const BoxConstraints(
+                          maxHeight: 150,
+                          maxWidth: 180,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Icon(
+                              Icons.school_rounded,
+                              color: Colors.black,
+                              size: 24,
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              "Exámenes contestados",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall
+                                  ?.copyWith(fontWeight: FontWeight.normal),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Obx( () {
+                              return Text(
+                                controller.takenAssessments.value.toString(),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headlineMedium,
+                              );
+                            }
+                            )
+                          ],
+                        ),
+                      ),
+                    )
+                ),
                 GestureDetector(
                     onTap: () {
                       Get.to(() => UserPremiumExams());
                     },
-                    child: _createStatsCard(context, "Exámenes premium", Icons.star_rate_rounded, controller.premiumAssessments)),
+                    child: Card(
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(21),
+                      ),
+                      child: Container(
+                        padding: EdgeInsets.all(10),
+                        color: AppColor.aliceBlue,
+                        constraints: const BoxConstraints(
+                          maxHeight: 150,
+                          maxWidth: 180,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Icon(
+                              Icons.star_rate_rounded,
+                              color: Colors.black,
+                              size: 24,
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              "Exámenes Premium",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall
+                                  ?.copyWith(fontWeight: FontWeight.normal),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Obx( () {
+                              return Text(
+                                controller.premiumAssessments.value.toString(),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headlineMedium,
+                              );
+                            }
+                            )
+                          ],
+                        ),
+                      ),
+                    )
+                ),
               ],
             ),
           ),
@@ -100,53 +196,6 @@ class ProfilePage extends StatelessWidget {
       ),
     );
   }
-}
-
-
-Widget _createStatsCard(BuildContext context, String text, IconData icon, String stat){
-  return Card(
-    clipBehavior: Clip.antiAliasWithSaveLayer,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(21),
-    ),
-    child: Container(
-        padding: EdgeInsets.all(10),
-        color: AppColor.aliceBlue,
-        constraints: const BoxConstraints(
-          maxHeight: 150,
-          maxWidth: 180,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Icon(
-              icon,
-              color: Colors.black,
-              size: 24,
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Text(
-              text,
-              style: Theme.of(context)
-                  .textTheme
-                  .headlineSmall
-                  ?.copyWith(fontWeight: FontWeight.normal),
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Text(
-              stat,
-              style: Theme.of(context)
-                  .textTheme
-                  .headlineMedium,
-            ),
-          ],
-        )),
-  );
 }
 
 Widget _createButtonCard(BuildContext context, String text, IconData icon){

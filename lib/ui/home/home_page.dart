@@ -29,7 +29,7 @@ class _HomePage extends State<HomePage> {
           const MainPage(),
           const SearchPage(),
           const HistoryPage(),
-              const ProfilePage(),
+          const ProfilePage(),
         ][currentPageIndex]),
       ),
       bottomNavigationBar: BottomNavigationBar(

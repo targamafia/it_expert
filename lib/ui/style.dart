@@ -88,7 +88,8 @@ class AppColor {
   static const correctGreen = Color(0xFF81dc9b);
 
   static Color randomLabelColor() {
-    var list = [pink1, indigoDye, lightSalmon];
+    var list = [pink1, indigoDye, lightSalmon, correctGreen];
+
 // generates a new Random object
     final random = Random();
 

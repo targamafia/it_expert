@@ -10,10 +10,6 @@ import 'application/usecase/get_assessment_grade_usecase.dart';
 import 'application/usecase/get_featured_assessment_usecase.dart';
 import 'application/usecase/grade_assessment_usecase.dart';
 
-GetBestAssessmentsUseCase constructGetBestAssessmentsUseCase() {
-  return GetBestAssessmentsUseCase();
-}
-
 GetFeaturedAssessmentsUseCase constructGetFeaturedAssessmentsUseCase() {
   return GetFeaturedAssessmentsUseCase(
       AssessmentRepositoryImpl(AssessmentRemoteDataSourceImpl()));
@@ -43,4 +39,9 @@ GetAllGradedAssessmentsUseCase constructGetAllGradedAssessmentsUseCase() {
   return GetAllGradedAssessmentsUseCase(
       AssessmentRepositoryImpl(AssessmentRemoteDataSourceImpl()),
       constructGetUserInfoLocalUseCase());
+}
+
+GetBestAssessmentsUseCase constructGetBestAssessmentsUseCase() {
+  return GetBestAssessmentsUseCase(
+      AssessmentRepositoryImpl(AssessmentRemoteDataSourceImpl()));
 }

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
 
 import '../../../core/assessment/application/usecase/get_best_assessments_usecase.dart';
@@ -16,6 +18,7 @@ class MainController extends GetxController {
 
   loadBestAssessments() async {
     var result = await getBestAssessmentsUseCase.call();
+
     if (result.isSuccess) {
       bestAssessments(result.getOrNull());
     } else {

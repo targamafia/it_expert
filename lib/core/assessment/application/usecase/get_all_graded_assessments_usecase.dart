@@ -9,7 +9,6 @@ class GetAllGradedAssessmentsUseCase {
   GetAllGradedAssessmentsUseCase(
       this.assessmentRepositoryInterface, this.getUserInfoLocalUseCase);
   Future<Result> call() async {
-    print("Get all graded assessments usecase");
     var userInfoResult = await getUserInfoLocalUseCase.call();
 
     if (userInfoResult.isFailure) {

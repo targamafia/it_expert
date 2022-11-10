@@ -57,7 +57,6 @@ class AssessmentRemoteDataSourceImpl
                 "El examen seleccionado no tiene preguntas!, intenta con otro"),
           );
         }
-        print(a["_id"]);
         AssessmentDto assessmentDto = AssessmentDto(
             id: a["_id"],
             title: a["title"],
@@ -153,7 +152,6 @@ class AssessmentRemoteDataSourceImpl
 
   @override
   Future<Result> fetchAllGradedAssessments(String userId) async {
-    print("Fetching graded assessments");
     var response = await API.get("/grade/user/$userId");
     var json = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
 
@@ -164,6 +162,34 @@ class AssessmentRemoteDataSourceImpl
     }
     return Result.failure(
         HttpException("Exception while fetching all graded assessmetns"));
+  }
+
+  @override
+  Future<Result> fetchBestAssessments() async {
+    var response = await API.get("/assessments/featured");
+    var json = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+    switch (response.statusCode) {
+      case HttpStatus.ok:
+        var featuredAssessments =
+            json['entity']['list'].map<AssessmentDto>((it) {
+          return AssessmentDto(
+              id: it['id'],
+              title: it['title'],
+              categories: asListOfStrings(it['categories']),
+              thumbnailUrl:
+                  it['thumbnailUrl'] ?? 'http://placeimg.com/640/480/arch',
+              isPremium: it['isPremium'],
+              description: it['description'] ?? '',
+              rating: (it['rating'] as int) * 1.0,
+              isPrivate: it['isPrivate'],
+              questions: []);
+        }).toList();
+        return Result.success(featuredAssessments);
+    }
+    return Result.failure(
+      const HttpException(
+          "Cannot Perform operation (fetchFeaturedAssessments)"),
+    );
   }
 }
 

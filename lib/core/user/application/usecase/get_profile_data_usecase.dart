@@ -8,8 +8,9 @@ class GetProfileDataUseCase {
 
   GetProfileDataUseCase(this.profileRepository);
 
-  Future<Result> call(){
-    return profileRepository.getUserInfo();
+  Future<Result> call() async{
+    var result =  await profileRepository.getUserInfo();
+    return result;
   }
 
 }

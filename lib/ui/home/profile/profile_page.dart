@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:it_expert/ui/home/profile/profile_controller.dart';
 import 'package:it_expert/ui/home/profile/user_premium_exams/user_premium_exams_page.dart';
+import 'package:it_expert/ui/home/profile/user_taken_assessments/user_taken_assessments_page.dart';
 import 'package:it_expert/ui/user/login/login_page.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:it_expert/ui/style.dart';
@@ -53,6 +54,9 @@ class ProfilePage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 GestureDetector(
+                    onTap: () {
+                      Get.to(() => TakenAssessments());
+                    },
                     child: Card(
                       clipBehavior: Clip.antiAliasWithSaveLayer,
                       shape: RoundedRectangleBorder(

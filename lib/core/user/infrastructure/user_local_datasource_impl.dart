@@ -31,4 +31,15 @@ class UserLocalDataSourceImpl implements UserLocalDataSourceInterface {
     await prefs.setString('userInfo.token', userDto.token ?? "");
     return Result.success(true);
   }
+
+  Future<Result> logout() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('userInfo.userId', "");
+    await prefs.setString('userInfo.firstName', "");
+    await prefs.setString('userInfo.lastName', "");
+    await prefs.setString('userInfo.email', "");
+    await prefs.setString('userInfo.companyCode', "");
+    await prefs.setString('userInfo.token', "");
+    return Result.success(true);
+  }
 }

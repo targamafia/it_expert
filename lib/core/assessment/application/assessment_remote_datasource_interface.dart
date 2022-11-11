@@ -25,4 +25,8 @@ class AssessmentRemoteDataSourceInterface {
   Future<Result> fetchAllAssessments() async {
     throw UnimplementedError();
   }
+
+  Future<Result> fetchUserPremiumAssessments(String userId) {
+    throw UnimplementedError();
+  }
 }

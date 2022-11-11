@@ -107,7 +107,7 @@ class ProfilePage extends StatelessWidget {
                 ),
                 GestureDetector(
                     onTap: () {
-                      Get.to(() => UserPremiumAssessments());
+                      Get.to(() => PremiumAssessmentsPage());
                     },
                     child: Card(
                       clipBehavior: Clip.antiAliasWithSaveLayer,

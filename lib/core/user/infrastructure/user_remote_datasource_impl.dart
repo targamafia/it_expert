@@ -86,7 +86,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSourceInterface {
 
   @override
   Future<Result> fetchUserStats(String id) async {
-    var response = await API.get("/users/092384792847/stats");
+    var response = await API.get("/users/$id/stats");
     var json = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
     switch (response.statusCode) {
       case HttpStatus.ok:

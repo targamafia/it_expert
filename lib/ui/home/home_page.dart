@@ -28,7 +28,6 @@ class _HomePage extends State<HomePage> {
             child: [
           const MainPage(),
           const SearchPage(),
-          const HistoryPage(),
           const ProfilePage(),
         ][currentPageIndex]),
       ),
@@ -50,11 +49,10 @@ class _HomePage extends State<HomePage> {
             label: 'Buscar',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.history_sharp),
-            label: 'Historial',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person, color: Colors.black,),
+            icon: Icon(
+              Icons.person,
+              color: Colors.black,
+            ),
             label: 'Perfil',
           )
         ],

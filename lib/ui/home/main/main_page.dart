@@ -22,12 +22,13 @@ class MainPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(padding: EdgeInsets.all(8.0),
-          child: Text(
-            "Lo mejor",
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headlineMedium,
-          )),
+          Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                "Lo mejor",
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.headlineMedium,
+              )),
           Center(
             child: CarouselSlider.builder(
               itemCount: 3,
@@ -64,7 +65,7 @@ class MainPage extends StatelessWidget {
                       ),
                     );
                   },
-                  backgroundColor: AppColor.lightBlue,
+                  backgroundColor: AppColor.aliceBlue,
                 );
               },
               options: CarouselOptions(
@@ -75,11 +76,12 @@ class MainPage extends StatelessWidget {
               ),
             ),
           ),
-          Padding(padding: EdgeInsets.all(8.0),
-          child: Text(
-            "Exámenes Populares",
-            style: Theme.of(context).textTheme.headlineMedium,
-          )),
+          Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                "Exámenes Populares",
+                style: Theme.of(context).textTheme.headlineMedium,
+              )),
           Obx(() {
             if (controller.featuredAssessments.isNotEmpty) {
               return CarouselSlider.builder(

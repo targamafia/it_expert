@@ -14,58 +14,65 @@ class HistoryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     HistoryController controller = Get.put(HistoryController());
     controller.fetchHistory();
-    return Padding(
-      padding: EdgeInsets.all(16),
-      child: Obx(
-        () => Stack(
-          children: [
-            if (controller.status.value == Status.SUCCESS)
-              Column(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Historial"),
+        elevation: 0,
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(16),
+            child: Obx(
+              () => Stack(
                 children: [
-                  Text(
-                    "Historial",
-                    style: Theme.of(context).textTheme.headlineLarge,
-                  ),
-                  Column(
-                    children: controller.assessments
-                        .map(
-                          (e) => Card(
-                              elevation: 3,
-                              child: Container(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 8),
-                                width: double.infinity,
-                                child: Padding(
-                                  padding: EdgeInsets.all(8),
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Text("Examen"),
-                                          Spacer(),
-                                          Text(asSimpleDateFormat(e.startDate))
-                                        ],
+                  if (controller.status.value == Status.SUCCESS)
+                    Column(
+                      children: [
+                        Column(
+                          children: controller.assessments
+                              .map(
+                                (e) => Card(
+                                    elevation: 3,
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 8),
+                                      width: double.infinity,
+                                      child: Padding(
+                                        padding: EdgeInsets.all(8),
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Text("Examen"),
+                                                Spacer(),
+                                                Text(asSimpleDateFormat(
+                                                    e.startDate))
+                                              ],
+                                            ),
+                                            Row(
+                                              children: [
+                                                Text("Calificación: "),
+                                                Text("${e.grade * 100}")
+                                              ],
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                      Row(
-                                        children: [
-                                          Text("Calificación: "),
-                                          Text("${e.grade * 100}")
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              )),
-                        )
-                        .toList(),
-                  ),
+                                    )),
+                              )
+                              .toList(),
+                        ),
+                      ],
+                    ),
+                  if (controller.status.value == Status.LOADING)
+                    const Center(
+                      child: Text("Loading..."),
+                    ),
                 ],
               ),
-            if (controller.status.value == Status.LOADING)
-              const Center(
-                child: Text("Loading..."),
-              ),
-          ],
+            ),
+          ),
         ),
       ),
     );

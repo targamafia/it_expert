@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:it_expert/core/assessment/domain/dto/graded_assessment_dto.dart';
 import 'package:it_expert/core/assessment/domain/dto/post_grade_assessment_dto.dart';
+import 'package:it_expert/core/assessment/domain/dto/premium_assessment_dto.dart';
 
 import 'package:it_expert/core/utils/result.dart';
 
@@ -165,6 +167,21 @@ class AssessmentRemoteDataSourceImpl
     return Result.failure(
         HttpException("Exception while fetching all graded assessmetns"));
   }
+
+  @override
+  Future<Result> fetchUserPremiumAssessments(String userId) async{
+    print("Fetching premium assessments");
+    var response = await API.get("/assessments/$userId/premium-accessible");
+    var json = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+
+    switch (response.statusCode) {
+      case HttpStatus.ok:
+        return Result.success(
+            asListOfPremiumAssessmentDto(json["entity"]["list"]));
+    }
+    return Result.failure(
+        HttpException("Exception while fetching all user's premium assessmetns"));
+  }
 }
 
 List<String> asListOfStrings(List<dynamic> list) {
@@ -194,6 +211,18 @@ List<GradedAssessmentDto> asListOfGradedAssessmentDto(List<dynamic> list) {
       grade: entity["grade"] * 1.0,
       correctAnswers: entity["correctAnswers"],
       wrongAnswers: entity["wrongAnswers"],
+    ));
+  }
+  return assessments;
+}
+
+List<PremiumAssessmentDto> asListOfPremiumAssessmentDto(List<dynamic> list) {
+  List<PremiumAssessmentDto> assessments = [];
+  for (var entity in list) {
+    assessments.add(PremiumAssessmentDto(
+      id: entity["id"],
+      title: entity["title"],
+      attempts: entity["attempts"]
     ));
   }
   return assessments;

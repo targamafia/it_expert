@@ -6,6 +6,7 @@ import 'package:it_expert/ui/home/home_page.dart';
 import 'package:it_expert/ui/style.dart';
 import 'package:it_expert/ui/user/login/login_controller.dart';
 import 'package:it_expert/ui/user/sign_up/sign_up_page.dart';
+import 'package:it_expert/ui/user/password_reset/reset_instructions/instructions_page.dart';
 
 import 'dart:io' show Platform;
 
@@ -108,7 +109,9 @@ class _LoginPage extends State<LoginPage> {
                           Container(
                             alignment: Alignment.centerRight,
                             child: TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Get.to(() => InstructionsPage());
+                              },
                               child: Text(
                                 "¿Olvidaste tu contraseña?",
                                 textAlign: TextAlign.end,

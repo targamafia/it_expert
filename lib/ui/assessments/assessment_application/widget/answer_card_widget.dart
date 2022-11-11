@@ -62,7 +62,9 @@ class _AnswerCardWidgetState extends State<AnswerCardWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text("${widget.letter})"),
-                  Text(" ${widget.answer}")
+                  Flexible(
+                    child: Text(" ${widget.answer}"),
+                  ),
                 ],
               ),
             )

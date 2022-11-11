@@ -20,8 +20,12 @@ class HistoryController extends GetxController {
     var result = await _getAllGradedAssessmentsUseCase.call();
     if (result.isSuccess) {
       assessments = result.getOrNull() as List<GradedAssessmentDto>;
-      print(assessments);
       status(Status.SUCCESS);
+    }
+    if (assessments.isNotEmpty){
+      status(Status.SUCCESS);
+    } else {
+      status(Status.NOT_AVAILABLE);
     }
   }
 }

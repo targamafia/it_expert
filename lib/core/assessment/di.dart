@@ -6,6 +6,7 @@ import 'package:it_expert/core/assessment/infraestructure/assessment_remote_data
 import 'package:it_expert/core/user/di.dart';
 
 import 'application/usecase/get_all_graded_assessments_usecase.dart';
+import 'application/usecase/get_assessment_attempts_usecase.dart';
 import 'application/usecase/get_assessment_grade_usecase.dart';
 import 'application/usecase/get_featured_assessment_usecase.dart';
 import 'application/usecase/grade_assessment_usecase.dart';
@@ -43,5 +44,10 @@ GetAllGradedAssessmentsUseCase constructGetAllGradedAssessmentsUseCase() {
 
 GetBestAssessmentsUseCase constructGetBestAssessmentsUseCase() {
   return GetBestAssessmentsUseCase(
+      AssessmentRepositoryImpl(AssessmentRemoteDataSourceImpl()));
+}
+
+GetAssessmentAttemptsUsecase constructGetAssessmentAttemptsUsecase() {
+  return GetAssessmentAttemptsUsecase(
       AssessmentRepositoryImpl(AssessmentRemoteDataSourceImpl()));
 }

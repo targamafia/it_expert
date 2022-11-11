@@ -46,4 +46,10 @@ class AssessmentRepositoryImpl implements AssessmentRepositoryInterface {
   Future<Result> getBestAssessments() {
     return assessmentRemoteDataSourceInterface.fetchBestAssessments();
   }
+
+  @override
+  Future<Result> getAssessmentAttempts(String assessmentId) {
+    return assessmentRemoteDataSourceInterface
+        .fetchAssessmentAttemps(assessmentId);
+  }
 }

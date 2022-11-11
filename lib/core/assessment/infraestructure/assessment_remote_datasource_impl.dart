@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:http/http.dart' as http;
+import 'package:it_expert/core/assessment/domain/dto/grade_report_dto.dart';
 import 'package:it_expert/core/assessment/domain/dto/graded_assessment_dto.dart';
 import 'package:it_expert/core/assessment/domain/dto/post_grade_assessment_dto.dart';
 
@@ -191,6 +192,24 @@ class AssessmentRemoteDataSourceImpl
       const HttpException(
           "Cannot Perform operation (fetchFeaturedAssessments)"),
     );
+  }
+
+  @override
+  Future<Result> fetchAssessmentAttemps(String assessmentId) async {
+    var response =
+        await API.get("/grade/report/user/me/assessment/$assessmentId");
+    var json = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+    switch (response.statusCode) {
+      case HttpStatus.ok:
+        var entitiy = json["entity"];
+        return Result.success(GradeReportDto(
+            assessmentId: entitiy["assessmentId"],
+            remainingAttemps: entitiy["attempts"],
+            bestGrade: entitiy["bestGrade"] * 1.0,
+            isAvailable: entitiy["isAvailable"] ?? false));
+    }
+    return Result.failure(
+        HttpException("Error while performing fetchAssessmentAttemps"));
   }
 }
 

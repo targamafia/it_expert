@@ -88,6 +88,7 @@ class AssessmentRemoteDataSourceImpl
 
     var jsonBody = jsonEncode(
       <String, dynamic>{
+        "startDate": DateTime.now().toIso8601String(),
         "assessmentId": assessmentId,
         "givenAnswers": listQuestionAnswers
       },
@@ -166,7 +167,7 @@ class AssessmentRemoteDataSourceImpl
 
   @override
   Future<Result> fetchBestAssessments() async {
-    var response = await API.get("/assessments/featured");
+    var response = await API.get("/assessments/top-rated");
     var json = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
     switch (response.statusCode) {
       case HttpStatus.ok:

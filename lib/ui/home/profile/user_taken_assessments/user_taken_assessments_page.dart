@@ -16,6 +16,13 @@ class TakenAssessments extends StatelessWidget {
     HistoryController controller = Get.put(HistoryController());
     controller.fetchHistory();
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        iconTheme: Theme.of(context)
+            .iconTheme
+            .copyWith(color: Theme.of(context).primaryColor),
+        backgroundColor: Theme.of(context).canvasColor,
+      ),
         resizeToAvoidBottomInset: false,
         body: SafeArea(
         child: SingleChildScrollView(

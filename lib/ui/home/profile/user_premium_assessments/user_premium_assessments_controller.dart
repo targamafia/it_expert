@@ -3,7 +3,7 @@ import 'package:it_expert/core/user/application/usecase/get_profile_data_usecase
 import 'package:it_expert/core/user/di.dart';
 
 
-class UserPremiumExamsController extends GetxController {
+class UserPremiumAssessmentsController extends GetxController {
   GetProfileDataUseCase getProfileDataUseCase = constructProfileDataUseCase();
 
   String name = "";

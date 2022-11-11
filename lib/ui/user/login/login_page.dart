@@ -81,7 +81,7 @@ class _LoginPage extends State<LoginPage> {
                             autocorrect: false,
                             decoration: const InputDecoration(
                               border: OutlineInputBorder(),
-                              labelText: 'email',
+                              labelText: 'Email',
                               prefixIcon: Icon(Icons.mail),
                             ),
                           ),
@@ -102,7 +102,7 @@ class _LoginPage extends State<LoginPage> {
                             obscureText: true,
                             decoration: const InputDecoration(
                               border: OutlineInputBorder(),
-                              labelText: 'Password',
+                              labelText: 'Contraseña',
                               prefixIcon: Icon(Icons.lock),
                             ),
                           ),

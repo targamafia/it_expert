@@ -18,7 +18,7 @@ class MainPage extends StatelessWidget {
     MainController controller = Get.put(MainController());
     controller.loadFeaturedAssessments();
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

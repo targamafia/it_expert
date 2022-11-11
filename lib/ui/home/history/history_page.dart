@@ -26,12 +26,16 @@ class HistoryPage extends StatelessWidget {
                     "Historial",
                     style: Theme.of(context).textTheme.headlineLarge,
                   ),
+                  SizedBox(
+                    height: 20,
+                  ),
                   Column(
                     children: controller.assessments
                         .map(
                           (e) => Card(
                               elevation: 3,
                               child: Container(
+                                color: AppColor.aliceBlue,
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 8),
                                 width: double.infinity,
@@ -63,7 +67,11 @@ class HistoryPage extends StatelessWidget {
               ),
             if (controller.status.value == Status.LOADING)
               const Center(
-                child: Text("Loading..."),
+                child: Text("Cargando..."),
+              ),
+            if (controller.status.value == Status.NOT_AVAILABLE)
+              const Center(
+                child: Text("Lo sentimos, no tienes exámenes premium disponibles."),
               ),
           ],
         ),

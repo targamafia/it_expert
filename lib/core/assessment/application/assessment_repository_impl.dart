@@ -41,4 +41,9 @@ class AssessmentRepositoryImpl implements AssessmentRepositoryInterface {
     return assessmentRemoteDataSourceInterface
         .fetchAllGradedAssessments(userId);
   }
+
+  @override
+  Future<Result> getUserPremiumAssessments(String userId) {
+    return assessmentRemoteDataSourceInterface.fetchUserPremiumAssessments(userId);
+  }
 }

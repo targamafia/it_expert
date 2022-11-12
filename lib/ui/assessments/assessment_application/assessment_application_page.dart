@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -33,12 +35,19 @@ class _AssessmentApplicationPageState extends State<AssessmentApplicationPage> {
     return Obx(
       () => Scaffold(
         appBar: AppBar(
-          title: Text(
-            "Examen CISCO II",
-            style: Theme.of(context)
-                .textTheme
-                .bodyMedium
-                ?.copyWith(color: Theme.of(context).primaryColor),
+          title: Obx(
+            () => Stack(
+              children: [
+                if (controller.status.value == Status.SUCCESS)
+                  Text(
+                    controller.assessmentDto.title,
+                    style: Theme.of(context)
+                        .textTheme
+                        .labelSmall
+                        ?.copyWith(color: Theme.of(context).primaryColor),
+                  )
+              ],
+            ),
           ),
           elevation: 1,
           backgroundColor: Colors.white,
@@ -102,7 +111,7 @@ class _AssessmentApplicationPageState extends State<AssessmentApplicationPage> {
                                     ])),
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    Get.offAll(() => const HomePage());
+                                    Navigator.of(context).pop();
                                   },
                                   style: ElevatedButton.styleFrom(
                                       primary: Colors.transparent,
@@ -279,7 +288,10 @@ class _AssessmentApplicationPageState extends State<AssessmentApplicationPage> {
                       "No se guardará tu avance y tendrás que comenzar de nuevo"),
                   actions: <Widget>[
                     TextButton(
-                      onPressed: () => Get.offAll(const HomePage()),
+                      onPressed: () {
+                        Get.back(); // Close Popup
+                        Get.back(); // Return to previous screen
+                      },
                       child: Text(
                         'Salir',
                         style: Theme.of(context)

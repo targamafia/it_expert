@@ -25,37 +25,49 @@ class _AssessmentCardState extends State<AssessmentCard> {
       elevation: 1,
       child: Container(
         height: 85,
+        constraints: BoxConstraints(
+          maxWidth: MediaQuery.of(context).size.width * .9,
+          maxHeight: 85,
+        ),
         padding: EdgeInsets.all(6),
         child: Row(
+          mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(4.0),
               child: Image.network(
-                "https://images.unsplash.com/photo-1667935764607-73fca1a86555?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=988&q=80",
+                widget.gradedAssessmentDto.thumbnailUrl,
+                width: 70,
               ),
             ),
             SizedBox(
               width: 12,
             ),
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 6),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Text("Certificación Cisco 20"),
-                  Text(
-                    "17 Preguntas",
-                    style: labelTextStyle,
-                  ),
-                  Spacer(),
-                  Text("100/100", style: labelTextStyle),
-                ],
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 6),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Text(
+                      widget.gradedAssessmentDto.startDate.asSimpleDateFormat(),
+                      style: labelTextStyle,
+                    ),
+                    Text(
+                      widget.gradedAssessmentDto.title,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    Spacer(),
+                    Text("${(widget.gradedAssessmentDto.grade * 100).round()}%",
+                        style: labelTextStyle?.copyWith(
+                            color: Theme.of(context).primaryColor)),
+                  ],
+                ),
               ),
             ),
-            Spacer(),
             Center(
               child: IconButton(
                   onPressed: () {

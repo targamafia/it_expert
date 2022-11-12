@@ -16,10 +16,6 @@ class HistoryPage extends StatelessWidget {
     HistoryController controller = Get.put(HistoryController());
     controller.fetchHistory();
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Historial"),
-        elevation: 0,
-      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -35,10 +31,19 @@ class HistoryPage extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "Historial",
-                          textAlign: TextAlign.start,
-                          style: Theme.of(context).textTheme.headlineMedium,
+                        Row(
+                          children: [
+                            IconButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                icon: Icon(Icons.arrow_back_ios_sharp)),
+                            Text(
+                              "Historial",
+                              textAlign: TextAlign.start,
+                              style: Theme.of(context).textTheme.headlineMedium,
+                            ),
+                          ],
                         ),
                         SizedBox(
                           height: 12,

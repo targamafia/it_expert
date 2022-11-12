@@ -19,12 +19,15 @@ class AssessmentApplicationController extends GetxController {
   var selectedAnswerId = "".obs;
   Map<String, String> questionsAnswer = {};
   var assessmentId = "";
+  late AssessmentDto assessmentDto;
 
   void fetchQuestions(String assessmentId) async {
     this.assessmentId = assessmentId;
+    print(this.assessmentId);
     status(Status.LOADING);
     var result = await _getAssessmentUseCase.call(assessmentId);
     if (result.isSuccess) {
+      assessmentDto = result.getOrNull() as AssessmentDto;
       questions = (result.getOrNull() as AssessmentDto).questions;
       currentQuestion(questions[questionIndex.value]);
       totalQuestions(questions.length);

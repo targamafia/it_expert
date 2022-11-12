@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:http/http.dart' as http;
 import 'package:it_expert/core/assessment/domain/dto/grade_report_dto.dart';
 import 'package:it_expert/core/assessment/domain/dto/graded_assessment_dto.dart';
@@ -154,7 +155,7 @@ class AssessmentRemoteDataSourceImpl
 
   @override
   Future<Result> fetchAllGradedAssessments(String userId) async {
-    var response = await API.get("/grade/user/$userId");
+    var response = await API.get("/grade/user/me/");
     var json = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
 
     switch (response.statusCode) {
@@ -233,8 +234,13 @@ List<QuestionDto> asListOfQuestionDto(List<dynamic> list) {
 List<GradedAssessmentDto> asListOfGradedAssessmentDto(List<dynamic> list) {
   List<GradedAssessmentDto> assessments = [];
   for (var entity in list) {
+    if (entity["assessment"] == null) continue;
+    var title = entity["assessment"]["title"];
+    var thumbnailUrl = entity["assessment"]["thumbnailUrl"];
     assessments.add(GradedAssessmentDto(
-      id: entity["id"],
+      title: title ?? "",
+      thumbnailUrl: thumbnailUrl ?? "",
+      id: entity["assessment"]["id"],
       startDate: DateTime.parse(entity["startDate"]),
       endDate: DateTime.parse(entity["endDate"]),
       grade: entity["grade"] * 1.0,
@@ -242,7 +248,7 @@ List<GradedAssessmentDto> asListOfGradedAssessmentDto(List<dynamic> list) {
       wrongAnswers: entity["wrongAnswers"],
     ));
   }
-  return assessments;
+  return assessments.reversed.toList();
 }
 
 List<AnswerDto> asListOfAnswerDto(List<dynamic> list) {

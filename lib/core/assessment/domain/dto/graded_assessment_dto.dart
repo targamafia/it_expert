@@ -5,6 +5,8 @@ class GradedAssessmentDto {
   final double grade;
   final int correctAnswers;
   final int wrongAnswers;
+  final String thumbnailUrl;
+  final String title;
 
   GradedAssessmentDto(
       {required this.id,
@@ -12,5 +14,7 @@ class GradedAssessmentDto {
       required this.endDate,
       required this.grade,
       required this.correctAnswers,
-      required this.wrongAnswers});
+      required this.wrongAnswers,
+      required this.thumbnailUrl,
+      required this.title});
 }

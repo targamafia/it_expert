@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:http/http.dart' as http;
+import 'package:it_expert/core/assessment/domain/dto/grade_report_dto.dart';
 import 'package:it_expert/core/assessment/domain/dto/graded_assessment_dto.dart';
 import 'package:it_expert/core/assessment/domain/dto/post_grade_assessment_dto.dart';
 import 'package:it_expert/core/assessment/domain/dto/premium_assessment_dto.dart';
@@ -59,7 +61,6 @@ class AssessmentRemoteDataSourceImpl
                 "El examen seleccionado no tiene preguntas!, intenta con otro"),
           );
         }
-        print(a["_id"]);
         AssessmentDto assessmentDto = AssessmentDto(
             id: a["_id"],
             title: a["title"],
@@ -91,6 +92,7 @@ class AssessmentRemoteDataSourceImpl
 
     var jsonBody = jsonEncode(
       <String, dynamic>{
+        "startDate": DateTime.now().toIso8601String(),
         "assessmentId": assessmentId,
         "givenAnswers": listQuestionAnswers
       },
@@ -155,8 +157,7 @@ class AssessmentRemoteDataSourceImpl
 
   @override
   Future<Result> fetchAllGradedAssessments(String userId) async {
-    print("Fetching graded assessments");
-    var response = await API.get("/grade/user/$userId");
+    var response = await API.get("/grade/user/me/");
     var json = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
 
     switch (response.statusCode) {
@@ -169,7 +170,7 @@ class AssessmentRemoteDataSourceImpl
   }
 
   @override
-  Future<Result> fetchUserPremiumAssessments(String userId) async{
+  Future<Result> fetchUserPremiumAssessments(String userId) async {
     print("Fetching premium assessments");
     var response = await API.get("/assessments/$userId/premium-accessible");
     var json = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
@@ -179,8 +180,53 @@ class AssessmentRemoteDataSourceImpl
         return Result.success(
             asListOfPremiumAssessmentDto(json["entity"]["list"]));
     }
+    return Result.failure(HttpException(
+        "Exception while fetching all user's premium assessmetns"));
+  }
+
+  Future<Result> fetchBestAssessments() async {
+    var response = await API.get("/assessments/top-rated");
+    var json = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+    switch (response.statusCode) {
+      case HttpStatus.ok:
+        var featuredAssessments =
+            json['entity']['list'].map<AssessmentDto>((it) {
+          return AssessmentDto(
+              id: it['id'],
+              title: it['title'],
+              categories: asListOfStrings(it['categories']),
+              thumbnailUrl:
+                  it['thumbnailUrl'] ?? 'http://placeimg.com/640/480/arch',
+              isPremium: it['isPremium'],
+              description: it['description'] ?? '',
+              rating: (it['rating'] as int) * 1.0,
+              isPrivate: it['isPrivate'],
+              questions: []);
+        }).toList();
+        return Result.success(featuredAssessments);
+    }
     return Result.failure(
-        HttpException("Exception while fetching all user's premium assessmetns"));
+      const HttpException(
+          "Cannot Perform operation (fetchFeaturedAssessments)"),
+    );
+  }
+
+  @override
+  Future<Result> fetchAssessmentAttemps(String assessmentId) async {
+    var response =
+        await API.get("/grade/report/user/me/assessment/$assessmentId");
+    var json = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+    switch (response.statusCode) {
+      case HttpStatus.ok:
+        var entitiy = json["entity"];
+        return Result.success(GradeReportDto(
+            assessmentId: entitiy["assessmentId"],
+            remainingAttemps: entitiy["attempts"],
+            bestGrade: entitiy["bestGrade"] * 1.0,
+            isAvailable: entitiy["isAvailable"] ?? false));
+    }
+    return Result.failure(
+        HttpException("Error while performing fetchAssessmentAttemps"));
   }
 }
 
@@ -204,8 +250,13 @@ List<QuestionDto> asListOfQuestionDto(List<dynamic> list) {
 List<GradedAssessmentDto> asListOfGradedAssessmentDto(List<dynamic> list) {
   List<GradedAssessmentDto> assessments = [];
   for (var entity in list) {
+    if (entity["assessment"] == null) continue;
+    var title = entity["assessment"]["title"];
+    var thumbnailUrl = entity["assessment"]["thumbnailUrl"];
     assessments.add(GradedAssessmentDto(
-      id: entity["id"],
+      title: title ?? "",
+      thumbnailUrl: thumbnailUrl ?? "",
+      id: entity["assessment"]["id"],
       startDate: DateTime.parse(entity["startDate"]),
       endDate: DateTime.parse(entity["endDate"]),
       grade: entity["grade"] * 1.0,
@@ -213,17 +264,16 @@ List<GradedAssessmentDto> asListOfGradedAssessmentDto(List<dynamic> list) {
       wrongAnswers: entity["wrongAnswers"],
     ));
   }
-  return assessments;
+  return assessments.reversed.toList();
 }
 
 List<PremiumAssessmentDto> asListOfPremiumAssessmentDto(List<dynamic> list) {
   List<PremiumAssessmentDto> assessments = [];
   for (var entity in list) {
     assessments.add(PremiumAssessmentDto(
-      id: entity["id"],
-      title: entity["title"],
-      attempts: entity["attempts"]
-    ));
+        id: entity["id"],
+        title: entity["title"],
+        attempts: entity["attempts"]));
   }
   return assessments;
 }

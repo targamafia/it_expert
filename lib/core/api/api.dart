@@ -6,20 +6,14 @@ import '../user/di.dart';
 
 class TokenSingleton {
   static final TokenSingleton _singleton = TokenSingleton._internal();
+
   final GetAuthTokenLocalUseCase _getAuthTokenFromLocalStorage =
       constructGetAuthTokenLocalUseCase();
   String _token = "";
 
   Future<String> get() async {
-    if (_token.isEmpty) {
-      var futureToken = await _getAuthTokenFromLocalStorage.call();
-      if (futureToken.getOrNull() != null) {
-        _token += futureToken.getOrNull();
-      } else {
-        _token = '';
-      }
-    }
-    return _token;
+    var futureToken = await _getAuthTokenFromLocalStorage.call();
+    return futureToken.getOrNull() ?? "";
   }
 
   factory TokenSingleton() {

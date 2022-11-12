@@ -9,6 +9,8 @@ import 'package:it_expert/core/user/application/user_repository_impl.dart';
 import 'package:it_expert/core/user/infrastructure/user_local_datasource_impl.dart';
 import 'package:it_expert/core/user/infrastructure/user_remote_datasource_impl.dart';
 
+import '../assessment/application/usecase/get_assessment_attempts_usecase.dart';
+
 LoginUseCase constructLoginUseCase() {
   return LoginUseCase(UserRepositoryImpl(
       UserRemoteDataSourceImpl(), UserLocalDataSourceImpl()));
@@ -19,10 +21,11 @@ GetAuthTokenLocalUseCase constructGetAuthTokenLocalUseCase() {
 }
 
 GetProfileDataUseCase constructProfileDataUseCase() {
-  return GetProfileDataUseCase(UserRepositoryImpl(UserRemoteDataSourceImpl(), UserLocalDataSourceImpl()));
+  return GetProfileDataUseCase(UserRepositoryImpl(
+      UserRemoteDataSourceImpl(), UserLocalDataSourceImpl()));
 }
 
-SignUpUseCase constructSignUpUseCase(){
+SignUpUseCase constructSignUpUseCase() {
   return SignUpUseCase(UserRepositoryImpl(
       UserRemoteDataSourceImpl(), UserLocalDataSourceImpl()));
 }
@@ -32,14 +35,12 @@ GetUserInfoLocalUseCase constructGetUserInfoLocalUseCase() {
       UserRemoteDataSourceImpl(), UserLocalDataSourceImpl()));
 }
 
-LogOutUseCase constructLogOutUseCase(){
+LogOutUseCase constructLogOutUseCase() {
   return LogOutUseCase(UserRepositoryImpl(
-    UserRemoteDataSourceImpl(), UserLocalDataSourceImpl()
-  ));
+      UserRemoteDataSourceImpl(), UserLocalDataSourceImpl()));
 }
 
 FetchUserStatsUsecase constructUserStatsUseCase() {
   return FetchUserStatsUsecase(UserRepositoryImpl(
-      UserRemoteDataSourceImpl(), UserLocalDataSourceImpl()
-  ));
+      UserRemoteDataSourceImpl(), UserLocalDataSourceImpl()));
 }

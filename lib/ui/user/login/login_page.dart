@@ -152,7 +152,10 @@ class _LoginPage extends State<LoginPage> {
               Padding(
                 padding: const EdgeInsets.only(top: 16),
                 child: TextButton(
-                    onPressed: () {}, child: const Text("O crea una cuenta")),
+                    onPressed: () {
+                      Get.to(() => const SignUpPage());
+                    },
+                    child: const Text("O crea una cuenta")),
               ),
               Spacer(),
             ],

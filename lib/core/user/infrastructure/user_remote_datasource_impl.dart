@@ -14,7 +14,6 @@ import '../application/datasource/user_remote_datasource_interface.dart';
 import '../domain/dto/login_failed_dto.dart';
 import '../../api/api.dart';
 
-
 class UserRemoteDataSourceImpl implements UserRemoteDataSourceInterface {
   @override
   Future<Result> login(String email, String password) async {
@@ -86,17 +85,16 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSourceInterface {
 
   @override
   Future<Result> fetchUserStats(String id) async {
-    var response = await API.get("/users/$id/stats");
+    var response = await API.get("/users/me/stats");
     var json = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
     switch (response.statusCode) {
       case HttpStatus.ok:
         var a = json["entity"];
         return Result.success(UserStatsDto(
-          premiumAssessments: a["premiumAssessments"] ?? 0,
-          takenAssessments: a["takenAssessments"] ?? 0
-        ));
+            premiumAssessments: a["premiumAssessments"] ?? 0,
+            takenAssessments: a["takenAssessments"] ?? 0));
     }
-    return Result.failure(NoStatsException("Error al obtener las estadísticas de usuario"));
+    return Result.failure(
+        NoStatsException("Error al obtener las estadísticas de usuario"));
   }
-
 }

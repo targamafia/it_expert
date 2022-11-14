@@ -49,17 +49,16 @@ class MainPage extends StatelessWidget {
                             description: it.description,
                             categories: it.categories,
                             id: it.id,
-                            isPremium: true,
-                            isPrivate: true,
-                            rating: 5,
-                            thumbnailUrl:
-                                'https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2670&q=80',
+                            isPremium: it.isPremium,
+                            isPrivate: it.isPrivate,
+                            rating: it.rating,
+                            thumbnailUrl: it.thumbnailUrl,
                           ),
                         ),
                       );
                     },
                     categories: it.categories,
-                    label: 'GRATIS',
+                    label: getIsPremiumLabel(it.isPremium),
                   );
                 },
                 options: CarouselOptions(
@@ -100,17 +99,17 @@ class MainPage extends StatelessWidget {
                             description: it.description,
                             categories: it.categories,
                             id: it.id,
-                            isPremium: true,
-                            isPrivate: true,
-                            rating: 5,
+                            isPremium: it.isPremium,
+                            isPrivate: it.isPrivate,
+                            rating: it.rating,
                             thumbnailUrl:
-                                'https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2670&q=80',
+                                it.thumbnailUrl,
                           ),
                         ),
                       );
                     },
                     categories: it.categories,
-                    label: 'GRATIS',
+                    label: getIsPremiumLabel(it.isPremium),
                   );
                 },
                 options: CarouselOptions(
@@ -126,4 +125,10 @@ class MainPage extends StatelessWidget {
       ),
     );
   }
+}
+
+
+String getIsPremiumLabel(bool isPremium) {
+  if (isPremium) return "PREMIUM";
+  return "GRATIS";
 }

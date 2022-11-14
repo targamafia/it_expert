@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:it_expert/ui/assessments/assessment_application/widget/answer_card_widget.dart';
-import 'package:it_expert/ui/home/home_page.dart';
 import 'package:it_expert/ui/style.dart';
 import '../../../core/utils/status.dart';
 import '../assessment_result/assessment_result_page.dart';
@@ -43,7 +42,7 @@ class _AssessmentApplicationPageState extends State<AssessmentApplicationPage> {
                     controller.assessmentDto.title,
                     style: Theme.of(context)
                         .textTheme
-                        .labelSmall
+                        .titleMedium
                         ?.copyWith(color: Theme.of(context).primaryColor),
                   )
               ],
@@ -94,7 +93,7 @@ class _AssessmentApplicationPageState extends State<AssessmentApplicationPage> {
                               ),
                             ),
                             Text(
-                              "Estamos trabajando en brindarte el mejor servicio",
+                              "Estamos recolectando las preguntas para esta evaluación. Regresa pronto.",
                               style: Theme.of(context).textTheme.titleMedium,
                               textAlign: TextAlign.center,
                             ),

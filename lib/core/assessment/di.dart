@@ -9,6 +9,8 @@ import 'package:it_expert/core/user/di.dart';
 import 'application/usecase/get_all_graded_assessments_usecase.dart';
 import 'application/usecase/get_assessment_attempts_usecase.dart';
 import 'application/usecase/get_assessment_grade_usecase.dart';
+import 'application/usecase/get_assessment_is_available_info_usecase.dart';
+import 'application/usecase/get_assessment_usecase.dart';
 import 'application/usecase/get_featured_assessment_usecase.dart';
 import 'application/usecase/grade_assessment_usecase.dart';
 
@@ -17,7 +19,7 @@ GetFeaturedAssessmentsUseCase constructGetFeaturedAssessmentsUseCase() {
       AssessmentRepositoryImpl(AssessmentRemoteDataSourceImpl()));
 }
 
-GetAssessmentQuestionsUseCase constructGetAssessmentUseCase() {
+GetAssessmentQuestionsUseCase constructGetAssessmentQuestionUseCase() {
   return GetAssessmentQuestionsUseCase(
       AssessmentRepositoryImpl(AssessmentRemoteDataSourceImpl()));
 }
@@ -56,4 +58,12 @@ GetBestAssessmentsUseCase constructGetBestAssessmentsUseCase() {
 GetAssessmentAttemptsUsecase constructGetAssessmentAttemptsUsecase() {
   return GetAssessmentAttemptsUsecase(
       AssessmentRepositoryImpl(AssessmentRemoteDataSourceImpl()));
+}
+
+GetAssessmentUseCase constructGetAssessmentUseCase() {
+  return GetAssessmentUseCase();
+}
+
+GetAssessmentAvailableInfoUseCase constructGetAssessmentAvailableInfoUseCase() {
+  return GetAssessmentAvailableInfoUseCase(AssessmentRepositoryImpl(AssessmentRemoteDataSourceImpl()));
 }

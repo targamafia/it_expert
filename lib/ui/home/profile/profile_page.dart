@@ -1,13 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:it_expert/ui/home/history/history_page.dart';
 import 'package:it_expert/ui/home/profile/profile_controller.dart';
 import 'package:it_expert/ui/home/profile/user_premium_assessments/user_premium_assessments_page.dart';
 import 'package:it_expert/ui/home/profile/user_taken_assessments/user_taken_assessments_page.dart';
 import 'package:it_expert/ui/user/login/login_page.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:it_expert/ui/style.dart';
+
+import 'history/history_page.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -53,14 +54,15 @@ class ProfilePage extends StatelessWidget {
               ProfileStatCard(
                   icon: Icon(Icons.school_rounded),
                   text: "Examenes contestados",
-                  n: 10,
+                  n: 0,
                   onTap: () {
+                    Get.to(() => const HistoryPage());
                     Get.to(() => const HistoryPage());
                   }),
               ProfileStatCard(
                   icon: Icon(Icons.star_rate_rounded),
-                  text: "Exámenes Premium",
-                  n: 3,
+                  text: "Exámenes \nPremium",
+                  n: 0,
                   onTap: () {
                     Get.to(() => const PremiumAssessmentsPage());
                   }),
@@ -192,13 +194,14 @@ class _ProfileStatCardState extends State<ProfileStatCard> {
               SizedBox(
                 height: 5,
               ),
-              Text(
-                widget.n.toString(),
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyLarge
-                    ?.copyWith(fontWeight: FontWeight.normal),
-              ),
+              if (widget.n != 0)
+                Text(
+                  widget.n.toString(),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyLarge
+                      ?.copyWith(fontWeight: FontWeight.normal),
+                ),
             ],
           ),
         ),

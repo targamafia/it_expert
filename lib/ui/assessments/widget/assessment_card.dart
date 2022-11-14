@@ -5,8 +5,7 @@ import 'package:get/get.dart';
 import 'package:it_expert/core/assessment/domain/dto/graded_assessment_dto.dart';
 import 'package:it_expert/core/utils/extensions.dart';
 import 'package:it_expert/ui/assessments/assessment_application/assessment_application_page.dart';
-
-import '../../style.dart';
+import 'package:it_expert/ui/style.dart';
 
 class AssessmentCard extends StatefulWidget {
   const AssessmentCard({super.key, required this.gradedAssessmentDto});
@@ -61,9 +60,15 @@ class _AssessmentCardState extends State<AssessmentCard> {
                       overflow: TextOverflow.ellipsis,
                     ),
                     Spacer(),
-                    Text("${(widget.gradedAssessmentDto.grade * 100).round()}%",
-                        style: labelTextStyle?.copyWith(
-                            color: Theme.of(context).primaryColor)),
+                    if (widget.gradedAssessmentDto.grade >= .8)
+                      Text("${(widget.gradedAssessmentDto.grade * 100).round()}%",
+                          style: labelTextStyle?.copyWith(
+                              color: AppColor.correctGreen, fontWeight: FontWeight.bold)),
+                    if (widget.gradedAssessmentDto.grade < .8)
+                      Text("${(widget.gradedAssessmentDto.grade * 100).round()}%",
+                          style: labelTextStyle?.copyWith(
+                              color: AppColor.incorrectRed, fontWeight: FontWeight.bold)),
+
                   ],
                 ),
               ),

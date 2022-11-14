@@ -21,6 +21,10 @@ class AssessmentRepositoryInterface {
       Map<String, String> questionsAnswer, String assessmentId) {
     throw UnimplementedError();
   }
+  Future<Result> getIsAvailableInfo(String assessmentId) async {
+    throw UnimplementedError();
+  }
+
 
   Future<Result> getAssessmentGrade(String assessmentId) {
     throw UnimplementedError();

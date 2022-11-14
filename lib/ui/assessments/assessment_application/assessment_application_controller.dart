@@ -8,7 +8,7 @@ import '../../../core/utils/status.dart';
 import 'dart:developer' as developer;
 
 class AssessmentApplicationController extends GetxController {
-  final _getAssessmentUseCase = constructGetAssessmentUseCase();
+  final _getAssessmentUseCase = constructGetAssessmentQuestionUseCase();
   final _gradeAssessmentUseCase = constructGradeAssessmentUseCase();
   var questions = [];
   var totalQuestions = 0.obs;

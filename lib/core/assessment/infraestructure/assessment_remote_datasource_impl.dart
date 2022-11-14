@@ -1,9 +1,6 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
-import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
-import 'package:http/http.dart' as http;
+import 'package:it_expert/core/assessment/domain/dto/AssessmentAvailableDto.dart';
 import 'package:it_expert/core/assessment/domain/dto/grade_report_dto.dart';
 import 'package:it_expert/core/assessment/domain/dto/graded_assessment_dto.dart';
 import 'package:it_expert/core/assessment/domain/dto/post_grade_assessment_dto.dart';
@@ -172,13 +169,14 @@ class AssessmentRemoteDataSourceImpl
   @override
   Future<Result> fetchUserPremiumAssessments(String userId) async {
     print("Fetching premium assessments");
-    var response = await API.get("/assessments/$userId/premium-accessible");
+    var response = await API.get("/assessments/premium-access/me");
     var json = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
 
     switch (response.statusCode) {
       case HttpStatus.ok:
         return Result.success(
-            asListOfPremiumAssessmentDto(json["entity"]["list"]));
+          (json["entity"] as List<dynamic>).asLisOfAssessmentDto(),
+        );
     }
     return Result.failure(HttpException(
         "Exception while fetching all user's premium assessmetns"));
@@ -227,6 +225,19 @@ class AssessmentRemoteDataSourceImpl
     }
     return Result.failure(
         HttpException("Error while performing fetchAssessmentAttemps"));
+  }
+
+  @override
+  Future<Result> isAvailable(String assessmentId) async {
+    var response =
+        await API.get("/assessments/$assessmentId/is-available/me");
+    var json = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+    switch (response.statusCode) {
+      case HttpStatus.ok:
+        return Result.success(AssessmentAvailableDto.fromJson(json));
+    }
+    return Result.failure(
+        HttpException("Error while performing isAvailable($assessmentId)"));
   }
 }
 
@@ -284,6 +295,25 @@ List<AnswerDto> asListOfAnswerDto(List<dynamic> list) {
     answers.add(AnswerDto(answer["_id"], answer["value"]));
   }
   return answers;
+}
+
+extension AssessmentMapper on List<dynamic> {
+  List<AssessmentDto> asLisOfAssessmentDto() {
+    List<AssessmentDto> lst = [];
+    for (final assessment in this) {
+      lst.add(AssessmentDto(
+          id: assessment["id"],
+          title: assessment["title"],
+          description: assessment["description"],
+          thumbnailUrl: assessment["thumbnailUrl"],
+          isPrivate: assessment["isPrivate"],
+          isPremium: assessment["isPremium"],
+          categories: asListOfStrings(assessment["categories"]),
+          rating: assessment["rating"] * 1.0,
+          questions: []));
+    }
+    return lst;
+  }
 }
 
 class PostQuestionAnswersDto {

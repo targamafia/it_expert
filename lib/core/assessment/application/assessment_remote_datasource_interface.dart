@@ -26,6 +26,10 @@ class AssessmentRemoteDataSourceInterface {
     throw UnimplementedError();
   }
 
+  Future<Result> isAvailable(String assessmentId) async {
+    throw UnimplementedError();
+  }
+
   Future<Result> fetchAssessmentAttemps(String assessmentId) async {
     throw UnimplementedError();
   }

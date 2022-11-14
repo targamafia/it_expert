@@ -1,10 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:it_expert/core/assessment/domain/dto/assessment_dto.dart';
 import 'package:it_expert/core/utils/status.dart';
 import 'package:it_expert/ui/assessments/assessment_detail/assessment_detail_controller.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import '../../style.dart';
 import '../assessment_application/assessment_application_page.dart';
+import 'dart:io' show Platform;
 
 class AssessmentDetailPage extends StatefulWidget {
   const AssessmentDetailPage({Key? key, required this.assessmentDto})
@@ -22,8 +25,8 @@ class _AssessmentDetailPageState extends State<AssessmentDetailPage> {
         Get.put(AssessmentDetailController());
 
     controller.assessmentDto = widget.assessmentDto;
-    controller.fetchAssessmentAttemps(widget.assessmentDto.id);
-
+    controller.fetchAssessmentAvailableInfo(widget.assessmentDto.id);
+    print("thumbnailUrl: ${controller.assessmentDto.thumbnailUrl}");
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -54,7 +57,6 @@ class AssessmentDetailPageSuccess extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AssessmentDetailController controller = Get.find();
-    print("Attemps: ${controller.gradeReportDto.remainingAttemps}");
     return SafeArea(
       child: SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -94,10 +96,20 @@ class AssessmentDetailPageSuccess extends StatelessWidget {
                     )
                     .toList(),
               ),
+              if (controller.assessmentAvailableDto.isAvailable == true)
+                Text(
+                  "Intentos disponibles: ${controller.assessmentAvailableDto.attemptsLeft}",
+                  style: Theme.of(context)
+                      .textTheme
+                      .labelLarge
+                      ?.copyWith(color: Theme.of(context).primaryColor),
+                ),
               Container(
-                padding: const EdgeInsets.only(top: 32.0, bottom: 20.0),
-                child: Image.network(
-                    "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2670&q=80"),
+                width: context.width,
+                constraints: const BoxConstraints(maxHeight: 400),
+                padding: const EdgeInsets.only(top: 16.0, bottom: 16.0),
+                child: Image.network(controller.assessmentDto.thumbnailUrl,
+                    fit: BoxFit.cover),
               ),
               Align(
                 alignment: Alignment.center,
@@ -115,33 +127,175 @@ class AssessmentDetailPageSuccess extends StatelessWidget {
                 style: Theme.of(context).textTheme.headline6?.copyWith(
                     color: Colors.black.withOpacity(.65), fontSize: 16.0),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                child: Container(
-                  height: 50.0,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(40.0),
-                      gradient: LinearGradient(colors: [
-                        Theme.of(context).primaryColor,
-                        Theme.of(context).primaryColorDark
-                      ])),
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      // TODO: Verificar si hay todavía intentos disponibles
-                      Get.to(() => AssessmentApplicationPage(
-                          assessmentId: controller.assessmentDto.id));
-                    },
-                    style: ElevatedButton.styleFrom(
-                        primary: Colors.transparent,
-                        shadowColor: Colors.transparent),
-                    child: const Text('Iniciar Examen'),
-                  ),
-                ),
-              ),
+              SizedBox(height: 28),
+              if (controller.assessmentAvailableDto.isAvailable == true)
+                StartAssessmentBtn(assessmentId: controller.assessmentDto.id),
+              if (controller.assessmentAvailableDto.isPremium == true &&
+                  controller.assessmentAvailableDto.isAvailable == false)
+                UnlockPremiumExamBtn(context: context),
+              if (controller.assessmentAvailableDto.isAvailable == false &&
+                  controller.assessmentAvailableDto.isPremium == false)
+                NoTriesLeftBtn(),
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+void _showPremiumAssessmentDialog(BuildContext context) {
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Platform.isIOS
+            ? CupertinoAlertDialog(
+                title: const Text("Premium"),
+                content: const Text(
+                    "Al adquirir alguno de nuestros cursos desbloqueas los examenes asociados"),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () {
+                      Get.back();
+                    },
+                    child: Text(
+                      'Cancelar',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium
+                          ?.copyWith(color: Colors.red),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () => launchUrlString(
+                        'https://mrpcapacitacion.mx/product-category/cursos/'),
+                    child: Text('Explorar cursos',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium
+                            ?.copyWith(color: Theme.of(context).primaryColor)),
+                  ),
+                ],
+              )
+            : const AlertDialog(
+                title: Text("Success"),
+                // TODO: Hacer las madres también para android
+                content: Text("Saved successfully"),
+              );
+      });
+}
+
+class NoTriesLeftBtn extends StatefulWidget {
+  const NoTriesLeftBtn({Key? key}) : super(key: key);
+
+  @override
+  State<NoTriesLeftBtn> createState() => _NoTriesLeftBtnState();
+}
+
+class _NoTriesLeftBtnState extends State<NoTriesLeftBtn> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 50.0,
+      width: double.infinity,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(40.0),
+          gradient: const LinearGradient(colors: [
+            Colors.black38,
+            Colors.black38,
+          ])),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          ElevatedButton(
+            onPressed: () {},
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.transparent,
+              shadowColor: Colors.transparent,
+            ),
+            child: const Text('Opps, se te acabaron los intentos'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class StartAssessmentBtn extends StatefulWidget {
+  const StartAssessmentBtn({Key? key, required this.assessmentId})
+      : super(key: key);
+  final String assessmentId;
+
+  @override
+  State<StartAssessmentBtn> createState() => _StartAssessmentBtnState();
+}
+
+class _StartAssessmentBtnState extends State<StartAssessmentBtn> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 50.0,
+      width: double.infinity,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(40.0),
+          gradient: LinearGradient(colors: [
+            Theme.of(context).primaryColor,
+            Theme.of(context).primaryColorDark,
+          ])),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          ElevatedButton(
+            onPressed: () async {
+              Get.to(() =>
+                  AssessmentApplicationPage(assessmentId: widget.assessmentId));
+            },
+            style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.transparent,
+                shadowColor: Colors.transparent),
+            child: const Text('Iniciar Examen'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class UnlockPremiumExamBtn extends StatefulWidget {
+  const UnlockPremiumExamBtn({Key? key, required this.context})
+      : super(key: key);
+  final BuildContext context;
+
+  @override
+  State<UnlockPremiumExamBtn> createState() => _UnlockPremiumExamBtnState();
+}
+
+class _UnlockPremiumExamBtnState extends State<UnlockPremiumExamBtn> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 50.0,
+      width: double.infinity,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(40.0),
+          gradient: const LinearGradient(colors: [
+            Colors.amberAccent,
+            Colors.amber,
+          ])),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          ElevatedButton(
+            onPressed: () {
+              _showPremiumAssessmentDialog(context);
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.transparent,
+              shadowColor: Colors.transparent,
+            ),
+            child: const Text('Desbloquea examen Premium'),
+          ),
+        ],
       ),
     );
   }

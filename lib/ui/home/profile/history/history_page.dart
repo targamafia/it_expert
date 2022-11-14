@@ -3,10 +3,9 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:it_expert/ui/assessments/widget/assessment_card.dart';
-import 'package:it_expert/ui/home/history/history_controller.dart';
-import 'package:it_expert/ui/style.dart';
 
-import '../../../core/utils/status.dart';
+import '../../../../core/utils/status.dart';
+import 'history_controller.dart';
 
 class HistoryPage extends StatelessWidget {
   const HistoryPage({Key? key}) : super(key: key);
@@ -40,7 +39,7 @@ class HistoryPage extends StatelessWidget {
                                 },
                                 icon: Icon(Icons.arrow_back_ios_sharp)),
                             Text(
-                              "Historial",
+                              "Exámenes contestados",
                               textAlign: TextAlign.start,
                               style: Theme.of(context).textTheme.headlineMedium,
                             ),
@@ -62,9 +61,9 @@ class HistoryPage extends StatelessWidget {
                                 },
                                 icon: Icon(Icons.arrow_back_ios_sharp)),
                             Text(
-                              "Historial",
+                              "Exámenes contestados",
                               textAlign: TextAlign.start,
-                              style: Theme.of(context).textTheme.headlineMedium,
+                              style: Theme.of(context).textTheme.headlineSmall,
                             ),
                           ],
                         ),

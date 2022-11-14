@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:it_expert/ui/home/history/history_page.dart';
 import 'package:it_expert/ui/home/home_controller.dart';
 import 'package:it_expert/ui/home/profile/profile_page.dart';
 import 'package:it_expert/ui/home/search/search_page.dart';

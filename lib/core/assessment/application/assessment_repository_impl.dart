@@ -57,4 +57,9 @@ class AssessmentRepositoryImpl implements AssessmentRepositoryInterface {
     return assessmentRemoteDataSourceInterface
         .fetchAssessmentAttemps(assessmentId);
   }
+
+  @override
+  Future<Result> getIsAvailableInfo(String assessmentId) {
+    return assessmentRemoteDataSourceInterface.isAvailable(assessmentId);
+  }
 }

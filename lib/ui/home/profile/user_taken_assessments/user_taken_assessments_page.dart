@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:it_expert/ui/home/history/history_controller.dart';
 
-import '../../history/history_page.dart';
+import '../history/history_controller.dart';
+import '../history/history_page.dart';
 
 
 

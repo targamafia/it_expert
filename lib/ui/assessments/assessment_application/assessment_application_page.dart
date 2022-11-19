@@ -124,11 +124,23 @@ class _AssessmentApplicationPageState extends State<AssessmentApplicationPage> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(controller.currentQuestion.value.text,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge
-                                  ?.copyWith(fontWeight: FontWeight.normal)),
+                          Text(
+                            controller.currentQuestion.value.text,
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge
+                                ?.copyWith(fontWeight: FontWeight.normal),
+                          ),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          if (controller
+                              .currentQuestion.value.imageUrl.isNotEmpty)
+                            Image.network(
+                                controller.currentQuestion.value.imageUrl),
+                          const SizedBox(
+                            height: 12,
+                          ),
                           Column(
                             children: controller.currentQuestion.value.answers
                                 .map((e) => AnswerCardWidget(

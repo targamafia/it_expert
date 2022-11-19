@@ -4,10 +4,12 @@ import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:it_expert/core/assessment/domain/dto/assessment_dto.dart';
 import 'package:it_expert/ui/assessments/assessment_detail/assessment_detail_page.dart';
+import 'package:it_expert/ui/home/main/widget/top_rated_assessment_card_widget.dart';
 import 'package:it_expert/ui/home/widget/best_assessment_card_widget.dart';
 import 'package:it_expert/ui/home/widget/featured_assessment_card_widget.dart';
 import 'package:it_expert/ui/style.dart';
 
+import '../../../core/utils/status.dart';
 import 'main_controller.dart';
 
 class MainPage extends StatelessWidget {
@@ -16,117 +18,97 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     MainController controller = Get.put(MainController());
-    controller.loadFeaturedAssessments();
-    controller.loadBestAssessments();
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+    controller.load();
+    return Obx(
+      () => Stack(
         children: [
-          Text(
-            "Lo mejor",
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headlineMedium,
-          ),
-          Obx(() {
-            if (controller.bestAssessments.isNotEmpty) {
-              return CarouselSlider.builder(
-                itemCount: controller.bestAssessments.length,
-                itemBuilder:
-                    (BuildContext context, int itemIndex, int pageViewIndex) {
-                  var it = controller.bestAssessments[itemIndex];
-                  return FeaturedAssessmentCardWidget(
-                    id: it.id,
-                    title: it.title,
-                    area: it.description,
-                    thumbnailUrl: it.thumbnailUrl,
-                    onPressed: () {
-                      Get.to(
-                        () => AssessmentDetailPage(
-                          assessmentDto: AssessmentDto(
-                            questions: [],
-                            title: it.title,
-                            description: it.description,
-                            categories: it.categories,
-                            id: it.id,
-                            isPremium: it.isPremium,
-                            isPrivate: it.isPrivate,
-                            rating: it.rating,
-                            thumbnailUrl: it.thumbnailUrl,
-                          ),
-                        ),
-                      );
-                    },
-                    categories: it.categories,
-                    label: getIsPremiumLabel(it.isPremium),
-                  );
-                },
-                options: CarouselOptions(
-                  height: MediaQuery.of(context).size.height * .40,
-                  viewportFraction: .90,
-                  enableInfiniteScroll: false,
-                  enlargeCenterPage: true,
-                ),
-              );
-            } else {
-              return Container(height: 400);
-            }
-          }),
-          const SizedBox(height: 12),
-          Text(
-            "Exámenes Populares",
-            style: Theme.of(context).textTheme.headlineMedium,
-          ),
-          const SizedBox(height: 4),
-          Obx(() {
-            if (controller.featuredAssessments.isNotEmpty) {
-              return CarouselSlider.builder(
-                itemCount: controller.featuredAssessments.length,
-                itemBuilder:
-                    (BuildContext context, int itemIndex, int pageViewIndex) {
-                  var it = controller.featuredAssessments[itemIndex];
-                  return FeaturedAssessmentCardWidget(
-                    id: it.id,
-                    title: it.title,
-                    area: it.description,
-                    thumbnailUrl: it.thumbnailUrl,
-                    onPressed: () {
-                      Get.to(
-                        () => AssessmentDetailPage(
-                          assessmentDto: AssessmentDto(
-                            questions: [],
-                            title: it.title,
-                            description: it.description,
-                            categories: it.categories,
-                            id: it.id,
-                            isPremium: it.isPremium,
-                            isPrivate: it.isPrivate,
-                            rating: it.rating,
-                            thumbnailUrl:
-                                it.thumbnailUrl,
-                          ),
-                        ),
-                      );
-                    },
-                    categories: it.categories,
-                    label: getIsPremiumLabel(it.isPremium),
-                  );
-                },
-                options: CarouselOptions(
-                    initialPage: 1,
-                    viewportFraction: .8,
-                    enableInfiniteScroll: true),
-              );
-            } else {
-              return Container(height: 200);
-            }
-          }),
+          if (controller.status.value == Status.LOADING)
+            const Center(
+              child: Text("Loading"),
+            ),
+          if (controller.status.value == Status.ERROR)
+            const Center(
+              child: Text("Error"),
+            ),
+          if (controller.status.value == Status.SUCCESS)
+            const MainPageSuccess(),
         ],
       ),
     );
   }
 }
 
+class MainPageSuccess extends StatelessWidget {
+  const MainPageSuccess({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    MainController controller = Get.find();
+    print(controller.topRated);
+    print(controller.featured);
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "MRP Capacitaciones",
+            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).primaryColor),
+          ),
+          const SizedBox(
+            height: 12,
+          ),
+          Text(
+            "Mejores exámenes",
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
+          if (controller.topRated.isNotEmpty)
+            CarouselSlider.builder(
+              itemCount: controller.topRated.length,
+              itemBuilder:
+                  (BuildContext context, int itemIndex, int pageViewIndex) {
+                return AssessmentCardWidget(
+                  assessmentDto: controller.topRated[itemIndex],
+                  width: context.width,
+                  height: context.width,
+                  linearGradient: controller.topRatedGradients[itemIndex],
+                );
+              },
+              options:
+                  CarouselOptions(viewportFraction: 1, height: context.width),
+            ),
+          const SizedBox(
+            height: 12,
+          ),
+          Text(
+            "Exámenes populares",
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
+          if (controller.featured.isNotEmpty)
+            CarouselSlider.builder(
+              itemCount: controller.featured.length,
+              itemBuilder:
+                  (BuildContext context, int itemIndex, int pageViewIndex) {
+                return AssessmentCardWidget(
+                  assessmentDto: controller.featured[itemIndex],
+                  width: context.width,
+                  height: context.width,
+                  linearGradient: controller.featuredGradients[itemIndex],
+                );
+              },
+              options: CarouselOptions(),
+            ),
+        ],
+      ),
+    );
+  }
+}
 
 String getIsPremiumLabel(bool isPremium) {
   if (isPremium) return "PREMIUM";

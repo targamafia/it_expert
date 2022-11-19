@@ -9,6 +9,7 @@ import 'package:it_expert/core/user/di.dart';
 import 'application/usecase/get_all_graded_assessments_usecase.dart';
 import 'application/usecase/get_assessment_attempts_usecase.dart';
 import 'application/usecase/get_assessment_grade_usecase.dart';
+import 'application/usecase/get_assessment_grade_with_answers_by_grade_id.dart';
 import 'application/usecase/get_assessment_is_available_info_usecase.dart';
 import 'application/usecase/get_assessment_usecase.dart';
 import 'application/usecase/get_featured_assessment_usecase.dart';
@@ -65,5 +66,12 @@ GetAssessmentUseCase constructGetAssessmentUseCase() {
 }
 
 GetAssessmentAvailableInfoUseCase constructGetAssessmentAvailableInfoUseCase() {
-  return GetAssessmentAvailableInfoUseCase(AssessmentRepositoryImpl(AssessmentRemoteDataSourceImpl()));
+  return GetAssessmentAvailableInfoUseCase(
+      AssessmentRepositoryImpl(AssessmentRemoteDataSourceImpl()));
+}
+
+GetAssessmentGradeWithAnswersByGradeId
+    constructGetAssessmentGradeWithAnswersByGradeId() {
+  return GetAssessmentGradeWithAnswersByGradeId(
+      AssessmentRepositoryImpl(AssessmentRemoteDataSourceImpl()));
 }

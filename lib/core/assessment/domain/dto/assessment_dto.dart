@@ -24,7 +24,16 @@ class AssessmentDto {
 
   @override
   String toString() {
-    return 'AssessmentDto{id: $id, title: $title, description: $description, thumbnailUrl: $thumbnailUrl, isPrivate: $isPrivate, isPremium: $isPremium, categories: $categories, rating: $rating}';
+    return """AssessmentDto {
+      id: $id, 
+      title: $title, 
+      description: $description, 
+      thumbnailUrl: $thumbnailUrl, 
+      isPrivate: $isPrivate, 
+      isPremium: $isPremium, 
+      categories: $categories, 
+      rating: $rating
+    }""";
   }
 
   @override

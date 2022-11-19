@@ -1,16 +1,15 @@
 import 'dart:convert';
+import 'dart:core';
 import 'dart:io';
 import 'package:it_expert/core/assessment/domain/dto/AssessmentAvailableDto.dart';
 import 'package:it_expert/core/assessment/domain/dto/grade_report_dto.dart';
 import 'package:it_expert/core/assessment/domain/dto/graded_assessment_dto.dart';
-import 'package:it_expert/core/assessment/domain/dto/post_grade_assessment_dto.dart';
 import 'package:it_expert/core/assessment/domain/dto/premium_assessment_dto.dart';
-
 import 'package:it_expert/core/utils/result.dart';
-
 import '../../api/api.dart';
 import '../application/assessment_remote_datasource_interface.dart';
 import '../domain/dto/assessment_dto.dart';
+import '../domain/dto/grade_assessment_response_dto.dart';
 import '../domain/dto/question_dto.dart';
 import '../domain/exceptions/no_questions_for_assessment_exception.dart';
 
@@ -78,6 +77,49 @@ class AssessmentRemoteDataSourceImpl
   @override
   Future<Result> gradeAssessment(
       Map<String, String> questionsAnswer, String assessmentId) async {
+    List<Map<String, dynamic>> listQuestionAnswers =
+        toGradeAsssessmentBodyFormat(questionsAnswer);
+
+    var response = await API.post("/grade",
+        body: jsonEncode(
+          <String, dynamic>{
+            "startDate": DateTime.now().toLocal().toIso8601String(),
+            "assessmentId": assessmentId,
+            "givenAnswers": listQuestionAnswers
+          },
+        ));
+
+    var json = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+
+    if (response.statusCode != HttpStatus.created) {
+      return Result.failure(HttpException(response.body));
+    }
+
+    json["entity"]["gradeId"] = ""; // TODO: correct code smell.
+    json["entity"]["answers"] = []; // TODO: correct code smell.
+    return Result.success(
+      GradeAssessmentResponseDto.fromJson(json["entity"]),
+    );
+  }
+
+  @override
+  Future<Result> fetchAssessmentGradeWithAnswersByGradeId(
+      String gradeId) async {
+    var response = await API.get("/grade/$gradeId/user/");
+    var json = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+    if (response.statusCode != HttpStatus.ok) {
+      return Result.failure(HttpException(response.body));
+    }
+
+    print("jsonResponse: $json");
+    json["entity"]["gradeId"] = gradeId;
+    return Result.success(
+      GradeAssessmentResponseDto.fromJson(json["entity"]),
+    );
+  }
+
+  List<Map<String, dynamic>> toGradeAsssessmentBodyFormat(
+      Map<String, String> questionsAnswer) {
     List<Map<String, dynamic>> listQuestionAnswers = [];
     questionsAnswer.forEach(
       (key, value) => listQuestionAnswers.add(
@@ -86,37 +128,7 @@ class AssessmentRemoteDataSourceImpl
         ),
       ),
     );
-
-    var jsonBody = jsonEncode(
-      <String, dynamic>{
-        "startDate": DateTime.now().toIso8601String(),
-        "assessmentId": assessmentId,
-        "givenAnswers": listQuestionAnswers
-      },
-    );
-    var response = await API.post("/grade",
-        body: jsonEncode(
-          <String, dynamic>{
-            "assessmentId": assessmentId,
-            "givenAnswers": listQuestionAnswers
-          },
-        ));
-    var json = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
-    if (response.statusCode == HttpStatus.created) {
-      var entity = json["entity"];
-      return Result.success(
-        PostGradeAssessmentDto(
-          id: entity["id"],
-          startDate: DateTime.parse(entity["startDate"]),
-          endDate: DateTime.parse(entity["endDate"]),
-          grade: entity["grade"] * 1.0,
-          correctAnswers: entity["correctAnswers"],
-          wrongAnswers: entity["wrongAnswers"],
-        ),
-      );
-    } else {
-      return Result.failure(HttpException(response.body));
-    }
+    return listQuestionAnswers;
   }
 
   @override
@@ -229,8 +241,7 @@ class AssessmentRemoteDataSourceImpl
 
   @override
   Future<Result> isAvailable(String assessmentId) async {
-    var response =
-        await API.get("/assessments/$assessmentId/is-available/me");
+    var response = await API.get("/assessments/$assessmentId/is-available/me");
     var json = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
     switch (response.statusCode) {
       case HttpStatus.ok:
@@ -252,8 +263,13 @@ List<String> asListOfStrings(List<dynamic> list) {
 List<QuestionDto> asListOfQuestionDto(List<dynamic> list) {
   List<QuestionDto> questions = [];
   for (var item in list) {
-    questions.add(QuestionDto(
-        item["_id"], item["title"], asListOfAnswerDto(item["options"])));
+    questions.add(
+      QuestionDto(
+          id: item["_id"],
+          text: item["title"],
+          answers: asListOfAnswerDto(item["options"]),
+          imageUrl: item["imageUrl"] ?? ""),
+    );
   }
   return questions;
 }
@@ -263,10 +279,17 @@ List<GradedAssessmentDto> asListOfGradedAssessmentDto(List<dynamic> list) {
   for (var entity in list) {
     if (entity["assessment"] == null) continue;
     var title = entity["assessment"]["title"];
-    var thumbnailUrl = entity["assessment"]["thumbnailUrl"];
+    String thumbnailUrl = entity["assessment"]["thumbnailUrl"];
+    if (thumbnailUrl.isEmpty) {
+      thumbnailUrl = "http://placeimg.com/640/480/arch";
+    }
+
+    print("assessmentId: ${entity["assessment"]["id"]}");
+
     assessments.add(GradedAssessmentDto(
+      gradeId: entity["id"],
       title: title ?? "",
-      thumbnailUrl: thumbnailUrl ?? "",
+      thumbnailUrl: thumbnailUrl,
       id: entity["assessment"]["id"],
       startDate: DateTime.parse(entity["startDate"]),
       endDate: DateTime.parse(entity["endDate"]),
@@ -303,9 +326,10 @@ extension AssessmentMapper on List<dynamic> {
     for (final assessment in this) {
       lst.add(AssessmentDto(
           id: assessment["id"],
-          title: assessment["title"],
-          description: assessment["description"],
-          thumbnailUrl: assessment["thumbnailUrl"],
+          title: assessment["title"] ?? "",
+          description: assessment["description"] ?? "",
+          thumbnailUrl:
+              assessment["thumbnailUrl"] ?? "http://placeimg.com/640/480/arch",
           isPrivate: assessment["isPrivate"],
           isPremium: assessment["isPremium"],
           categories: asListOfStrings(assessment["categories"]),

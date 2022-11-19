@@ -1,4 +1,4 @@
-class BestAssessmentCardDto {
+class TopRatedAssessmentDto {
   final String id;
   final String title;
   final String description;
@@ -8,7 +8,7 @@ class BestAssessmentCardDto {
   final List<String> categories;
   final double rating;
 
-  BestAssessmentCardDto(
+  TopRatedAssessmentDto(
       {required this.id,
       required this.title,
       required this.description,
@@ -20,13 +20,13 @@ class BestAssessmentCardDto {
 
   @override
   String toString() {
-    return 'BestAssessmentCardDto{id: $id, title: $title, description: $description, thumbnailUrl: $thumbnailUrl, isPrivate: $isPrivate, isPremium: $isPremium, categories: $categories, rating: $rating}';
+    return 'TopRatedAssessmentDto{id: $id, title: $title, description: $description, thumbnailUrl: $thumbnailUrl, isPrivate: $isPrivate, isPremium: $isPremium, categories: $categories, rating: $rating}';
   }
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is BestAssessmentCardDto &&
+      other is TopRatedAssessmentDto &&
           runtimeType == other.runtimeType &&
           id == other.id;
 

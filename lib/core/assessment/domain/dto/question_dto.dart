@@ -1,26 +1,24 @@
 class QuestionDto {
   final String id;
   final String text;
+  final String imageUrl;
   final List<AnswerDto> answers;
 
-  QuestionDto(this.id, this.text, this.answers);
+  QuestionDto(
+      {required this.id,
+      required this.text,
+      required this.answers,
+      required this.imageUrl});
 
   @override
   String toString() {
-    return 'QuestionDto{id: $id, text: $text, answers: $answers}';
+    return """QuestionDto {
+      id: $id, 
+      text: $text, 
+      imageUrl: $imageUrl, 
+      answers: $answers
+    }""";
   }
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is QuestionDto &&
-          runtimeType == other.runtimeType &&
-          id == other.id &&
-          text == other.text &&
-          answers == other.answers;
-
-  @override
-  int get hashCode => id.hashCode ^ text.hashCode ^ answers.hashCode;
 }
 
 class AnswerDto {

@@ -10,6 +10,7 @@ class AssessmentResultController extends GetxController {
   void fetchGrade(String assessmentId) async {
     var result = await _getAssessmentGradeUseCase.call(assessmentId);
     if (result.isSuccess) {
+      print("AssessmentResult: ${result.getOrNull()}");
       score(result.getOrNull());
     }
   }

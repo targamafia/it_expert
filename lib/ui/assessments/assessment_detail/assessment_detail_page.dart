@@ -177,10 +177,33 @@ void _showPremiumAssessmentDialog(BuildContext context) {
                   ),
                 ],
               )
-            : const AlertDialog(
-                title: Text("Success"),
-                // TODO: Hacer las madres también para android
-                content: Text("Saved successfully"),
+            : AlertDialog(
+                title: const Text("Premium"),
+                content: const Text(
+                    "Al adquirir alguno de nuestros cursos desbloqueas los examenes asociados"),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () {
+                      Get.back();
+                    },
+                    child: Text(
+                      'Cancelar',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium
+                          ?.copyWith(color: Colors.red),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () => launchUrlString(
+                        'https://mrpcapacitacion.mx/product-category/cursos/'),
+                    child: Text('Explorar cursos',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium
+                            ?.copyWith(color: Theme.of(context).primaryColor)),
+                  ),
+                ],
               );
       });
 }

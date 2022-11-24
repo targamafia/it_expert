@@ -180,9 +180,15 @@ class _LoginPage extends State<LoginPage> {
                     ),
                   ],
                 )
-              : const AlertDialog(
-                  title: Text("Success"),
-                  content: Text("Saved successfully"),
+              : AlertDialog(
+                  title: const Text("Error al iniciar sesion"),
+                  content: Text(message),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, 'OK'),
+                      child: const Text('OK'),
+                    ),
+                  ],
                 );
         });
   }

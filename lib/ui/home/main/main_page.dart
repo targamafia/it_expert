@@ -4,7 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:it_expert/core/assessment/domain/dto/assessment_dto.dart';
 import 'package:it_expert/ui/assessments/assessment_detail/assessment_detail_page.dart';
-import 'package:it_expert/ui/home/main/widget/top_rated_assessment_card_widget.dart';
+import 'package:it_expert/ui/home/main/widget/assessment_card_widget.dart';
 import 'package:it_expert/ui/home/widget/best_assessment_card_widget.dart';
 import 'package:it_expert/ui/home/widget/featured_assessment_card_widget.dart';
 import 'package:it_expert/ui/style.dart';
@@ -102,7 +102,9 @@ class MainPageSuccess extends StatelessWidget {
                   linearGradient: controller.featuredGradients[itemIndex],
                 );
               },
-              options: CarouselOptions(),
+              options: CarouselOptions(
+                height: 220
+              ),
             ),
         ],
       ),

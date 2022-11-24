@@ -56,16 +56,17 @@ class HistoryAssessmentDetailPageSuccess extends StatelessWidget {
   Widget build(BuildContext context) {
     HistoryAssessmentDetailController controller = Get.find();
     return Padding(
-      padding: EdgeInsets.all(8),
+      padding: const EdgeInsets.all(8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Card(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 18, horizontal: 22),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                   child: Column(
                     children: [
                       Text("calificación"),
@@ -82,7 +83,8 @@ class HistoryAssessmentDetailPageSuccess extends StatelessWidget {
               ),
               Card(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 18, horizontal: 22),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                   child: Column(
                     children: [
                       Text("Preguntas \ncorrectas"),
@@ -100,10 +102,11 @@ class HistoryAssessmentDetailPageSuccess extends StatelessWidget {
               ),
               Card(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 18, horizontal: 22),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                   child: Column(
                     children: [
-                      Text("Incorrectas"),
+                      const Text("Incorrectas"),
                       Text(
                         controller.gradedAssessmentDto.wrongAnswers.toString(),
                         style: Theme.of(context)

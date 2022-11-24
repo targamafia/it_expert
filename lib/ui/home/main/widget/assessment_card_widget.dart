@@ -1,10 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:it_expert/core/assessment/domain/dto/assessment_dto.dart';
 import 'package:it_expert/ui/assessments/assessment_detail/assessment_detail_page.dart';
-import 'package:it_expert/ui/home/main/widget/rating_widget.dart';
 import 'package:it_expert/ui/style.dart';
 
 class AssessmentCardWidget extends StatefulWidget {
@@ -21,12 +21,10 @@ class AssessmentCardWidget extends StatefulWidget {
   final LinearGradient linearGradient;
 
   @override
-  State<AssessmentCardWidget> createState() =>
-      _AssessmentCardWidgetState();
+  State<AssessmentCardWidget> createState() => _AssessmentCardWidgetState();
 }
 
-class _AssessmentCardWidgetState
-    extends State<AssessmentCardWidget> {
+class _AssessmentCardWidgetState extends State<AssessmentCardWidget> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -123,9 +121,14 @@ class _DisplayHorizontalTagsState extends State<DisplayHorizontalTags> {
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
-      constraints: BoxConstraints(maxWidth: 300),
+      constraints: const BoxConstraints(maxWidth: 300),
       child: Wrap(
         children: widget.tags
+            .getRange(
+              0,
+              min(widget.tags.length,
+                  4), // TODO: Prevent overflow on a lot of tags
+            )
             .map<Card>(
               (it) => Card(
                 color: AppColor.randomLabelColor(),

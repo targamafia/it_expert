@@ -281,9 +281,16 @@ class _AssessmentApplicationPageState extends State<AssessmentApplicationPage> {
                     ),
                   ],
                 )
-              : const AlertDialog(
-                  title: Text("Success"),
-                  content: Text("Saved successfully"),
+              : AlertDialog(
+                  title: const Text("Selecciona una respuesta"),
+                  content: const Text(
+                      "Para continuar a la siguiente pregunta, selecciona una respuesta"),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, 'OK'),
+                      child: const Text('OK'),
+                    ),
+                  ],
                 );
         });
   }
@@ -322,9 +329,34 @@ class _AssessmentApplicationPageState extends State<AssessmentApplicationPage> {
                     ),
                   ],
                 )
-              : const AlertDialog(
-                  title: Text("Success"),
-                  content: Text("Saved successfully"),
+              :AlertDialog(
+                  title: const Text("Cancelar aplicación de examen"),
+                  content: const Text(
+                      "No se guardará tu avance y tendrás que comenzar de nuevo"),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () {
+                        Get.back(); // Close Popup
+                        Get.back(); // Return to previous screen
+                      },
+                      child: Text(
+                        'Salir',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium
+                            ?.copyWith(color: Colors.red),
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, 'OK'),
+                      child: Text('Continuar',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.copyWith(
+                                  color: Theme.of(context).primaryColor)),
+                    ),
+                  ],
                 );
         });
   }

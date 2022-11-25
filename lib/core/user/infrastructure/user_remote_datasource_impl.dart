@@ -99,4 +99,48 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSourceInterface {
     return Result.failure(NoStatsException("Error al obtener las estadísticas de usuario"));
   }
 
+  @override
+  Future<Result> requestRecoveryPin(String email) async{
+    var response =
+        await http.post(Uri.https(baseUrl, '/users/password-recovery-pin'), body: {
+      "email": email,
+    });
+    var json = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+    switch (response.statusCode) {
+      case HttpStatus.ok:
+        return Result.success({});
+
+      case HttpStatus.unauthorized:
+        return Result.failure(
+          SignUpFailedException(
+              errorMessage: json["error"], errorCode: json["errorCode"]),
+        );
+      default:
+        return Result.failure(SignUpFailedException(
+            errorMessage: json["error"], errorCode: "UNKNOWN"));
+    }
+  }
+
+  @override
+  Future<Result> changePassword(String email, String pin, String newPassword) async {
+    var response =
+        await http.post(Uri.https(baseUrl, '/users/reset-password'), body: {
+          "email": email,
+          "passwordPin": pin,
+          "password": newPassword
+    });
+    var json = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+    switch (response.statusCode) {
+      case HttpStatus.ok:
+        return Result.success({});
+      case HttpStatus.unauthorized:
+        return Result.failure(
+          SignUpFailedException(
+              errorMessage: json["error"], errorCode: json["errorCode"]),
+        );
+      default:
+        return Result.failure(SignUpFailedException(
+            errorMessage: json["error"], errorCode: "UNKNOWN"));
+    }
+  }
 }

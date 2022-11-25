@@ -63,6 +63,7 @@ class AppColor {
   static const black1 = Color(0xFF1a181b);
   static const black2 = Color(0xFF171219);
   static const russianViolet = Color(0xFF2c0735);
+  static const secondary = Color(0xFF4059AD);
 
   static const materialBlue = MaterialColor(0xFF1269FF, {
     50: Color(0xFFb3cfff),

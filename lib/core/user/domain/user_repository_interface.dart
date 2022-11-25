@@ -31,4 +31,16 @@ class UserRepositoryInterface {
   Future<Result> fetchUserStats(String id) async{
     throw UnimplementedError();
   }
+
+  Future<Result> changePassword(String email, String pin, String newPassword) async{
+    throw UnimplementedError();
+  }
+
+  Future<Result> requestRecoveryPin(String email) async{
+    throw UnimplementedError();
+  }
+
+  Future<Result> saveEmailRecoveryPassword(String email) async {
+    throw UnimplementedError();
+  }
 }

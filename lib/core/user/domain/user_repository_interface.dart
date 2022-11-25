@@ -20,27 +20,24 @@ class UserRepositoryInterface {
     throw UnimplementedError();
   }
 
-  Future<Result> getUserInfo() async{
+  Future<Result> getUserInfo() async {
     throw UnimplementedError();
   }
 
-  Future<Result> logout() async{
+  Future<Result> logout() async {
     throw UnimplementedError();
   }
 
-  Future<Result> fetchUserStats(String id) async{
+  Future<Result> fetchUserStats(String id) async {
     throw UnimplementedError();
   }
 
-  Future<Result> changePassword(String email, String pin, String newPassword) async{
+  Future<Result> changePassword(
+      String email, String pin, String newPassword) async {
     throw UnimplementedError();
   }
 
-  Future<Result> requestRecoveryPin(String email) async{
-    throw UnimplementedError();
-  }
-
-  Future<Result> saveEmailRecoveryPassword(String email) async {
+  Future<Result> requestRecoveryPin(String email) async {
     throw UnimplementedError();
   }
 }

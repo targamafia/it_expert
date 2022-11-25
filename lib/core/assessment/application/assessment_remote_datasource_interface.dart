@@ -5,6 +5,10 @@ class AssessmentRemoteDataSourceInterface {
     throw UnimplementedError();
   }
 
+  Future<Result> fetchBestAssessments() async {
+    throw UnimplementedError();
+  }
+
   Future<Result> fetchAssessment(String id) async {
     throw UnimplementedError();
   }
@@ -22,7 +26,23 @@ class AssessmentRemoteDataSourceInterface {
     throw UnimplementedError();
   }
 
+  Future<Result> isAvailable(String assessmentId) async {
+    throw UnimplementedError();
+  }
+
+  Future<Result> fetchAssessmentAttemps(String assessmentId) async {
+    throw UnimplementedError();
+  }
+
   Future<Result> fetchAllAssessments() async {
+    throw UnimplementedError();
+  }
+
+  Future<Result> fetchUserPremiumAssessments(String userId) {
+    throw UnimplementedError();
+  }
+
+  Future<Result> fetchAssessmentGradeWithAnswersByGradeId(String gradeId) {
     throw UnimplementedError();
   }
 }

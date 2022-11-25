@@ -21,8 +21,10 @@ class AssessmentRepositoryImpl implements AssessmentRepositoryInterface {
   @override
   Future<Result> gradeAssessment(
       Map<String, String> questionsAnswer, String assessmentId) async {
-    return assessmentRemoteDataSourceInterface.gradeAssessment(
+    var response = await assessmentRemoteDataSourceInterface.gradeAssessment(
         questionsAnswer, assessmentId);
+    print(response.getOrNull().toString());
+    return response;
   }
 
   @override
@@ -40,5 +42,32 @@ class AssessmentRepositoryImpl implements AssessmentRepositoryInterface {
   Future<Result> getAllGradedAssessments(String userId) {
     return assessmentRemoteDataSourceInterface
         .fetchAllGradedAssessments(userId);
+  }
+
+  @override
+  Future<Result> getUserPremiumAssessments(String userId) {
+    return assessmentRemoteDataSourceInterface
+        .fetchUserPremiumAssessments(userId);
+  }
+
+  Future<Result> getBestAssessments() {
+    return assessmentRemoteDataSourceInterface.fetchBestAssessments();
+  }
+
+  @override
+  Future<Result> getAssessmentAttempts(String assessmentId) {
+    return assessmentRemoteDataSourceInterface
+        .fetchAssessmentAttemps(assessmentId);
+  }
+
+  @override
+  Future<Result> getIsAvailableInfo(String assessmentId) {
+    return assessmentRemoteDataSourceInterface.isAvailable(assessmentId);
+  }
+
+  @override
+  Future<Result> getAssessmentGradeWithAnswersByGradeId(String gradeId) {
+    return assessmentRemoteDataSourceInterface
+        .fetchAssessmentGradeWithAnswersByGradeId(gradeId);
   }
 }

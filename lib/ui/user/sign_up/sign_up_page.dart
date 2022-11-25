@@ -164,9 +164,15 @@ class _SignUpPage extends State<SignUpPage> {
                     ),
                   ],
                 )
-              : const AlertDialog(
-                  title: Text("Success"),
-                  content: Text("Saved successfully"),
+              : AlertDialog(
+                  title: const Text("Error al crear cuenta"),
+                  content: Text(message),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, 'OK'),
+                      child: const Text('OK'),
+                    ),
+                  ],
                 );
         });
   }

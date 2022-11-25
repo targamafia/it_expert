@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:it_expert/ui/onboarding/onboarding_data.dart';
 import 'package:it_expert/ui/user/login/login_page.dart';
-import 'package:it_expert/ui/onboarding/carousel_page.dart';
+
+import 'carousel_page.dart';
+import 'onboarding_data.dart';
 
 class OnBoardingPage extends StatelessWidget {
   final List<OnBoardingData> list = [

@@ -22,78 +22,81 @@ class BestAssessmentCardWidget extends StatefulWidget {
 class _BestAssessmentCardWidget extends State<BestAssessmentCardWidget> {
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        FittedBox(
-          clipBehavior: Clip.hardEdge,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(100),
-            child: Image.network(
-              width: 2000,
-              height: 2000,
-              widget.assessmentDto.thumbnailUrl,
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-
-        InkWell(
-          onTap: () => widget.onPressed(),
-          child: SizedBox(
-            width: double.infinity,
-            //height: 300,
-            child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    widget.assessmentDto.isPremium ? "PREMIUM" : "GRATIS",
-                    style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                        color: Theme.of(context).colorScheme.onPrimary),
-                  ),
-                  const SizedBox(height: 8),
-                  SizedBox(
-                    width: 250,
-                    child: Text(
-                      widget.assessmentDto.title,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineMedium
-                          ?.copyWith(
-                              color: Theme.of(context).colorScheme.onPrimary),
-                    ),
-                  ),
-                  const Spacer(),
-                  Wrap(
-                    children: widget.assessmentDto.categories
-                        .map<Card>(
-                          (it) => Card(
-                            color: AppColor.randomLabelColor(),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 8, vertical: 2),
-                              child: Text(
-                                "#$it",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelLarge
-                                    ?.copyWith(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onPrimary),
-                              ),
-                            ),
-                          ),
-                        )
-                        .toList(),
-                  ),
-                ],
+    return Center(
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          FittedBox(
+            clipBehavior: Clip.hardEdge,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(100),
+              child: Image.network(
+                width: 2000,
+                height: 2000,
+                widget.assessmentDto.thumbnailUrl,
+                fit: BoxFit.cover,
               ),
             ),
           ),
-        ),
-      ],
+          InkWell(
+            onTap: () => widget.onPressed(),
+            child: Container(
+              alignment: Alignment.center,
+              width: double.infinity,
+              //height: 300,
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.assessmentDto.isPremium ? "PREMIUM" : "GRATIS",
+                      style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                          color: Theme.of(context).colorScheme.onPrimary),
+                    ),
+                    const SizedBox(height: 8),
+                    SizedBox(
+                      width: 250,
+                      child: Text(
+                        widget.assessmentDto.title,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineMedium
+                            ?.copyWith(
+                                color: Theme.of(context).colorScheme.onPrimary),
+                      ),
+                    ),
+                    const Spacer(),
+                    Wrap(
+                      children: widget.assessmentDto.categories
+                          .map<Card>(
+                            (it) => Card(
+                              color: AppColor.randomLabelColor(),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 8, vertical: 2),
+                                child: Text(
+                                  "#$it",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelLarge
+                                      ?.copyWith(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onPrimary),
+                                ),
+                              ),
+                            ),
+                          )
+                          .toList(),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -4,10 +4,12 @@ import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:it_expert/core/assessment/domain/dto/assessment_dto.dart';
 import 'package:it_expert/ui/assessments/assessment_detail/assessment_detail_page.dart';
+import 'package:it_expert/ui/home/main/widget/assessment_card_widget.dart';
 import 'package:it_expert/ui/home/widget/best_assessment_card_widget.dart';
 import 'package:it_expert/ui/home/widget/featured_assessment_card_widget.dart';
 import 'package:it_expert/ui/style.dart';
 
+import '../../../core/utils/status.dart';
 import 'main_controller.dart';
 
 class MainPage extends StatelessWidget {
@@ -16,115 +18,101 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     MainController controller = Get.put(MainController());
-    controller.loadFeaturedAssessments();
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+    controller.load();
+    return Obx(
+      () => Stack(
         children: [
-          Padding(padding: EdgeInsets.all(8.0),
-          child: Text(
-            "Lo mejor",
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headlineMedium,
-          )),
-          Center(
-            child: CarouselSlider.builder(
-              itemCount: 3,
-              itemBuilder:
-                  (BuildContext context, int itemIndex, int pageViewIndex) {
-                return BestAssessmentCardWidget(
-                  assessmentDto: AssessmentDto(
-                    questions: [],
-                    title: "Lo más cool",
-                    description: "Mucha descripciòn",
-                    categories: ["IoT", "CISCO", "CCNA II"],
-                    id: '',
-                    isPremium: true,
-                    isPrivate: true,
-                    rating: 5,
-                    thumbnailUrl:
-                        'https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2670&q=80',
-                  ),
-                  onPressed: () {
-                    Get.to(
-                      () => AssessmentDetailPage(
-                        assessmentDto: AssessmentDto(
-                          questions: [],
-                          categories: [],
-                          id: "",
-                          description: '',
-                          isPremium: true,
-                          isPrivate: true,
-                          rating: 5,
-                          title: '',
-                          thumbnailUrl:
-                              'https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2670&q=80',
-                        ),
-                      ),
-                    );
-                  },
-                  backgroundColor: AppColor.aliceBlue,
-                );
-              },
-              options: CarouselOptions(
-                height: 350,
-                viewportFraction: .95,
-                enableInfiniteScroll: false,
-                enlargeCenterPage: true,
-              ),
+          if (controller.status.value == Status.LOADING)
+            const Center(
+              child: Text("Loading"),
             ),
-          ),
-          Padding(padding: EdgeInsets.all(8.0),
-          child: Text(
-            "Exámenes Populares",
-            style: Theme.of(context).textTheme.headlineMedium,
-          )),
-          Obx(() {
-            if (controller.featuredAssessments.isNotEmpty) {
-              return CarouselSlider.builder(
-                itemCount: controller.featuredAssessments.length,
-                itemBuilder:
-                    (BuildContext context, int itemIndex, int pageViewIndex) {
-                  var it = controller.featuredAssessments[itemIndex];
-                  return FeaturedAssessmentCardWidget(
-                    id: it.id,
-                    title: it.title,
-                    area: it.description,
-                    thumbnailUrl: it.thumbnailUrl,
-                    onPressed: () {
-                      Get.to(
-                        () => AssessmentDetailPage(
-                          assessmentDto: AssessmentDto(
-                            questions: [],
-                            title: it.title,
-                            description: it.description,
-                            categories: it.categories,
-                            id: it.id,
-                            isPremium: true,
-                            isPrivate: true,
-                            rating: 5,
-                            thumbnailUrl:
-                                'https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2670&q=80',
-                          ),
-                        ),
-                      );
-                    },
-                    categories: it.categories,
-                    label: 'GRATIS',
-                  );
-                },
-                options: CarouselOptions(
-                    initialPage: 1,
-                    viewportFraction: .8,
-                    enableInfiniteScroll: true),
-              );
-            } else {
-              return Container(height: 200);
-            }
-          }),
+          if (controller.status.value == Status.ERROR)
+            const Center(
+              child: Text("Error"),
+            ),
+          if (controller.status.value == Status.SUCCESS)
+            const MainPageSuccess(),
         ],
       ),
     );
   }
+}
+
+class MainPageSuccess extends StatelessWidget {
+  const MainPageSuccess({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    MainController controller = Get.find();
+    print(controller.topRated);
+    print(controller.featured);
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "MRP Capacitaciones",
+            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).primaryColor),
+          ),
+          const SizedBox(
+            height: 12,
+          ),
+          Text(
+            "Mejores exámenes",
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
+          if (controller.topRated.isNotEmpty)
+            CarouselSlider.builder(
+              itemCount: controller.topRated.length,
+              itemBuilder:
+                  (BuildContext context, int itemIndex, int pageViewIndex) {
+                return AssessmentCardWidget(
+                  assessmentDto: controller.topRated[itemIndex],
+                  width: context.width,
+                  height: context.width,
+                  linearGradient: controller.topRatedGradients[itemIndex],
+                );
+              },
+              options:
+                  CarouselOptions(viewportFraction: 1, height: context.width),
+            ),
+          const SizedBox(
+            height: 12,
+          ),
+          Text(
+            "Exámenes populares",
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
+          if (controller.featured.isNotEmpty)
+            CarouselSlider.builder(
+              itemCount: controller.featured.length,
+              itemBuilder:
+                  (BuildContext context, int itemIndex, int pageViewIndex) {
+                return AssessmentCardWidget(
+                  assessmentDto: controller.featured[itemIndex],
+                  width: context.width,
+                  height: context.width,
+                  linearGradient: controller.featuredGradients[itemIndex],
+                );
+              },
+              options: CarouselOptions(
+                height: 220
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+String getIsPremiumLabel(bool isPremium) {
+  if (isPremium) return "PREMIUM";
+  return "GRATIS";
 }

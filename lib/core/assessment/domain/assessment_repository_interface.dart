@@ -4,7 +4,12 @@ class AssessmentRepositoryInterface {
   Future<Result> getFeaturedAssessments() async {
     throw UnimplementedError();
   }
- Future<Result> getAllAssessments() async {
+
+  Future<Result> getBestAssessments() async {
+    throw UnimplementedError();
+  }
+
+  Future<Result> getAllAssessments() async {
     throw UnimplementedError();
   }
 
@@ -17,11 +22,27 @@ class AssessmentRepositoryInterface {
     throw UnimplementedError();
   }
 
+  Future<Result> getIsAvailableInfo(String assessmentId) async {
+    throw UnimplementedError();
+  }
+
   Future<Result> getAssessmentGrade(String assessmentId) {
     throw UnimplementedError();
   }
- Future<Result> getAllGradedAssessments(String userId) {
-    throw UnimplementedError();
-  } 
-}
 
+  Future<Result> getAllGradedAssessments(String userId) {
+    throw UnimplementedError();
+  }
+
+  Future<Result> getUserPremiumAssessments(String userId) {
+    throw UnimplementedError();
+  }
+
+  Future<Result> getAssessmentAttempts(String assessmentId) {
+    throw UnimplementedError();
+  }
+
+  Future<Result> getAssessmentGradeWithAnswersByGradeId(String gradeId) {
+    throw UnimplementedError();
+  }
+}

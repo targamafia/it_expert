@@ -11,7 +11,6 @@ class LoginUseCase {
     var result = await loginRepository.login(email, password);
 
     if (result.isSuccess) {
-      print(result.getOrNull());
       await loginRepository.saveUserInfoInLocalStorage(result.getOrNull());
     }
     return result;

@@ -1,13 +1,16 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:it_expert/ui/user/login/login_page.dart';
 import 'package:it_expert/ui/user/password_reset/reset_form/reset_form_controller.dart';
 import 'package:it_expert/ui/style.dart';
-import 'package:flutter_pin_code_fields/flutter_pin_code_fields.dart';
 import 'package:it_expert/ui/user/password_reset/reset_instructions/instructions_controller.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'dart:io' show Platform;
+
+import 'package:pin_code_fields/pin_code_fields.dart';
 
 class ResetFormPage extends StatefulWidget {
   const ResetFormPage({Key? key}) : super(key: key);
@@ -19,6 +22,40 @@ class ResetFormPage extends StatefulWidget {
 class _ResetFormPage extends State<ResetFormPage> {
   final _formKey = GlobalKey<FormState>();
   final _email = Get.find<InstructionsController>().email;
+
+  TextEditingController textEditingController = TextEditingController();
+
+  // ..text = "123456";
+
+  // ignore: close_sinks
+  StreamController<ErrorAnimationType>? errorController;
+
+  bool hasError = false;
+  String currentText = "";
+  final formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    errorController = StreamController<ErrorAnimationType>();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    errorController!.close();
+
+    super.dispose();
+  }
+
+  // snackBar Widget
+  snackBar(String? message) {
+    return ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message!),
+        duration: const Duration(seconds: 2),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,29 +88,44 @@ class _ResetFormPage extends State<ResetFormPage> {
               ),
               Padding(
                 padding: EdgeInsets.only(bottom: 64.0),
-                child: PinCodeFields(
-                  length: 6,
-                  fieldBorderStyle: FieldBorderStyle.Square,
-                  responsive: false,
-                  fieldHeight: 38.0,
-                  fieldWidth: 38.0,
-                  borderWidth: 1.0,
-                  activeBorderColor: AppColor.materialBlue.shade200,
-                  activeBackgroundColor: AppColor.materialBlue.shade50,
-                  borderRadius: BorderRadius.circular(10.0),
-                  keyboardType: TextInputType.number,
-                  autoHideKeyboard: true,
-                  fieldBackgroundColor: Colors.black12,
-                  borderColor: Colors.black38,
-                  textStyle: TextStyle(
-                    fontSize: 30.0,
+                child: PinCodeTextField(
+                  appContext: context,
+                  pastedTextStyle: TextStyle(
+                    color: Colors.green.shade600,
                     fontWeight: FontWeight.bold,
                   ),
-                  onComplete: (output) {
+                  length: 6,
+                  obscureText: true,
+                  obscuringCharacter: '*',
+                  blinkWhenObscuring: true,
+                  animationType: AnimationType.fade,
+                  pinTheme: PinTheme(
+                      shape: PinCodeFieldShape.box,
+                      borderRadius: BorderRadius.circular(5),
+                      fieldHeight: 50,
+                      fieldWidth: 40,
+                      activeFillColor: Colors.white,
+                      inactiveFillColor: Colors.white,
+                      inactiveColor: AppColor.bluetiful),
+                  cursorColor: Colors.black,
+                  animationDuration: const Duration(milliseconds: 300),
+                  enableActiveFill: true,
+                  errorAnimationController: errorController,
+                  controller: textEditingController,
+                  keyboardType: TextInputType.number,
+                  boxShadows: const [
+                    BoxShadow(
+                      offset: Offset(0, 1),
+                      color: Colors.black12,
+                      blurRadius: 10,
+                    )
+                  ],
+                  onCompleted: (output) {
                     // Your logic with pin code
                     controller.pin(output);
                     print(output);
                   },
+                  onChanged: (String value) {},
                 ),
               ),
               Padding(
@@ -143,13 +195,13 @@ class _ResetFormPage extends State<ResetFormPage> {
                                           const Duration(milliseconds: 500),
                                     );
                                   } else {
-                                      if (!mounted) return;
-                                      _showResetDialog(
-                                      context, controller.errorMessage.value);
+                                    if (!mounted) return;
+                                    _showResetDialog(
+                                        context, controller.errorMessage.value);
                                   }
                                 }
                               },
-                              child: Text("Envíame un correo",
+                              child: Text("Restablecer contraseña",
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyMedium

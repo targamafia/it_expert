@@ -36,11 +36,17 @@ ThemeData lightTheme() {
             const TextStyle(fontSize: 36.0, fontWeight: FontWeight.bold),
         headlineLarge:
             const TextStyle(fontSize: 32.0, fontWeight: FontWeight.bold),
-        headlineMedium: const TextStyle(fontSize: 28.0, fontWeight: FontWeight.bold, color: AppColor.black1),
-        headlineSmall: const TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold, color: AppColor.black1),
+        headlineMedium: const TextStyle(
+            fontSize: 28.0,
+            fontWeight: FontWeight.bold,
+            color: AppColor.black1),
+        headlineSmall: const TextStyle(
+            fontSize: 24.0,
+            fontWeight: FontWeight.bold,
+            color: AppColor.black1),
         titleLarge: const TextStyle(fontSize: 22.0),
         titleMedium: const TextStyle(fontSize: 18.0),
-        titleSmall: const TextStyle(fontSize: 14.0),
+        titleSmall: const TextStyle(fontSize: 16.0),
         labelLarge: const TextStyle(fontSize: 14.0),
         labelMedium: const TextStyle(fontSize: 12.0),
         labelSmall: const TextStyle(fontSize: 11.0),
@@ -63,7 +69,8 @@ class AppColor {
   static const black1 = Color(0xFF1a181b);
   static const black2 = Color(0xFF171219);
   static const russianViolet = Color(0xFF2c0735);
-  static const secondary = Color(0xFF4059AD);
+  static const normalBlue = Color(0xFF5E8EE8);
+  static const blueSky = Color(0xFFa4c3ff);
 
   static const materialBlue = MaterialColor(0xFF1269FF, {
     50: Color(0xFFb3cfff),
@@ -82,9 +89,32 @@ class AppColor {
   static const indigoDye = Color(0xFF083D77);
   static const lightSalmon = Color(0xFFfca17d);
   static const correctGreen = Color(0xFF81dc9b);
+  static const incorrectRed = Color(0xFFEC5959);
+
+  static const gradientHaikus = LinearGradient(colors: [
+    Color(0xFFfd746c),
+    Color(0xFFff9068),
+  ]);
+
+  static const gradientBlush =
+      LinearGradient(colors: [Color(0xFFB24592), Color(0xFFF15F79)]);
+
+  static const gradientDeepPurple =
+      LinearGradient(colors: [Color(0xFF673AB7), Color(0xFF8D5EFA)]);
+
+  static LinearGradient randomLinearGradient() {
+    var list = [gradientHaikus, gradientBlush, gradientDeepPurple];
+    // generates a new Random object
+    final random = Random();
+
+    // generate a random index based on the list length
+    // and use it to retrieve the element
+    return list[random.nextInt(list.length)];
+  }
 
   static Color randomLabelColor() {
-    var list = [pink1, indigoDye, lightSalmon];
+    var list = [pink1, indigoDye, lightSalmon, correctGreen];
+
 // generates a new Random object
     final random = Random();
 

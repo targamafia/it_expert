@@ -1,8 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:it_expert/ui/assessments/assessment_application/widget/answer_card_widget.dart';
-import 'package:it_expert/ui/home/home_page.dart';
 import 'package:it_expert/ui/style.dart';
 import '../../../core/utils/status.dart';
 import '../assessment_result/assessment_result_page.dart';
@@ -33,12 +34,19 @@ class _AssessmentApplicationPageState extends State<AssessmentApplicationPage> {
     return Obx(
       () => Scaffold(
         appBar: AppBar(
-          title: Text(
-            "Examen CISCO II",
-            style: Theme.of(context)
-                .textTheme
-                .bodyMedium
-                ?.copyWith(color: Theme.of(context).primaryColor),
+          title: Obx(
+            () => Stack(
+              children: [
+                if (controller.status.value == Status.SUCCESS)
+                  Text(
+                    controller.assessmentDto.title,
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium
+                        ?.copyWith(color: Theme.of(context).primaryColor),
+                  )
+              ],
+            ),
           ),
           elevation: 1,
           backgroundColor: Colors.white,
@@ -85,7 +93,7 @@ class _AssessmentApplicationPageState extends State<AssessmentApplicationPage> {
                               ),
                             ),
                             Text(
-                              "Lo sentimos, este examen todavía no tiene preguntas, intenta con otro.",
+                              "Estamos recolectando las preguntas para esta evaluación. Regresa pronto.",
                               style: Theme.of(context).textTheme.titleMedium,
                               textAlign: TextAlign.center,
                             ),
@@ -102,7 +110,7 @@ class _AssessmentApplicationPageState extends State<AssessmentApplicationPage> {
                                     ])),
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    Get.offAll(() => const HomePage());
+                                    Navigator.of(context).pop();
                                   },
                                   style: ElevatedButton.styleFrom(
                                       primary: Colors.transparent,
@@ -116,11 +124,23 @@ class _AssessmentApplicationPageState extends State<AssessmentApplicationPage> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(controller.currentQuestion.value.text,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge
-                                  ?.copyWith(fontWeight: FontWeight.normal)),
+                          Text(
+                            controller.currentQuestion.value.text,
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge
+                                ?.copyWith(fontWeight: FontWeight.normal),
+                          ),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          if (controller
+                              .currentQuestion.value.imageUrl.isNotEmpty)
+                            Image.network(
+                                controller.currentQuestion.value.imageUrl),
+                          const SizedBox(
+                            height: 12,
+                          ),
                           Column(
                             children: controller.currentQuestion.value.answers
                                 .map((e) => AnswerCardWidget(
@@ -261,9 +281,16 @@ class _AssessmentApplicationPageState extends State<AssessmentApplicationPage> {
                     ),
                   ],
                 )
-              : const AlertDialog(
-                  title: Text("Success"),
-                  content: Text("Saved successfully"),
+              : AlertDialog(
+                  title: const Text("Selecciona una respuesta"),
+                  content: const Text(
+                      "Para continuar a la siguiente pregunta, selecciona una respuesta"),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, 'OK'),
+                      child: const Text('OK'),
+                    ),
+                  ],
                 );
         });
   }
@@ -279,7 +306,10 @@ class _AssessmentApplicationPageState extends State<AssessmentApplicationPage> {
                       "No se guardará tu avance y tendrás que comenzar de nuevo"),
                   actions: <Widget>[
                     TextButton(
-                      onPressed: () => Get.offAll(const HomePage()),
+                      onPressed: () {
+                        Get.back(); // Close Popup
+                        Get.back(); // Return to previous screen
+                      },
                       child: Text(
                         'Salir',
                         style: Theme.of(context)
@@ -299,9 +329,34 @@ class _AssessmentApplicationPageState extends State<AssessmentApplicationPage> {
                     ),
                   ],
                 )
-              : const AlertDialog(
-                  title: Text("Success"),
-                  content: Text("Saved successfully"),
+              :AlertDialog(
+                  title: const Text("Cancelar aplicación de examen"),
+                  content: const Text(
+                      "No se guardará tu avance y tendrás que comenzar de nuevo"),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () {
+                        Get.back(); // Close Popup
+                        Get.back(); // Return to previous screen
+                      },
+                      child: Text(
+                        'Salir',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium
+                            ?.copyWith(color: Colors.red),
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, 'OK'),
+                      child: Text('Continuar',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.copyWith(
+                                  color: Theme.of(context).primaryColor)),
+                    ),
+                  ],
                 );
         });
   }

@@ -13,8 +13,4 @@ class UserLocalDataSourceInterface {
   Future<Result> logout() async {
     throw UnimplementedError();
   }
-
-  Future<Result> saveEmailForResetPassword(String email) async {
-    throw UnimplementedError();
-  }
 }

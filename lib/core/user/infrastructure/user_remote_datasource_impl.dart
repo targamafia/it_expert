@@ -102,7 +102,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSourceInterface {
   @override
   Future<Result> requestRecoveryPin(String email) async{
     var response =
-        await http.post(Uri.https(baseUrl, '/users/password-recovery-pin'), body: {
+        await http.post(Uri.https(baseUrl, '/api/v1/users/password-recovery-pin'), body: {
       "email": email,
     });
     var json = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
@@ -124,7 +124,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSourceInterface {
   @override
   Future<Result> changePassword(String email, String pin, String newPassword) async {
     var response =
-        await http.post(Uri.https(baseUrl, '/users/reset-password'), body: {
+        await http.post(Uri.https(baseUrl, '/api/v1/users/reset-password'), body: {
           "email": email,
           "passwordPin": pin,
           "password": newPassword

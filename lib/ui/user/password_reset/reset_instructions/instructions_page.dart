@@ -3,6 +3,9 @@ import 'package:get/get.dart';
 import 'package:it_expert/ui/user/password_reset/reset_instructions/instructions_controller.dart';
 import 'package:it_expert/ui/user/password_reset/reset_form/reset_form_page.dart';
 import 'package:it_expert/ui/style.dart';
+import 'package:flutter/cupertino.dart';
+
+import 'dart:io' show Platform;
 
 class InstructionsPage extends StatefulWidget {
   const InstructionsPage({Key? key}) : super(key: key);
@@ -72,16 +75,20 @@ class _InstructionsPage extends State<InstructionsPage> {
                                 AppColor.midnightBlue
                               ])),
                           child: ElevatedButton(
-                            onPressed: ([bool mounted = true]) {
+                            onPressed: ([bool mounted = true]) async {
                               if (_formKey.currentState!.validate()) {
-                                //await controller.login();
-                                // if (controller.loginSuccess) {
-                                Get.to(() => ResetFormPage());
-                                //     transition: Transition.circularReveal,
-                                //     duration:
-                                //     const Duration(milliseconds: 500),
-                                //   );
-                              }
+                                await controller.requestPin();
+                                if (controller.sentEmailSucess) {
+                                  Get.to(() => ResetFormPage(),
+                                    transition: Transition.circularReveal,
+                                    duration:
+                                    const Duration(milliseconds: 500),
+                                  );
+                                } else {
+                                  if (!mounted) return;
+                                  _showResetDialog(
+                                      context, controller.errorMessage.value);
+                                }}
                             },
                             child: Text("Envíame un correo", style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600, color: Colors.white)),
                           ),
@@ -96,5 +103,28 @@ class _InstructionsPage extends State<InstructionsPage> {
           ),
         ),
       );
+  }
+
+
+  void _showResetDialog(BuildContext context, String message) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Platform.isIOS
+              ? CupertinoAlertDialog(
+            title: const Text("Error al enviar pin"),
+            content: Text(message),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => Navigator.pop(context, 'OK'),
+                child: const Text('OK'),
+              ),
+            ],
+          )
+              : const AlertDialog(
+            title: Text("Error"),
+            content: Text("Error al enviar pin"),
+          );
+        });
   }
 }

@@ -19,4 +19,16 @@ class UserRepositoryInterface {
   Future<Result> getUserInfoInLocalStorage() async {
     throw UnimplementedError();
   }
+
+  Future<Result> getUserInfo() async{
+    throw UnimplementedError();
+  }
+
+  Future<Result> logout() async{
+    throw UnimplementedError();
+  }
+
+  Future<Result> fetchUserStats(String id) async{
+    throw UnimplementedError();
+  }
 }

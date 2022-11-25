@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:it_expert/ui/home/history/history_page.dart';
 import 'package:it_expert/ui/home/home_controller.dart';
+import 'package:it_expert/ui/home/profile/profile_page.dart';
 import 'package:it_expert/ui/home/search/search_page.dart';
 
 import 'main/main_page.dart';
@@ -28,6 +29,7 @@ class _HomePage extends State<HomePage> {
           const MainPage(),
           const SearchPage(),
           const HistoryPage(),
+          const ProfilePage(),
         ][currentPageIndex]),
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -50,6 +52,10 @@ class _HomePage extends State<HomePage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.history_sharp),
             label: 'Historial',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person, color: Colors.black,),
+            label: 'Perfil',
           )
         ],
         backgroundColor: Theme.of(context).canvasColor,

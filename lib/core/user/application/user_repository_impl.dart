@@ -24,6 +24,10 @@ class UserRepositoryImpl implements UserRepositoryInterface {
   }
 
   @override
+  Future<Result> getUserInfo() {
+    return userLocalDataSourceInterface.getUserInfo();
+  }
+
   Future<Result> signUp(
       String name, String lastName, String email, String password) {
     return userRemoteDataSource.signUp(name, lastName, email, password);
@@ -33,4 +37,15 @@ class UserRepositoryImpl implements UserRepositoryInterface {
   Future<Result> getUserInfoInLocalStorage() {
     return userLocalDataSourceInterface.getUserInfo();
   }
+
+  @override
+  Future<Result> logout() {
+    return userLocalDataSourceInterface.logout();
+  }
+
+  @override
+  Future<Result> fetchUserStats(String id) {
+    return userRemoteDataSource.fetchUserStats(id);
+  }
+
 }

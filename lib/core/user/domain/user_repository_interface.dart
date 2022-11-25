@@ -39,4 +39,8 @@ class UserRepositoryInterface {
   Future<Result> requestRecoveryPin(String email) async{
     throw UnimplementedError();
   }
+
+  Future<Result> saveEmailRecoveryPassword(String email) async {
+    throw UnimplementedError();
+  }
 }

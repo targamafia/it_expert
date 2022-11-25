@@ -58,4 +58,9 @@ class UserRepositoryImpl implements UserRepositoryInterface {
     return userRemoteDataSource.requestRecoveryPin(email);
   }
 
+  @override
+  Future<Result> saveEmailRecoveryPassword(String email) async{
+    return userLocalDataSourceInterface.saveEmailForResetPassword(email);
+  }
+
 }

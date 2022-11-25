@@ -64,7 +64,7 @@ class MainPage extends StatelessWidget {
                       ),
                     );
                   },
-                  backgroundColor: AppColor.lightBlue,
+                  backgroundColor: AppColor.aliceBlue,
                 );
               },
               options: CarouselOptions(

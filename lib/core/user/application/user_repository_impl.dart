@@ -48,4 +48,14 @@ class UserRepositoryImpl implements UserRepositoryInterface {
     return userRemoteDataSource.fetchUserStats(id);
   }
 
+  @override
+  Future<Result> changePassword(String email, String pin, String newPassword) {
+    return userRemoteDataSource.changePassword(email, pin, newPassword);
+  }
+
+  @override
+  Future<Result> requestRecoveryPin(String email) {
+    return userRemoteDataSource.requestRecoveryPin(email);
+  }
+
 }

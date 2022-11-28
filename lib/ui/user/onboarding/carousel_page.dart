@@ -41,7 +41,8 @@ class _CarouselPage extends State<CarouselPage> {
       height: page == currentPage ? 10.0 : 6.0,
       width: page == currentPage ? 10.0 : 6.0,
       decoration: BoxDecoration(
-        color: page == currentPage ? Colors.blue : Colors.grey,
+        color:
+            page == currentPage ? Theme.of(context).primaryColor : Colors.grey,
         borderRadius: BorderRadius.circular(12),
       ),
     );
@@ -72,7 +73,7 @@ class _CarouselPage extends State<CarouselPage> {
                 TextButton(
                   child: Text(lastPage ? "" : "Saltar",
                       style: TextStyle(
-                          color: AppColor.primary.withOpacity(.6),
+                          color: Theme.of(context).primaryColor.withOpacity(.6),
                           fontSize: 16.0)),
                   onPressed: () => lastPage
                       ? null
@@ -93,8 +94,8 @@ class _CarouselPage extends State<CarouselPage> {
                 TextButton(
                   child: Text(
                     lastPage ? "Continuar" : "Siguiente",
-                    style: const TextStyle(
-                        color: AppColor.primary, fontSize: 16.0),
+                    style: TextStyle(
+                        color: Theme.of(context).primaryColor, fontSize: 16.0),
                   ),
                   onPressed: () => lastPage
                       ? widget.skipPage(context)
